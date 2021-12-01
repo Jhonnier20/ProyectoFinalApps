@@ -38,7 +38,7 @@
     <style name="ForgotPassMin" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/secondary_1</item>
         <item name="android:textSize">16sp</item>
-        <item name="fontFamily">@font/cairo_regular</item>
+        <item name="android:fontFamily">@font/cairo_regular</item>
     </style>
 
     <style name="NoAccount" parent="Widget.AppCompat.TextView">
@@ -46,4 +46,10 @@
         <item name="android:textSize">17sp</item>
         <item name="fontFamily">@font/cairo_regular</item>
     </style>
+
+    <style name="MenuNavigation" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@color/secondary_1</item>
+        <item name="itemTextColor">@color/secondary_3</item>
+    </style>
+
 </resources>

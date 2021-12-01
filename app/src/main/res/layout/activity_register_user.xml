@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/emailLoginET"
+        android:id="@+id/nameRegisterET"
         style="@style/EditTextMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/registerBtn"
         style="@style/ButtonMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

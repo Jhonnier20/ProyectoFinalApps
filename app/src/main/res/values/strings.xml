@@ -31,4 +31,25 @@
     <string name="conf_pass_hint_tv">Confirmar contraseña</string>
     <string name="haveaccount_tv">Ya tienes cuenta? Inicia sesión</string>
 
+    <!-- menu_client   -->
+    <string name="profile_menu">Perfil</string>
+    <string name="home_menu">Home</string>
+    <string name="config_menu">Config</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- fragment_home_client -->
+    <string name="welcome_frag">BIENVENIDO!</string>
+    <string name="no_register_gym">No te encuentras registrado en ningún gimnasio.</string>
+    <string name="code_qr_client">Lleva este código a tu gym para ser activado.</string>
+
+    <!-- menu_staff   -->
+    <string name="clientes_menu">Clientes</string>
+    <string name="config_menu_staff">Config</string>
+    
+    <!-- fragment_home_staff -->
+    <string name="cliens_staff">CLIENTES</string>
+    <string name="allow_staf">Permitir entrada</string>
+    <string name="activ_client">Activar cliente</string>
+
 </resources>
