@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">ProyectoFinalApps</string>
+
+    <!-- activity-main -->
+    <string name="welcome_main">BIENVENIDO</string>
+    <string name="client_btn">Cliente</string>
+    <string name="gym_btn">Gimnasio</string>
+
+    <!-- activity_client -->
+    <string name="client_wel_tv">CLIENTE</string>
+    <string name="login_btn">Iniciar Sesión</string>
+    <string name="register_btn">Registrarme</string>
+
+    <!-- activity_gym -->
+    <string name="gym_wel_tv">GIMNASIO</string>
+    <string name="registermygym_btn">Registrar mi GYM</string>
+    <string name="registerstaff_btn">Registrarme como STAFF</string>
+
+    <!-- activity_login -->
+    <string name="login_tv">INICIO DE SESIÓN</string>
+    <string name="email_hint_et">Correo electrónico</string>
+    <string name="password_hint_et">Contraseña</string>
+    <string name="forgotpass_tv">Olvidaste tu contraseña</string>
+    <string name="loginenter_btn">Ingresar</string>
+    <string name="noaccount_tv">No tienes cuenta? Regístrate</string>
+
+    <!-- activity_register_user -->
+    <string name="register_tv">REGISTRO</string>
+    <string name="namelastname_hint_tv">Nombre y Apellido</string>
+    <string name="no_id_hint_tv">Número de documento</string>
+    <string name="conf_pass_hint_tv">Confirmar contraseña</string>
+    <string name="haveaccount_tv">Ya tienes cuenta? Inicia sesión</string>
+
+</resources>
