@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         registerInTV = binding.registerInTV;
 
         registerInTV.setOnClickListener(this::registerUser);
+        loginBtn.setOnClickListener(this::validate);
 
     }
 
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //https://www.youtube.com/watch?v=vwD00u6Lshw - Link video para validaciones de correo y password
 
-    private void validate() {
+    private void validate(View view) {
         boolean result[] = {validateEmail(), validatePassword()};
         if (result[0] && result[1]) {
             //next screen

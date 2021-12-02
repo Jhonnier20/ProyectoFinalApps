@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.databinding.ActivityHomeClientBinding;
 import com.example.proyectofinalapps.fragments.HomeClientFragment;
+import com.example.proyectofinalapps.model.Client;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeClientActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class HomeClientActivity extends AppCompatActivity {
 
     private HomeClientFragment homeClientFragment;
 
+    private Client client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +31,11 @@ public class HomeClientActivity extends AppCompatActivity {
         binding = ActivityHomeClientBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        client = (Client) getIntent().getExtras().get("client");
         navigatorClient = binding.navigatorClient;
 
         homeClientFragment = HomeClientFragment.newInstance();
+        homeClientFragment.setClient(client);
 
         showFragment(homeClientFragment);
 
