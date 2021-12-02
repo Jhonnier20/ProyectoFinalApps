@@ -17,12 +17,13 @@
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps2/app/src/main/res/layout/activity_client.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/activity_client.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_gym.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_home_client.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home_client.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home_staff.xml" value="0.1272644927536232" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.28080949687199175" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_home_client.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home_client.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_home_staff.xml" value="0.33" />
       </map>
     </option>
   </component>
