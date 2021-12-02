@@ -46,15 +46,12 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = binding.loginBtn;
         goToLoginTV = binding.goToLoginTV;
 
-        loginBtn.setOnClickListener(this::validate);
-
+        loginBtn.setOnClickListener(this::loginUser);
         goToLoginTV.setOnClickListener(this::changeToRegister);
-
-        Log.e(">>>>>>>",""+rol);
 
     }
 
-    private void loginUser() {
+    private void loginUser(View view) {
         String email = emailLoginET.getText().toString();
         String pass = passwordLoginET.getText().toString();
 
@@ -84,8 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     }
-
-
                                 }
                         );
                     }
@@ -95,9 +90,8 @@ public class LoginActivity extends AppCompatActivity {
                     }
             );
         }
-
-
     }
+
 
     private void saveUser(User user) {
         String json = new Gson().toJson(user);
@@ -116,12 +110,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    //https://www.youtube.com/watch?v=vwD00u6Lshw - Link video para validaciones de correo y password
+
+
+
+
 
     private void validate(View view) {
         boolean result[] = {validateEmail(), validatePassword()};
         if (result[0] && result[1]) {
-            loginUser();
+            //loginUser();
         }
     }
 

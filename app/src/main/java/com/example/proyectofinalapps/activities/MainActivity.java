@@ -31,10 +31,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.clientBtn:
                 Intent intent = new Intent(this, ClientActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.entrada, R.anim.salida);
+
                 break;
             case R.id.gymBtn:
                 Intent intent1 = new Intent(this, GymActivity.class);
                 startActivity(intent1);
+                overridePendingTransition(R.anim.entrada, R.anim.salida);
+
                 break;
         }
     }

@@ -49,9 +49,82 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         rol = getIntent().getExtras().getString("rol");
 
-        registerBtn.setOnClickListener(this::validate);
-
+        goToRegisterTV.setOnClickListener(this::changeToLogin);
+        registerBtn.setOnClickListener(this::registerUser);
     }
+
+    private void registerUser(View view) {
+        String name = nameRegisterET.getText().toString();
+        String id = idRegisterET.getText().toString();
+        String email = mailRegisterET.getText().toString();
+        String pass1 = passwordRegisterET.getText().toString();
+        String pass2 = password2RegisterET.getText().toString();
+
+        if(name.isEmpty() || id.isEmpty() || email.isEmpty() || pass1.isEmpty() || pass2.isEmpty()){
+            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
+        }else{
+            if(pass1.equals(pass2)){
+                //1. registro en db de auth
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                        email,
+                        pass1
+                ).addOnSuccessListener(
+                        task -> {
+                            //2. registar al user en la base de datos
+                            FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String uid = fbUser.getUid();
+
+                            User user = new User(name, id, email, uid);
+
+                            if(rol.equals("Client")) {
+
+                                FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user).addOnSuccessListener(
+                                        firetask->{
+                                            Intent intent = new Intent(this, HomeClientActivity.class);
+                                            intent.putExtra("rol", "Client");
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                );
+
+                            } else if(rol.equals("Staff")) {
+
+                                FirebaseFirestore.getInstance().collection("Staff").document(user.getUid()).set(user).addOnSuccessListener(
+                                        firetask->{
+                                            Intent intent = new Intent(this, HomeStaffActivity.class);
+                                            intent.putExtra("rol", "Staff");
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                );
+                            }
+                        }
+                ).addOnFailureListener(
+                        error->{
+                            Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                );
+            }else{
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void changeToLogin(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        if(rol.equals("Client")) {
+            intent.putExtra("rol", "Client");
+        } else if(rol.equals("Staff")) {
+            intent.putExtra("rol", "Staff");
+        }
+        startActivity(intent);
+        finish();
+    }
+
+
+
+
+
 
 
     private void validate(View view) {
@@ -129,81 +202,9 @@ public class RegisterUserActivity extends AppCompatActivity {
             }
         }
 
-        goToRegisterTV.setOnClickListener(this::changeToLogin);
-
         Log.e(">>>>>>>",""+rol);
 
         return complete;
     }
-
-    private void changeToLogin(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        if(rol.equals("Client")) {
-            intent.putExtra("rol", "Client");
-        } else if(rol.equals("Staff")) {
-            intent.putExtra("rol", "Staff");
-        }
-        startActivity(intent);
-        finish();
-    }
-
-    private void registerUser(View view) {
-        String name = nameRegisterET.getText().toString();
-        String id = idRegisterET.getText().toString();
-        String email = mailRegisterET.getText().toString();
-        String pass1 = passwordRegisterET.getText().toString();
-        String pass2 = password2RegisterET.getText().toString();
-
-        if(name.isEmpty() || id.isEmpty() || email.isEmpty() || pass1.isEmpty() || pass2.isEmpty()){
-            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
-        }else{
-            if(pass1.equals(pass2)){
-                //1. registro en db de auth
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                        email,
-                        pass1
-                ).addOnSuccessListener(
-                        task -> {
-                            //2. registar al user en la base de datos
-                            FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = fbUser.getUid();
-
-                            User user = new User(name, id, email, uid);
-
-                            if(rol.equals("Client")) {
-
-                                FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user).addOnSuccessListener(
-                                        firetask->{
-                                            Intent intent = new Intent(this, HomeClientActivity.class);
-                                            intent.putExtra("rol", "Client");
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                );
-
-                            } else if(rol.equals("Staff")) {
-
-                                FirebaseFirestore.getInstance().collection("Staff").document(user.getUid()).set(user).addOnSuccessListener(
-                                        firetask->{
-                                            Intent intent = new Intent(this, HomeStaffActivity.class);
-                                            intent.putExtra("rol", "Staff");
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                );
-                            }
-                        }
-                ).addOnFailureListener(
-                        error->{
-                            Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                );
-            }else{
-                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-
 
 }

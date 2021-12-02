@@ -17,16 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_mini" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/left" />
-
     <TextView
         android:id="@+id/textView2"
         style="@style/WelcomeMain"
@@ -101,7 +91,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
         android:backgroundTint="#00B0D7"
-        android:text="@string/loginenter_btn"
+        android:text="Ingresar"
         android:textAllCaps="false"
         android:textSize="16dp"
         app:layout_constraintBottom_toTopOf="@+id/goToLoginTV"
