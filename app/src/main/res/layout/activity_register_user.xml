@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordLoginET"
+        android:id="@+id/mailRegisterET"
         style="@style/EditTextMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordET2"
+        android:id="@+id/idRegisterET"
         style="@style/EditTextMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordET3"
+        android:id="@+id/passwordRegisterET"
         style="@style/EditTextMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordET4"
+        android:id="@+id/password2RegisterET"
         style="@style/EditTextMain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="580dp"
         android:layout_marginEnd="70dp"
         android:background="@drawable/buttonbackmain"
         android:text="@string/register_btn"
@@ -152,14 +152,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/registerInTV"
-        style="@style/NoAccount"
+    <Button
+        android:id="@+id/goToRegisterTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="665dp"
-        android:text="@string/haveaccount_tv"
+        android:layout_marginTop="30dp"
+        android:background="#00FFFFFF"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:text="¿Ya tienes cuenta? Inicia sesión."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/registerBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

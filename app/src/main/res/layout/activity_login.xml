@@ -96,7 +96,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="580dp"
         android:layout_marginEnd="70dp"
         android:background="@drawable/buttonbackmain"
         android:text="@string/loginenter_btn"
@@ -104,14 +104,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/registerInTV"
-        style="@style/NoAccount"
+    <Button
+        android:id="@+id/goToLoginTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="665dp"
-        android:text="@string/noaccount_tv"
+        android:layout_marginTop="30dp"
+        android:background="#00FFFFFF"
+        android:text="¿No tienes cuenta? Regístrate."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

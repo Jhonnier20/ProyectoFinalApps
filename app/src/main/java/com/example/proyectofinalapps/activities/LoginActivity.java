@@ -2,15 +2,22 @@ package com.example.proyectofinalapps.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
+import com.example.proyectofinalapps.User;
 import com.example.proyectofinalapps.databinding.ActivityLoginBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,11 +26,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
 
-    private EditText emailLoginET;
-    private EditText passwordLoginET;
+    private EditText emailLoginET, passwordLoginET;
     private TextView forgotPassTV;
-    private Button loginBtn;
-    private TextView registerInTV;
+    private Button loginBtn, goToLoginTV;
 
     private String rol;
 
@@ -39,22 +44,74 @@ public class LoginActivity extends AppCompatActivity {
         passwordLoginET = binding.passwordLoginET;
         forgotPassTV = binding.forgotPassTV;
         loginBtn = binding.loginBtn;
-        registerInTV = binding.registerInTV;
+        goToLoginTV = binding.goToLoginTV;
 
-        registerInTV.setOnClickListener(this::registerUser);
+        loginBtn.setOnClickListener(this::loginUser);
+        goToLoginTV.setOnClickListener(this::changeToRegister);
+
+        Log.e(">>>>>>>",""+rol);
 
     }
 
-    private void registerUser(View view) {
+    private void loginUser(View view) {
+        String email = emailLoginET.getText().toString();
+        String pass = passwordLoginET.getText().toString();
+
+        if(email.isEmpty() || pass.isEmpty() ){
+            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
+        }else{
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                    email,
+                    pass
+            ).addOnSuccessListener(
+                    task->{
+                        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+
+                        FirebaseFirestore.getInstance().collection("Clientes").document(fbuser.getUid()).get().addOnSuccessListener(
+                                document->{
+                                    User user = document.toObject(User.class);
+                                    saveUser(user);
+                                    if(rol.equals("Client")) {
+                                        Intent intent = new Intent(this, HomeClientActivity.class);
+                                        intent.putExtra("rol", "Client");
+                                        startActivity(intent);
+                                        finish();
+
+                                    } else if(rol.equals("Staff")) {
+                                        Intent intent = new Intent(this, HomeStaffActivity.class);
+                                        intent.putExtra("rol", "Staff");
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+
+                                }
+                        );
+                    }
+            ).addOnFailureListener(
+                    error->{
+                        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+            );
+        }
+
+
+    }
+
+    private void saveUser(User user) {
+        String json = new Gson().toJson(user);
+        getSharedPreferences("data", MODE_PRIVATE).edit().putString("user", json).apply();
+    }
+
+    private void changeToRegister(View view) {
         Intent intent = new Intent(this, RegisterUserActivity.class);
         if(rol.equals("Client")) {
             intent.putExtra("rol", "Client");
-        } else if(rol.equals("Gym")) {
-            intent.putExtra("rol", "Gym");
         } else if(rol.equals("Staff")) {
             intent.putExtra("rol", "Staff");
         }
         startActivity(intent);
+        finish();
     }
 
 
