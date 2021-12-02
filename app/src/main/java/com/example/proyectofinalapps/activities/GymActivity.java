@@ -34,7 +34,7 @@ public class GymActivity extends AppCompatActivity {
 
     private void login(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
-        //intent.putExtra("rol", "gym");
+        intent.putExtra("rol", "Staff");
         startActivity(intent);
     }
 
@@ -48,5 +48,6 @@ public class GymActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegisterUserActivity.class);
         intent.putExtra("rol", "Gym");
         startActivity(intent);
+
     }
 }

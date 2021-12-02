@@ -2,33 +2,31 @@ package com.example.proyectofinalapps.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
+import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityRegisterUserBinding;
 import com.example.proyectofinalapps.model.Client;
 
-import java.util.PrimitiveIterator;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
     private ActivityRegisterUserBinding binding;
-
-    private EditText nameRegisterET;
-    private EditText userIdET;
-    private EditText emailRegisterET;
-    private EditText passRegisterET;
-    private EditText confPassET;
-    private Button registerBtn;
-    private TextView loginRegisterTV;
+    private EditText nameRegisterET, idRegisterET, mailRegisterET, passwordRegisterET, password2RegisterET;
+    private Button registerBtn, goToRegisterTV;
 
     private String rol;
 
@@ -38,21 +36,20 @@ public class RegisterUserActivity extends AppCompatActivity {
         binding = ActivityRegisterUserBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        rol = getIntent().getExtras().getString("rol");
+
         nameRegisterET = binding.nameRegisterET;
-        userIdET = binding.userIdET;
-        emailRegisterET = binding.emailRegisterET;
-        passRegisterET = binding.passRegisterET;
-        confPassET = binding.confPassET;
+        idRegisterET = binding.idRegisterET;
+        mailRegisterET = binding.mailRegisterET;
+        passwordRegisterET = binding.passwordRegisterET;
+        password2RegisterET = binding.password2RegisterET;
+
+        goToRegisterTV = binding.goToRegisterTV;
         registerBtn = binding.registerBtn;
-        loginRegisterTV = binding.loginRegisterTV;
 
         rol = getIntent().getExtras().getString("rol");
 
         registerBtn.setOnClickListener(this::validate);
-
-    }
-
-    private void registerUser(View view) {
 
     }
 
@@ -66,9 +63,9 @@ public class RegisterUserActivity extends AppCompatActivity {
                 Client client = new Client(
                         UUID.randomUUID().toString(),
                         nameRegisterET.getText().toString(),
-                        Integer.parseInt(userIdET.getText().toString()),
-                        emailRegisterET.getText().toString(),
-                        passRegisterET.getText().toString(),
+                        Integer.parseInt(idRegisterET.getText().toString()),
+                        mailRegisterET.getText().toString(),
+                        passwordRegisterET.getText().toString(),
                         false
                 );
                 intent.putExtra("client", client);
@@ -81,24 +78,24 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     private boolean validateEmail() {
-        String email = binding.emailRegisterET.getText().toString();
+        String email = binding.mailRegisterET.getText().toString();
         if(email.isEmpty()) {
-            emailRegisterET.setError("Por favor ingrese un email");
+            mailRegisterET.setError("Por favor ingrese un email");
         } else if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailRegisterET.setError("Por favor ingrese un email valido");
+            mailRegisterET.setError("Por favor ingrese un email valido");
         } else {
-            emailRegisterET.setError(null);
+            mailRegisterET.setError(null);
             return true;
         }
         return false;
     }
 
     private boolean validatePassword() {
-        String password = passRegisterET.getText().toString();
+        String password = passwordRegisterET.getText().toString();
         String regEx = "^(?:(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*)[^\\s]{8,}$";
 
         if(password.isEmpty()) {
-            passRegisterET.setError("Por favor ingrese una contraseña");
+            passwordRegisterET.setError("Por favor ingrese una contraseña");
             return false;
         } else {
             CharSequence inputStr = password;
@@ -109,7 +106,7 @@ public class RegisterUserActivity extends AppCompatActivity {
             if(matcher.matches()) {
                 return true;
             } else {
-                passRegisterET.setError("Ingrese una contraseña valida");
+                passwordRegisterET.setError("Ingrese una contraseña valida");
                 return false;
             }
         }
@@ -121,17 +118,92 @@ public class RegisterUserActivity extends AppCompatActivity {
             nameRegisterET.setError("Por favor ingrese un nombre");
             complete++;
         }
-        if (userIdET.getText().toString().isEmpty()) {
-            userIdET.setError("Ingrese su número de identidad");
+        if (idRegisterET.getText().toString().isEmpty()) {
+            idRegisterET.setError("Ingrese su número de identidad");
             complete++;
         }
-        if(!passRegisterET.getText().toString().isEmpty()) {
-            if(!passRegisterET.getText().toString().equals(confPassET.getText().toString())) {
-                confPassET.setError("No coínciden las contraseñas");
+        if(!passwordRegisterET.getText().toString().isEmpty()) {
+            if(!passwordRegisterET.getText().toString().equals(password2RegisterET.getText().toString())) {
+                password2RegisterET.setError("No coínciden las contraseñas");
                 complete++;
             }
         }
 
+        goToRegisterTV.setOnClickListener(this::changeToLogin);
+
+        Log.e(">>>>>>>",""+rol);
+
         return complete;
     }
+
+    private void changeToLogin(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        if(rol.equals("Client")) {
+            intent.putExtra("rol", "Client");
+        } else if(rol.equals("Staff")) {
+            intent.putExtra("rol", "Staff");
+        }
+        startActivity(intent);
+        finish();
+    }
+
+    private void registerUser(View view) {
+        String name = nameRegisterET.getText().toString();
+        String id = idRegisterET.getText().toString();
+        String email = mailRegisterET.getText().toString();
+        String pass1 = passwordRegisterET.getText().toString();
+        String pass2 = password2RegisterET.getText().toString();
+
+        if(name.isEmpty() || id.isEmpty() || email.isEmpty() || pass1.isEmpty() || pass2.isEmpty()){
+            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
+        }else{
+            if(pass1.equals(pass2)){
+                //1. registro en db de auth
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                        email,
+                        pass1
+                ).addOnSuccessListener(
+                        task -> {
+                            //2. registar al user en la base de datos
+                            FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+                            String uid = fbUser.getUid();
+
+                            User user = new User(name, id, email, uid);
+
+                            if(rol.equals("Client")) {
+
+                                FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user).addOnSuccessListener(
+                                        firetask->{
+                                            Intent intent = new Intent(this, HomeClientActivity.class);
+                                            intent.putExtra("rol", "Client");
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                );
+
+                            } else if(rol.equals("Staff")) {
+
+                                FirebaseFirestore.getInstance().collection("Staff").document(user.getUid()).set(user).addOnSuccessListener(
+                                        firetask->{
+                                            Intent intent = new Intent(this, HomeStaffActivity.class);
+                                            intent.putExtra("rol", "Staff");
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                );
+                            }
+                        }
+                ).addOnFailureListener(
+                        error->{
+                            Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                );
+            }else{
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+
 }

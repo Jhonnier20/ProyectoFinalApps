@@ -21,9 +21,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 public class HomeClientFragment extends Fragment {
 
     private FragmentHomeClientBinding binding;
-
     private View view;
-
     private ImageView codQrImg;
 
     private Client client;
@@ -42,13 +40,12 @@ public class HomeClientFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding =FragmentHomeClientBinding.inflate(inflater, container, false);
+        binding = FragmentHomeClientBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
         codQrImg = binding.codQrImg;
 
         generateQR();
-
 
         return view;
     }
@@ -62,11 +59,9 @@ public class HomeClientFragment extends Fragment {
 
             codQrImg.setImageBitmap(bitmap);
 
-
         } catch (WriterException e) {
             e.printStackTrace();
         }
-
     }
 
     public Client getClient() {

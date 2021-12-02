@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_mini" />
@@ -32,10 +32,11 @@
         style="@style/WelcomeMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="250dp"
         android:fontFamily="@font/cairo_bold"
         android:text="@string/login_tv"
+        android:textSize="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,75 +44,84 @@
         android:id="@+id/emailLoginET"
         style="@style/EditTextMain"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="320dp"
-        android:layout_marginEnd="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/edittext_back"
         android:ems="10"
         android:fontFamily="@font/cairo_regular"
         android:hint="@string/email_hint_et"
         android:inputType="textPersonName"
+        android:textSize="16dp"
         app:errorEnabled="true"
         app:errorIconDrawable="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/passwordLoginET"
         style="@style/EditTextMain"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="390dp"
-        android:layout_marginEnd="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/edittext_back"
         android:ems="10"
         android:fontFamily="@font/cairo_regular"
         android:hint="@string/password_hint_et"
         android:inputType="textPersonName"
+        android:textSize="16dp"
         app:errorEnabled="true"
         app:errorIconDrawable="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/emailLoginET" />
 
     <TextView
         android:id="@+id/forgotPassTV"
         style="@style/ForgotPassMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/cairo_regular"
-        android:text="@string/forgotpass_tv"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordLoginET" />
 
     <Button
         android:id="@+id/loginBtn"
-        style="@style/ButtonMain"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:backgroundTint="#00B0D7"
+        android:text="@string/loginenter_btn"
+        android:textAllCaps="false"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/goToLoginTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/goToLoginTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="600dp"
-        android:layout_marginEnd="70dp"
-        android:background="@drawable/buttonbackmain"
-        android:text="@string/loginenter_btn"
+        android:layout_marginBottom="20dp"
+        android:background="#00FFFFFF"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:text="¿No tienes cuenta? Regístrate."
+        android:textAllCaps="false"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/registerInTV"
-        style="@style/NoAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="665dp"
-        android:text="@string/noaccount_tv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
