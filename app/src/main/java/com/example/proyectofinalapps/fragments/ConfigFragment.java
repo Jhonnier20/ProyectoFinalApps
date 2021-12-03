@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +18,10 @@ import com.example.proyectofinalapps.R;
  * create an instance of this fragment.
  */
 public class ConfigFragment extends Fragment {
+
+    private FragmentHomeStaffBinding binding;
+    private View view;
+    private Button logoutBtn;
 
 
     public ConfigFragment() {
@@ -33,7 +39,11 @@ public class ConfigFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        binding = FragmentHomeStaffBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
+
+        //logoutBtn = binding.logoutBtn;
+
         return inflater.inflate(R.layout.fragment_config, container, false);
     }
 }
