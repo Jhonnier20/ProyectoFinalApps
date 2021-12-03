@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/drawable/edittext_back.xml" value="0.27314814814814814" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_client.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_home_client.xml" value="0.33" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_home_staff.xml" value="0.5" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_login.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_main.xml" value="0.23697916666666666" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/fragment_config.xml" value="0.23097826086956522" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/fragment_profile_client.xml" value="0.33" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/menu/menuclient.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/menu/staff_menu.xml" value="0.3472222222222222" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps/app/src/main/res/layout/activity_client.xml" value="0.34193840579710144" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps/app/src/main/res/layout/activity_gym.xml" value="0.35520833333333335" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps/app/src/main/res/layout/activity_home_client.xml" value="0.33" />
@@ -17,6 +27,12 @@
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps2/app/src/main/res/drawable/backgroundlogin.xml" value="0.37135416666666665" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps2/app/src/main/res/font/cairo.xml" value="0.3854166666666667" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps2/app/src/main/res/layout/activity_client.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/activity_client.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home_client.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.28080949687199175" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home_client.xml" value="0.1" />
       </map>
     </option>
   </component>

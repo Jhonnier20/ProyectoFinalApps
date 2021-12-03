@@ -4,8 +4,10 @@
 
     <item
         android:id="@+id/clientsStaffMenu"
+        android:icon="@drawable/baseline_assessment_black_24dp"
         android:title="@string/clientes_menu" />
     <item
         android:id="@+id/configStaffMenu"
+        android:icon="@drawable/baseline_settings_black_24dp"
         android:title="@string/config_menu_staff" />
 </menu>

@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.fragments.ConfigFragment;
+import com.example.proyectofinalapps.fragments.ProfileClientFragment;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityHomeClientBinding;
 import com.example.proyectofinalapps.fragments.HomeClientFragment;
@@ -21,7 +23,10 @@ public class HomeClientActivity extends AppCompatActivity {
 
     private ActivityHomeClientBinding binding;
     private BottomNavigationView navigatorClient;
+
     private HomeClientFragment homeClientFragment;
+    private ConfigFragment configFragment;
+    private ProfileClientFragment profileClientFragment;
 
     private Client client;
     private User user;
@@ -48,13 +53,23 @@ public class HomeClientActivity extends AppCompatActivity {
 
 
         homeClientFragment = HomeClientFragment.newInstance();
+        configFragment = ConfigFragment.newInstance();
+        profileClientFragment = ProfileClientFragment.newInstance();
+
         homeClientFragment.setClient(client);
         homeClientFragment.setUser(user);
 
         showFragment(homeClientFragment);
 
         navigatorClient.setOnItemSelectedListener(
-                MenuItem -> {
+                menuItem -> {
+                    if (menuItem.getItemId() == R.id.configClientMenu){
+                        showFragment(configFragment);
+                    }else if (menuItem.getItemId() == R.id.homeClientMenu){
+                        showFragment(homeClientFragment);
+                    }else{
+                        showFragment(profileClientFragment);
+                    }
                     return true;
                 }
         );

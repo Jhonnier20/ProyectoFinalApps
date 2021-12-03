@@ -4,11 +4,14 @@
 
     <item
         android:id="@+id/profileClientMenu"
+        android:icon="@drawable/baseline_person_black_24dp"
         android:title="@string/profile_menu" />
     <item
         android:id="@+id/homeClientMenu"
+        android:icon="@drawable/baseline_home_black_24dp"
         android:title="@string/home_menu" />
     <item
         android:id="@+id/configClientMenu"
+        android:icon="@drawable/baseline_settings_black_24dp"
         android:title="@string/config_menu" />
 </menu>

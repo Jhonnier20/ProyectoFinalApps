@@ -46,7 +46,7 @@
     <!-- menu_staff   -->
     <string name="clientes_menu">Clientes</string>
     <string name="config_menu_staff">Config</string>
-    
+
     <!-- fragment_home_staff -->
     <string name="cliens_staff">CLIENTES</string>
     <string name="allow_staf">Permitir entrada</string>
