@@ -10,6 +10,7 @@
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_login.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_main.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/fragment_config.xml" value="0.23097826086956522" />
+        <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/fragment_profile_client.xml" value="0.33" />
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/menu/menuclient.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/menu/staff_menu.xml" value="0.3472222222222222" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps/app/src/main/res/layout/activity_client.xml" value="0.34193840579710144" />
@@ -30,7 +31,6 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home_client.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_home_staff.xml" value="0.33" />
       </map>
     </option>
   </component>

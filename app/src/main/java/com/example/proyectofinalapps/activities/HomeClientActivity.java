@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.fragments.ConfigFragment;
+import com.example.proyectofinalapps.fragments.ProfileClientFragment;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityHomeClientBinding;
 import com.example.proyectofinalapps.fragments.HomeClientFragment;
@@ -25,6 +26,7 @@ public class HomeClientActivity extends AppCompatActivity {
 
     private HomeClientFragment homeClientFragment;
     private ConfigFragment configFragment;
+    private ProfileClientFragment profileClientFragment;
 
     private Client client;
     private User user;
@@ -52,6 +54,8 @@ public class HomeClientActivity extends AppCompatActivity {
 
         homeClientFragment = HomeClientFragment.newInstance();
         configFragment = ConfigFragment.newInstance();
+        profileClientFragment = ProfileClientFragment.newInstance();
+
         homeClientFragment.setClient(client);
 
         showFragment(homeClientFragment);
@@ -63,7 +67,7 @@ public class HomeClientActivity extends AppCompatActivity {
                     }else if (menuItem.getItemId() == R.id.homeClientMenu){
                         showFragment(homeClientFragment);
                     }else{
-                        showFragment(configFragment);
+                        showFragment(profileClientFragment);
                     }
                     return true;
                 }
