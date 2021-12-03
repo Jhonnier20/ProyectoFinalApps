@@ -3,6 +3,7 @@ package com.example.proyectofinalapps.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.adapters.StaffAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -26,10 +28,14 @@ public class HomeStaffFragment extends Fragment {
 
     private View view;
 
+    private StaffAdapter adapter;
+    private LinearLayoutManager manager;
+
     private OnReadQRListener onReadQRListener;
 
     public HomeStaffFragment() {
         // Required empty public constructor
+        adapter = new StaffAdapter();
     }
 
     public static HomeStaffFragment newInstance() {
@@ -46,6 +52,11 @@ public class HomeStaffFragment extends Fragment {
         view = binding.getRoot();
 
         clientRecylcler = binding.clientRecylcler;
+        manager = new LinearLayoutManager(getActivity());
+        clientRecylcler.setLayoutManager(manager);
+        clientRecylcler.setAdapter(adapter);
+        clientRecylcler.setHasFixedSize(true);
+
         activateClientStaffBtn = binding.activateClientStaffBtn;
         readQR = binding.readQR;
 
@@ -65,5 +76,13 @@ public class HomeStaffFragment extends Fragment {
 
     public interface OnReadQRListener {
         void onReadQR();
+    }
+
+    public StaffAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(StaffAdapter adapter) {
+        this.adapter = adapter;
     }
 }

@@ -49,6 +49,7 @@ public class HomeClientActivity extends AppCompatActivity {
 
         homeClientFragment = HomeClientFragment.newInstance();
         homeClientFragment.setClient(client);
+        homeClientFragment.setUser(user);
 
         showFragment(homeClientFragment);
 
