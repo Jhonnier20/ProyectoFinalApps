@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_app_back">
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="CONFIGURACIONES"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="40dp"
+        android:text="Política de privacidad y tratamiento de  datos:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="40dp"
+        android:text="Los datos son de caracter personal y de uso exclusivo de identificación dentro de la aplicación."
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:text="Información básica como nombre, apellido y cédula sera visible solamente por los instructores para proporcionar un mejor servicio."
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:text="MyGym garantizará la exactitud y la calidad de los datos personales y permitirá el retiro de los mismos si la persona lo desea."
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="14dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="23dp"
+        android:text="•"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="14dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="15dp"
+        android:text="•"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="14dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="15dp"
+        android:text="•"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <ImageButton
+        android:id="@+id/goToConfig"
+        android:layout_width="42dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_left" />
+</androidx.constraintlayout.widget.ConstraintLayout>

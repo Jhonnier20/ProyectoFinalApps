@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoFinalApps">
         <activity
+            android:name=".activities.ActivateClient_AllowEntry"
+            android:exported="true" />
+        <activity
+            android:name=".activities.PrivacyPolicyActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.HomeGymActivity"
             android:exported="true" />
         <activity

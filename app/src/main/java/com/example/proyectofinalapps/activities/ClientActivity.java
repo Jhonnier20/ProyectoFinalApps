@@ -27,7 +27,6 @@ public class ClientActivity extends AppCompatActivity {
 
         registerClientBtn.setOnClickListener(this::registerClient);
         loginClientBtn.setOnClickListener(this::loginClient);
-
     }
 
     private void loginClient(View view) {

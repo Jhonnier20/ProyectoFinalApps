@@ -1,18 +1,18 @@
 package com.example.proyectofinalapps.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
+import com.example.proyectofinalapps.activities.LoginActivity;
+import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigGymBinding;
 
 public class ConfigGymFragment extends Fragment {
@@ -22,6 +22,8 @@ public class ConfigGymFragment extends Fragment {
     private TextView gymName, gymInstructor;
     private Button privacyPolicy, deleteProfile, editProfile, signOff;
     private View view;
+
+    private PrivacyPolicyActivity privacyPolicyActivity;
 
     public ConfigGymFragment() {
         // Required empty public constructor
@@ -57,7 +59,8 @@ public class ConfigGymFragment extends Fragment {
     }
 
     protected void goToPrivacyPolicy(View view){
-        //TODO
+        Intent intent = new Intent(getActivity(), PrivacyPolicyActivity.class);
+        getActivity().startActivity(intent);
     }
 
     protected void deleteProfile(View view){
