@@ -45,9 +45,8 @@ public class GymActivity extends AppCompatActivity {
     }
 
     private void registerGym(View view) {
-        Intent intent = new Intent(this, RegisterUserActivity.class);
+        Intent intent = new Intent(this, RegisterGymActivity.class);
         intent.putExtra("rol", "Gym");
         startActivity(intent);
-
     }
 }

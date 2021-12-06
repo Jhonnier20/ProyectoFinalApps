@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_app_back">
 
+    <EditText
+        android:id="@+id/searchClient"
+        style="@style/EditTextMain"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/edittext_back"
+        android:ems="10"
+        android:fontFamily="@font/cairo_regular"
+        android:hint="Buscar por nombre o cédula"
+        android:inputType="textPersonName"
+        android:textSize="16dp"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="60dp"
@@ -29,6 +50,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Permitir entrada"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/allowEntry"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/allowEntry"
+        app:layout_constraintTop_toBottomOf="@+id/allowEntry" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Activar Cliente"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/activateClientStaffBtn"
+        app:layout_constraintStart_toStartOf="@+id/activateClientStaffBtn"
+        app:layout_constraintTop_toBottomOf="@+id/activateClientStaffBtn" />
+
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="30dp"
@@ -51,60 +99,47 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <EditText
-        android:id="@+id/readQR"
-        android:layout_width="259dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Buscar por nombre o cédula"
-        android:inputType="textPersonName"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/allowEntry"
+        android:layout_width="104dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#00B0D7"
-        android:text="Permitir entrada"
+        android:text="Flecha Izq"
         android:textAllCaps="false"
         android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/activateClientStaffBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/readQR" />
+        app:layout_constraintTop_toBottomOf="@+id/searchClient" />
 
     <Button
         android:id="@+id/activateClientStaffBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_width="112dp"
+        android:layout_height="40dp"
         android:backgroundTint="#00B0D7"
-        android:text="Activar cliente"
+        android:text="+"
         android:textAllCaps="false"
         android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="@+id/allowEntry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/allowEntry"
+        app:layout_constraintTop_toTopOf="@+id/allowEntry" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/clientRecylcler"
-        android:layout_width="0dp"
+        android:layout_width="352dp"
         android:layout_height="0dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activateClientStaffBtn"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:layout_constraintVertical_bias="0.0">
 
     </androidx.recyclerview.widget.RecyclerView>

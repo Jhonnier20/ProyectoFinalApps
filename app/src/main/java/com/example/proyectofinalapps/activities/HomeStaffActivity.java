@@ -10,11 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.databinding.ActivityHomeStaffBinding;
+import com.example.proyectofinalapps.fragments.ConfigGymFragment;
 import com.example.proyectofinalapps.fragments.HomeStaffFragment;
 import com.example.proyectofinalapps.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +33,7 @@ public class HomeStaffActivity extends AppCompatActivity implements HomeStaffFra
     private BottomNavigationView navigatorStaff;
 
     private HomeStaffFragment homeStaffFragment;
+    private ConfigGymFragment configGymFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +44,20 @@ public class HomeStaffActivity extends AppCompatActivity implements HomeStaffFra
         navigatorStaff = binding.navigatorStaff;
 
         homeStaffFragment = HomeStaffFragment.newInstance();
+        configGymFragment = ConfigGymFragment.newInstance();
         homeStaffFragment.setOnReadQRListener(this);
 
         showFragment(homeStaffFragment);
+
+        navigatorStaff.setOnItemSelectedListener(menuItem->{
+
+            if(menuItem.getItemId() == R.id.clientsStaffMenu){
+                showFragment(homeStaffFragment);
+            }else if(menuItem.getItemId() == R.id.configStaffMenu){
+                showFragment(configGymFragment);
+            }
+            return true;
+        });
     }
 
     public void showFragment(Fragment fragment) {

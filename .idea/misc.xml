@@ -3,6 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/activity_client.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/activity_gym.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/activity_home_gym.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/activity_home_staff.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/activity_register_gym.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/activity_register_user.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/fragment_client_gym.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/fragment_config.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/fragment_config_gym.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/fragment_home_client.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/layout/fragment_home_staff.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/menu/menuclient.xml" value="0.371875" />
+        <entry key="..\:/Users/R00TKIT/Documents/Apps/Proyecto Final/ProyectoFinalApps/app/src/main/res/menu/staff_menu.xml" value="0.371875" />
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/drawable/edittext_back.xml" value="0.27314814814814814" />
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_client.xml" value="0.23697916666666666" />
         <entry key="..\:/Users/juand/Desktop/Proyecto Apps/ProyectoFinalApps/app/src/main/res/layout/activity_home_client.xml" value="0.33" />

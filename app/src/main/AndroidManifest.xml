@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoFinalApps">
         <activity
+            android:name=".activities.HomeGymActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.RegisterGymActivity"
+            android:exported="true" />
+        <activity
             android:name=".activities.HomeStaffActivity"
             android:exported="true" />
         <activity
