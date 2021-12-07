@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.fragments.ConfigFragment;
 import com.example.proyectofinalapps.fragments.ProfileClientFragment;
@@ -66,7 +64,11 @@ public class HomeClientActivity extends AppCompatActivity {
                     if (menuItem.getItemId() == R.id.configClientMenu){
                         showFragment(configFragment);
                     }else if (menuItem.getItemId() == R.id.homeClientMenu){
+                        //TODO Condicional que me permita saber si ya está registrado en un gimnasio
+                        //Sino está registrado muestre este fragmento
                         showFragment(homeClientFragment);
+
+                        //Si esta registrado que muestre este otro fragmento
                     }else{
                         showFragment(profileClientFragment);
                     }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +30,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailLoginET, passwordLoginET;
     private TextView forgotPassTV;
     private Button loginBtn, goToLoginTV;
-
+    private RadioButton isClient, isGym;
     private String rol;
+    private String rolTmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,30 @@ public class LoginActivity extends AppCompatActivity {
         forgotPassTV = binding.forgotPassTV;
         loginBtn = binding.loginBtn;
         goToLoginTV = binding.goToLoginTV;
+        isClient = binding.isClient;
+        isGym = binding.isGym;
 
         loginBtn.setOnClickListener(this::loginUser);
         goToLoginTV.setOnClickListener(this::changeToRegister);
 
+        isClient.setOnClickListener(this::isClient);
+        isGym.setOnClickListener(this::isGym);
+    }
+
+    private void isClient(View view){
+        boolean checked = isClient.isChecked();
+        if(checked){
+            rolTmp = "Client";
+            isGym.setChecked(false);
+        }
+    }
+
+    private void isGym(View view){
+        boolean checked = isGym.isChecked();
+        if(checked){
+            rolTmp = "Gym";
+            isClient.setChecked(false);
+        }
     }
 
     private void loginUser(View view) {
@@ -69,13 +91,12 @@ public class LoginActivity extends AppCompatActivity {
                                 document->{
                                     User user = document.toObject(User.class);
                                     saveUser(user);
-                                    if(rol.equals("Client")) {
+                                    if(rolTmp.equals("Client")) {
                                         Intent intent = new Intent(this, HomeClientActivity.class);
                                         intent.putExtra("rol", "Client");
                                         startActivity(intent);
                                         finish();
-
-                                    } else if(rol.equals("Staff")) {
+                                    } else if(rolTmp.equals("Gym")) {
                                         Intent intent = new Intent(this, HomeStaffActivity.class);
                                         intent.putExtra("rol", "Staff");
                                         startActivity(intent);

@@ -1,16 +1,15 @@
 package com.example.proyectofinalapps.fragments;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeClientBinding;
 import com.example.proyectofinalapps.model.Client;
 import com.example.proyectofinalapps.model.User;
@@ -23,7 +22,7 @@ public class HomeClientFragment extends Fragment {
 
     private FragmentHomeClientBinding binding;
     private View view;
-    private ImageView codQrImg;
+    private ImageView codQrImg, goToNotificationsActivity;
 
     private Client client;
     private User user;
@@ -46,8 +45,11 @@ public class HomeClientFragment extends Fragment {
         view = binding.getRoot();
 
         codQrImg = binding.codQrImg;
+        goToNotificationsActivity = binding.goToNotificationsActivity;
 
         generateQR();
+
+        goToNotificationsActivity.setOnClickListener(this::goToNotificationsActivity);
 
         return view;
     }
@@ -80,5 +82,10 @@ public class HomeClientFragment extends Fragment {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    private void goToNotificationsActivity(View view){
+        Intent intent = new Intent(getActivity(), ClientNotificationsActivity.class);
+        getActivity().startActivity(intent);
     }
 }

@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/cairo_bold"
         android:text="@string/login_tv"
         android:textSize="30dp"
@@ -76,13 +76,13 @@
         style="@style/ForgotPassMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/cairo_regular"
         android:text="¿Olvidaste tu contraseña?"
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordLoginET" />
+        app:layout_constraintTop_toBottomOf="@+id/isClient" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -113,5 +113,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioButton
+        android:id="@+id/isClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:text="Client"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLoginET" />
+
+    <RadioButton
+        android:id="@+id/isGym"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Gym"
+        app:layout_constraintStart_toEndOf="@+id/isClient"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLoginET" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

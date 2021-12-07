@@ -60,6 +60,7 @@ public class ConfigGymFragment extends Fragment {
 
     protected void goToPrivacyPolicy(View view){
         Intent intent = new Intent(getActivity(), PrivacyPolicyActivity.class);
+        intent.putExtra("origen","gym");
         getActivity().startActivity(intent);
     }
 

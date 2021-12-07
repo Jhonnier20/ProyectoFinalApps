@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
+import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.adapters.StaffAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 
@@ -24,6 +27,7 @@ public class HomeStaffFragment extends Fragment {
     private StaffAdapter adapter;
     private LinearLayoutManager manager;
     private OnReadQRListener onReadQRListener;
+    private ImageView notifications;
 
     public HomeStaffFragment() {
         // Required empty public constructor
@@ -49,15 +53,17 @@ public class HomeStaffFragment extends Fragment {
         clientRecylcler.setHasFixedSize(true);
         activateClientStaffBtn = binding.activateClientStaffBtn;
         allowEntry = binding.allowEntry;
+        notifications = binding.notifications;
         searchClient = binding.searchClient;
         activateClientStaffBtn.setOnClickListener(this::activateClient);
         allowEntry.setOnClickListener(this::allowEntry);
+        notifications.setOnClickListener(this::goToNotifications);
         return view;
     }
 
     private void activateClient(View view) {
         Intent intent = new Intent(getActivity(), ActivateClient_AllowEntry.class);
-
+//TODO
         //No se como pasarle el titulo  a ActivateClient_AllowEntry
         //Me parece que es con put extra pero no recuerdo como ponerselo a un string allá
         intent.putExtra("title", "ACTIVAR");
@@ -66,10 +72,15 @@ public class HomeStaffFragment extends Fragment {
 
     private void allowEntry(View view){
         Intent intent = new Intent(getActivity(), ActivateClient_AllowEntry.class);
-
+//TODO
         //No se como pasarle el titulo  a ActivateClient_AllowEntry
         //Me parece que es con put extra pero no recuerdo como ponerselo a un string allá
         intent.putExtra("title", "PERMITIR");
+        getActivity().startActivity(intent);
+    }
+
+    private void goToNotifications(View view){
+        Intent intent = new Intent(getActivity(), Notifications.class);
         getActivity().startActivity(intent);
     }
 

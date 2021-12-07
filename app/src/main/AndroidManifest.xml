@@ -14,6 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoFinalApps">
         <activity
+            android:name=".activities.ClientNotificationsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.ClientQRCodeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activities.customerDetails"
+            android:exported="true" />
+        <activity
+            android:name=".activities.Notifications"
+            android:exported="true" />
+        <activity
             android:name=".activities.ActivateClient_AllowEntry"
             android:exported="true" />
         <activity

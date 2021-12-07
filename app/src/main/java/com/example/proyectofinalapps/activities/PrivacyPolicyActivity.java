@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import com.example.proyectofinalapps.databinding.ActivityPrivacyPolicyBinding;
+import com.example.proyectofinalapps.fragments.ConfigFragment;
 import com.example.proyectofinalapps.fragments.ConfigGymFragment;
 
 public class PrivacyPolicyActivity extends AppCompatActivity {
@@ -25,7 +26,19 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
     }
 
     private void goToConfig(View view){
-        Intent intent = new Intent(this, HomeStaffActivity.class);
-        startActivity(intent);
+        //TODO Recibe los extras y sabe de donde vino, toca hacer un if para saber a cual va a regresar
+
+        String origin = "gym";//TODO este string debe coger el getExtras
+
+        String rol = getIntent().getExtras().getString("origen");
+
+
+        if(origin.equals("gym")){
+            Intent intent = new Intent(this, ConfigGymFragment.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, ConfigFragment.class);
+            startActivity(intent);
+        }
     }
 }
