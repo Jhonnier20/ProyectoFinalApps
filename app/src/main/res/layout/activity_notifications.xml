@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_app_back">
 
+    <ImageButton
+        android:id="@+id/closeNotifications"
+        android:layout_width="42dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_left" />
+
     <Button
         android:id="@+id/deleteNotifications"
         android:layout_width="0dp"

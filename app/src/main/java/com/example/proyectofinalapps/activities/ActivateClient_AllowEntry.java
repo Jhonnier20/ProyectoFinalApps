@@ -63,9 +63,5 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
 
     protected void goToClients(View view){
         finish();
-        /**
-        Intent intent = new Intent(this, HomeStaffActivity.class);
-        startActivity(intent);
-         */
     }
 }
