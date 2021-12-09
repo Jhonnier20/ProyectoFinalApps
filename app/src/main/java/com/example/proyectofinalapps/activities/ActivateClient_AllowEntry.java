@@ -53,6 +53,8 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
     protected void allowEntry(View view){
         //TODO Aceptar entrada
         //Supongo que se modificará algo en la base de datos
+        //Y despues termina esta actividad
+        finish();
     }
 
     protected void scanQR(View view){
@@ -60,7 +62,10 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
     }
 
     protected void goToClients(View view){
+        finish();
+        /**
         Intent intent = new Intent(this, HomeStaffActivity.class);
         startActivity(intent);
+         */
     }
 }
