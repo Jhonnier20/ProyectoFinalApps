@@ -26,7 +26,6 @@ public class HomeClientActivity extends AppCompatActivity {
     private ConfigFragment configFragment;
     private ProfileClientFragment profileClientFragment;
 
-    private Client client;
     private User user;
 
 
@@ -36,7 +35,6 @@ public class HomeClientActivity extends AppCompatActivity {
         binding = ActivityHomeClientBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        client = (Client) getIntent().getExtras().get("client");
         navigatorClient = binding.navigatorClient;
 
         //Load User from SP
@@ -53,8 +51,7 @@ public class HomeClientActivity extends AppCompatActivity {
         homeClientFragment = HomeClientFragment.newInstance();
         configFragment = ConfigFragment.newInstance();
         profileClientFragment = ProfileClientFragment.newInstance();
-
-        homeClientFragment.setClient(client);
+        
         homeClientFragment.setUser(user);
 
         showFragment(homeClientFragment);

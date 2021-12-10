@@ -10,16 +10,29 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityLoginBinding;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FacebookAuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,9 +43,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailLoginET, passwordLoginET;
     private TextView forgotPassTV;
     private Button loginBtn, goToLoginTV;
+    private LoginButton loginFaceBtn;
     private RadioButton isClient, isGym;
     private String rol;
     private String rolTmp;
+
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +62,85 @@ public class LoginActivity extends AppCompatActivity {
         passwordLoginET = binding.passwordLoginET;
         forgotPassTV = binding.forgotPassTV;
         loginBtn = binding.loginBtn;
+        loginFaceBtn = binding.loginFaceBtn;
         goToLoginTV = binding.goToLoginTV;
         isClient = binding.isClient;
         isGym = binding.isGym;
+
+        callbackManager = CallbackManager.Factory.create();
+
+        loginFaceBtn.setOnClickListener(this::loginFacebook);
 
         loginBtn.setOnClickListener(this::loginUser);
         goToLoginTV.setOnClickListener(this::changeToRegister);
 
         isClient.setOnClickListener(this::isClient);
         isGym.setOnClickListener(this::isGym);
+    }
+
+    private void loginFacebook(View view) {
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(@NonNull FacebookException e) {
+
+            }
+        });
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+        .addOnCompleteListener(
+                task -> {
+                    if(rolTmp == null || rolTmp.equals("")) {
+                        Toast.makeText(this, "Seleccione un rol existente", Toast.LENGTH_LONG).show();
+                    }
+                    else if(rolTmp.equals("Client")) {
+                        addClientFirebase();
+                        Intent intentClient = new Intent(this, HomeClientActivity.class);
+                        startActivity(intentClient);
+                    } else if(rolTmp.equals("Gym")) {
+                        addStaffFirebase();
+                        Intent intentStaff = new Intent(this, HomeStaffActivity.class);
+                        startActivity(intentStaff);
+                    }
+                }
+        ).addOnFailureListener(
+                error -> {
+                    Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+        );
+    }
+
+    private void addStaffFirebase() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        User user = new User();
+        user.setUid(firebaseUser.getUid());
+        user.setName(firebaseUser.getDisplayName());
+        user.setEmail(firebaseUser.getEmail());
+
+        FirebaseFirestore.getInstance().collection("Staff").document(user.getUid()).set(user);
+    }
+
+    private void addClientFirebase() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        User user = new User();
+        user.setUid(firebaseUser.getUid());
+        user.setName(firebaseUser.getDisplayName());
+        user.setEmail(firebaseUser.getEmail());
+
+        FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user);
     }
 
     private void isClient(View view){
@@ -130,11 +216,11 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-
-
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void validate(View view) {
         boolean result[] = {validateEmail(), validatePassword()};

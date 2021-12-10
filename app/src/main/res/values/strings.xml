@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">ProyectoFinalApps</string>
+    <string name="facebook_app_id">649013113120360</string>
+    <string name="fb_login_protocol_scheme">fb649013113120360</string>
+
+
 
     <!-- activity-main -->
     <string name="welcome_main">BIENVENIDO</string>
