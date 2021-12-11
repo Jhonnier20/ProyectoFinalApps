@@ -3,15 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/profileClientMenu"
-        android:icon="@drawable/baseline_person_black_24dp"
-        android:title="@string/profile_menu" />
-    <item
         android:id="@+id/homeClientMenu"
-        android:icon="@drawable/baseline_home_black_24dp"
+        android:icon="@drawable/home"
         android:title="@string/home_menu" />
     <item
+        android:id="@+id/profileClientMenu"
+        android:icon="@drawable/profile"
+        android:title="@string/profile_menu" />
+    <item
         android:id="@+id/configClientMenu"
-        android:icon="@drawable/baseline_settings_black_24dp"
+        android:enabled="true"
+        android:icon="@drawable/config"
         android:title="@string/config_menu" />
 </menu>

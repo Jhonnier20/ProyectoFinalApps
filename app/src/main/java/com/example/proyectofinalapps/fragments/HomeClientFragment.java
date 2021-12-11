@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeClientBinding;
@@ -23,6 +24,7 @@ public class HomeClientFragment extends Fragment {
 
     private FragmentHomeClientBinding binding;
     private View view;
+    private TextView welcomeTv;
     private ImageView codQrImg, goToNotificationsActivity;
 
     private Person person;
@@ -46,6 +48,7 @@ public class HomeClientFragment extends Fragment {
 
         codQrImg = binding.codQrImg;
         goToNotificationsActivity = binding.goToNotificationsActivity;
+        welcomeTv = binding.welcomeTv;
 
         generateQR();
 

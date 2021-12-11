@@ -57,28 +57,23 @@ public class HomeClientActivity extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnCompleteListener(
                 task -> {
                     homeClientFragment.setPerson(task.getResult().toObject(Person.class));
+                    showFragment(homeClientFragment);
                 }
         );
 
-        showFragment(homeClientFragment);
-
-        navigatorClient.setOnItemSelectedListener(
-                menuItem -> {
-                    if (menuItem.getItemId() == R.id.configClientMenu){
-                        showFragment(configFragment);
-                    }else if (menuItem.getItemId() == R.id.homeClientMenu){
-                        //TODO Condicional que me permita saber si ya está registrado en un gimnasio
-                        //Sino está registrado muestre este fragmento
-                        showFragment(homeClientFragment);
-
-                        //Si esta registrado que muestre este otro fragmento
-                    }else{
-                        showFragment(profileClientFragment);
-                    }
-                    return true;
-                }
-        );
-
+        navigatorClient.setOnItemSelectedListener(menuItem -> {
+            if (menuItem.getItemId()== R.id.homeClientMenu) {
+                //condicional que me permita saber si ya está registrado en un gimnasio
+                showFragment(homeClientFragment);
+            }
+            if (menuItem.getItemId()== R.id.configClientMenu) {
+                showFragment(configFragment);
+            }
+            if (menuItem.getItemId()== R.id.profileClientMenu) {
+                showFragment(profileClientFragment);
+            }
+            return true;
+        });
     }
 
     private User loadUser() {
