@@ -62,6 +62,7 @@ public class HomeClientFragment extends Fragment {
                     Person p = task.toObject(Person.class);
                     if(p.getIsActive().equals("Y")) {
                         listener.onIsActiveClient();
+                        //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
                     }
                 }
         );

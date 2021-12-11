@@ -10,19 +10,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.databinding.FragmentProfileClientBinding;
+import com.example.proyectofinalapps.model.Person;
+import com.example.proyectofinalapps.model.Subscription;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileClientFragment extends Fragment {
 
     private ImageView imageClient2;
     private TextView clientName2, emailClient2, ageClient2, gymClient2, accountStatusClient2,
-            membershipClient2, dateClient2;
-    private Button but2;
+            membershipClient2, dateClient2, activeTV;
     private View view;
 
     private FragmentProfileClientBinding binding;
 
+    private Person person;
+    private Subscription subscription;
+
     public ProfileClientFragment() {
         // Required empty public constructor
+        subscription = new Subscription();
+        person = new Person();
     }
 
     public static ProfileClientFragment newInstance() {
@@ -46,18 +54,38 @@ public class ProfileClientFragment extends Fragment {
         accountStatusClient2 = binding.accountStatusClient2;
         membershipClient2 = binding.membershipClient2;
         dateClient2 = binding.dateClient2;
-        but2 = binding.but2;
+        activeTV = binding.activeTV;
+
+        FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).collection("Subscription").document(subscription.getId()).addSnapshotListener(
+                (value, error) -> {
+                    subscription = value.toObject(Subscription.class);
+                }
+        );
+
+        accountStatusClient2.setText(subscription.getState());
+        membershipClient2.setText(subscription.getMembership());
+        if(subscription.isActive()) {
+            activeTV.setText("Subscripcion activa");
+        } else {
+            activeTV.setText("Subscripcion inactiva");
+        }
 
         return view;
     }
 
-    private void modifySubscriptionStatus(Boolean status){
-        if(status){
-            //La subscripcion esta activa
-            but2.setText("Subscripción activa");
-        }else{
-            //La subscripcion esta inactiva
-            but2.setText("Subscripción inactiva");
-        }
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
     }
 }

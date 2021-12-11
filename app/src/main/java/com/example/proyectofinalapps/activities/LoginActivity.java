@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
 import com.example.proyectofinalapps.model.Person;
+import com.example.proyectofinalapps.model.Subscription;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityLoginBinding;
 import com.facebook.AccessToken;
@@ -34,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -211,8 +214,7 @@ public class LoginActivity extends AppCompatActivity {
         person.setRol(user.getRol());
         person.setIsActive("N");
 
-        FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
-        FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person);
+       validateExistUser(person, user);
     }
 
     private void addClientFirebase() {
@@ -226,8 +228,40 @@ public class LoginActivity extends AppCompatActivity {
         person.setRol(user.getRol());
         person.setIsActive("N");
 
-        FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
-        FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person);
+        validateExistUser(person, user);
+
+    }
+
+    private void validateExistUser(Person person, User user) {
+        switch (user.getRol()) {
+            case "Client":
+                FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnFailureListener(
+                        e -> {
+                            FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
+                            FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person);
+                            Subscription subscription = new Subscription(
+                                    UUID.randomUUID().toString(),
+                                    false,
+                                    0,
+                                    0,
+                                    "Sin pago",
+                                    "Ninguna"
+                            );
+                            FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).collection("Subscription")
+                                    .document(subscription.getId()).set(subscription);
+                        }
+                );
+
+                break;
+
+            case "Staff":
+                FirebaseFirestore.getInstance().collection("Staff").document(user.getId()).get().addOnFailureListener(
+                        e -> {
+                            FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
+                            FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person);
+                        }
+                );
+        }
     }
 
     @Override

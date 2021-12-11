@@ -11,9 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
 import com.example.proyectofinalapps.model.Person;
+import com.example.proyectofinalapps.model.Subscription;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityRegisterUserBinding;
 
+import java.util.Date;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,6 +72,14 @@ public class RegisterUserActivity extends AppCompatActivity {
 
                         User user = new User(fbUser.getUid(), rol);
                         Person person = new Person(fbUser.getUid(), name, email, id, rol, "N");
+                        Subscription subscription = new Subscription(
+                                UUID.randomUUID().toString(),
+                                false,
+                                new Date().getTime(),
+                                new Date().getTime(),
+                                "Sin pago",
+                                "Ninguna"
+                        );
 
                         FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user).addOnSuccessListener(
                                 firetask -> {
@@ -76,6 +87,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                                     if (user.getRol().equals("Client")) {
                                         FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person).addOnSuccessListener(
                                                 task2 -> {
+                                                    FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).collection("Subscription")
+                                                            .document(subscription.getId()).set(subscription);
                                                     Intent intent = new Intent(this, HomeClientActivity.class);
                                                     startActivity(intent);
                                                     finish();

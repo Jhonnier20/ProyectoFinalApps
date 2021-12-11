@@ -13,11 +13,13 @@ import com.example.proyectofinalapps.fragments.ConfigFragment;
 import com.example.proyectofinalapps.fragments.FragmentHomeRegisteredUser;
 import com.example.proyectofinalapps.fragments.ProfileClientFragment;
 import com.example.proyectofinalapps.model.Person;
+import com.example.proyectofinalapps.model.Subscription;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityHomeClientBinding;
 import com.example.proyectofinalapps.fragments.HomeClientFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
@@ -32,6 +34,7 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
     private FragmentHomeRegisteredUser homeRegisteredUserFragment;
 
     private User user;
+    private Person client;
 
 
     @Override
@@ -60,9 +63,13 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
 
         FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnSuccessListener(
                 task -> {
-                    Person p = task.toObject(Person.class);
-                    homeClientFragment.setPerson(p);
-                    showFragment(homeClientFragment);
+                    client = task.toObject(Person.class);
+                    if(client.getIsActive().equals("Y")) {
+                        showFragment(homeRegisteredUserFragment);
+                    } else if(client.getIsActive().equals("N")) {
+                        homeClientFragment.setPerson(client);
+                        showFragment(homeClientFragment);
+                    }
                 }
         );
 
@@ -73,11 +80,27 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
                     }else if (menuItem.getItemId() == R.id.homeClientMenu){
                         //TODO Condicional que me permita saber si ya está registrado en un gimnasio
                         //Sino está registrado muestre este fragmento
-                        showFragment(homeClientFragment);
+                        if(client.getIsActive().equals("Y")) {
+                            showFragment(homeRegisteredUserFragment);
+                        } else if(client.getIsActive().equals("N")) {
+                            showFragment(homeClientFragment);
+                        }
 
                         //Si esta registrado que muestre este otro fragmento
                     }else if(menuItem.getItemId() == R.id.profileClientMenu){
-                        showFragment(profileClientFragment);
+                        profileClientFragment.setPerson(client);
+                        FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription")
+                                .get().addOnSuccessListener(
+                                        task -> {
+                                            Subscription subscription = null;
+                                            for(DocumentSnapshot doc: task.getDocuments()) {
+                                                subscription = doc.toObject(Subscription.class);
+                                                break;
+                                            }
+                                            profileClientFragment.setSubscription(subscription);
+                                            showFragment(profileClientFragment);
+                                        }
+                                );
                     }
                     return true;
                 }
