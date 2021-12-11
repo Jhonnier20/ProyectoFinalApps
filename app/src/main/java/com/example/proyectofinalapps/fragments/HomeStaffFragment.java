@@ -71,18 +71,12 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
 
     private void activateClient(View view) {
         Intent intent = new Intent(getActivity(), ActivateClient_AllowEntry.class);
-//TODO
-        //No se como pasarle el titulo  a ActivateClient_AllowEntry
-        //Me parece que es con put extra pero no recuerdo como ponerselo a un string allá
         intent.putExtra("title", "ACTIVAR");
         getActivity().startActivity(intent);
     }
 
     private void allowEntry(View view){
         Intent intent = new Intent(getActivity(), ActivateClient_AllowEntry.class);
-//TODO
-        //No se como pasarle el titulo  a ActivateClient_AllowEntry
-        //Me parece que es con put extra pero no recuerdo como ponerselo a un string allá
         intent.putExtra("title", "PERMITIR");
         getActivity().startActivity(intent);
     }
