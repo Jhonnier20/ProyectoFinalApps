@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.databinding.ActivityHomeAdminBinding;
 import com.example.proyectofinalapps.fragments.ConfAdminFragment;
 import com.example.proyectofinalapps.fragments.HomeAdminFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -17,14 +18,19 @@ public class HomeAdminActivity extends AppCompatActivity {
     private ConfAdminFragment confAdminFragment;
     private HomeAdminFragment homeAdminFragment;
     private BottomNavigationView adminNavigator;
+    private ActivityHomeAdminBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        binding = ActivityHomeAdminBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        adminNavigator = binding.adminNavigator;
+
         confAdminFragment = ConfAdminFragment.newInstance();
         homeAdminFragment = HomeAdminFragment.newInstance();
-        adminNavigator = findViewById(R.id.adminNavigator);
 
         showFragment(homeAdminFragment);
 

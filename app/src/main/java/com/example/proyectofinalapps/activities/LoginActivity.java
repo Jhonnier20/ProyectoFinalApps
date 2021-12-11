@@ -115,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                         if(user.getRol().equals("Admin")){
                                             Intent intent = new Intent(this, HomeAdminActivity.class);
-                                            intent.putExtra("rol", "Staff");
                                             startActivity(intent);
                                             finish();
                                         }
