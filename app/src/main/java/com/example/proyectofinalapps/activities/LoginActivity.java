@@ -6,19 +6,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
-
+import com.example.proyectofinalapps.databinding.ActivityLoginBinding;
 import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.Subscription;
 import com.example.proyectofinalapps.model.User;
-import com.example.proyectofinalapps.databinding.ActivityLoginBinding;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -27,18 +24,13 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
-
 import java.util.Arrays;
-import java.util.Date;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -119,10 +111,10 @@ public class LoginActivity extends AppCompatActivity {
                                     document -> {
                                         User user = document.toObject(User.class);
                                         saveUser(user);
-                                        Log.e(">>>", ">>>>>"+ user.getRol());
+                                        Log.e(">>>", user.getRol());
 
                                         if(user.getRol().equals("Admin")){
-                                            Intent intent = new Intent(this, HomeGymActivity.class);
+                                            Intent intent = new Intent(this, HomeAdminActivity.class);
                                             intent.putExtra("rol", "Staff");
                                             startActivity(intent);
                                             finish();
@@ -291,5 +283,4 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
-
 }
