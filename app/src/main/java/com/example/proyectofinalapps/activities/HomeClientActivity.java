@@ -6,8 +6,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.fragments.ConfigFragment;
+import com.example.proyectofinalapps.fragments.FragmentHomeRegisteredUser;
 import com.example.proyectofinalapps.fragments.ProfileClientFragment;
 import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
@@ -18,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
-public class HomeClientActivity extends AppCompatActivity {
+public class HomeClientActivity extends AppCompatActivity implements HomeClientFragment.OnIsActiveClientListener {
 
     private ActivityHomeClientBinding binding;
     private BottomNavigationView navigatorClient;
@@ -26,6 +29,7 @@ public class HomeClientActivity extends AppCompatActivity {
     private HomeClientFragment homeClientFragment;
     private ConfigFragment configFragment;
     private ProfileClientFragment profileClientFragment;
+    private FragmentHomeRegisteredUser homeRegisteredUserFragment;
 
     private User user;
 
@@ -48,18 +52,20 @@ public class HomeClientActivity extends AppCompatActivity {
             this.user = loadedUser;
         }
 
-
         homeClientFragment = HomeClientFragment.newInstance();
         configFragment = ConfigFragment.newInstance();
         profileClientFragment = ProfileClientFragment.newInstance();
+        homeRegisteredUserFragment = FragmentHomeRegisteredUser.newInstance();
+        homeClientFragment.setListener(this);
 
-        FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnCompleteListener(
+        FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnSuccessListener(
                 task -> {
-                    homeClientFragment.setPerson(task.getResult().toObject(Person.class));
+                    Person p = task.toObject(Person.class);
+                    homeClientFragment.setPerson(p);
+                    Log.e(">>>", p.getId());
+                    showFragment(homeClientFragment);
                 }
         );
-
-        showFragment(homeClientFragment);
 
         navigatorClient.setOnItemSelectedListener(
                 menuItem -> {
@@ -94,5 +100,10 @@ public class HomeClientActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentClientContainer, fragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onIsActiveClient() {
+        showFragment(homeRegisteredUserFragment);
     }
 }

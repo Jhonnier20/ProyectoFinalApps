@@ -7,12 +7,12 @@ public class Person {
     private String email;
     private String identification;
     private String rol;
-    private boolean isActive;
+    private String isActive;
 
     public Person() {
     }
 
-    public Person(String id, String fullName, String email, String identification, String rol, boolean isActive) {
+    public Person(String id, String fullName, String email, String identification, String rol, String isActive) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -61,11 +61,11 @@ public class Person {
         this.rol = rol;
     }
 
-    public boolean isActive() {
+    public String getIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 }

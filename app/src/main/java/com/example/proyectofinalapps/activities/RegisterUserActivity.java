@@ -2,6 +2,7 @@ package com.example.proyectofinalapps.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,12 +62,13 @@ public class RegisterUserActivity extends AppCompatActivity {
                     pass1
             ).addOnSuccessListener(
                     task -> {
+                        Log.e(">>>", "Datos correctos");
                         //2. registar al user en la base de datos
                         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
                         String uid = fbUser.getUid();
 
                         User user = new User(fbUser.getUid(), rol);
-                        Person person = new Person(fbUser.getUid(), name, email, id, rol, false);
+                        Person person = new Person(fbUser.getUid(), name, email, id, rol, "N");
 
                         FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user).addOnSuccessListener(
                                 firetask -> {

@@ -16,8 +16,9 @@ import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
 import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.adapters.StaffAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
+import com.example.proyectofinalapps.model.Person;
 
-public class HomeStaffFragment extends Fragment {
+public class HomeStaffFragment extends Fragment implements ActivateClient_AllowEntry.OnActivedClient {
 
     private FragmentHomeStaffBinding binding;
     private EditText searchClient;
@@ -86,6 +87,11 @@ public class HomeStaffFragment extends Fragment {
 
     public void setOnReadQRListener(OnReadQRListener onReadQRListener) {
         this.onReadQRListener = onReadQRListener;
+    }
+
+    @Override
+    public void onActivedClient(Person client) {
+        adapter.addClient(client);
     }
 
     public interface OnReadQRListener {

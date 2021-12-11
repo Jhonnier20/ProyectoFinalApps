@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.viewholders.StaffViewHolder;
 
@@ -15,10 +16,10 @@ import java.util.ArrayList;
 
 public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
 
-    private ArrayList<User> users;
+    private ArrayList<Person> clients;
 
     public StaffAdapter() {
-        users = new ArrayList<>();
+        clients = new ArrayList<>();
     }
 
     @NonNull
@@ -32,17 +33,16 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
-        User user = users.get(position);
-        //holder.getNameuserrow().setText(user.getName());
+        Person client = clients.get(position);
+        holder.getNameuserrow().setText(client.getFullName());
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return clients.size();
     }
 
-    public void addUser(User user) {
-        users.add(user);
-
+    public void addClient(Person client) {
+        clients.add(client);
     }
 }

@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeClientBinding;
 import com.example.proyectofinalapps.model.Person;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -25,8 +29,11 @@ public class HomeClientFragment extends Fragment {
 
     private Person person;
 
+    private OnIsActiveClientListener listener;
+
     public HomeClientFragment() {
         // Required empty public constructor
+        person = new Person();
     }
 
     public static HomeClientFragment newInstance() {
@@ -48,6 +55,15 @@ public class HomeClientFragment extends Fragment {
         generateQR();
 
         goToNotificationsActivity.setOnClickListener(this::goToNotificationsActivity);
+
+        FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).addSnapshotListener(
+                (task, error) -> {
+                    Person p = task.toObject(Person.class);
+                    if(p.getIsActive().equals("Y")) {
+                        listener.onIsActiveClient();
+                    }
+                }
+        );
 
         return view;
     }
@@ -77,5 +93,18 @@ public class HomeClientFragment extends Fragment {
     private void goToNotificationsActivity(View view){
         Intent intent = new Intent(getActivity(), ClientNotificationsActivity.class);
         getActivity().startActivity(intent);
+    }
+
+
+    public OnIsActiveClientListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnIsActiveClientListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnIsActiveClientListener {
+        void onIsActiveClient();
     }
 }

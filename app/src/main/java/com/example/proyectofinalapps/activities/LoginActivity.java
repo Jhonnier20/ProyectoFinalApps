@@ -209,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
         person.setFullName(firebaseUser.getDisplayName());
         person.setEmail(firebaseUser.getEmail());
         person.setRol(user.getRol());
-        person.setActive(false);
+        person.setIsActive("N");
 
         FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
         FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person);
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity {
         person.setFullName(firebaseUser.getDisplayName());
         person.setEmail(firebaseUser.getEmail());
         person.setRol(user.getRol());
-        person.setActive(false);
+        person.setIsActive("N");
 
         FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
         FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person);
@@ -240,7 +240,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = binding.emailLoginET.getText().toString();
         if(email.isEmpty()) {
             emailLoginET.setError("Por favor ingrese un email");
-        } else if(PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
+        } else if(!PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()) {
             emailLoginET.setError("Por favor ingrese un email valido");
         } else {
             emailLoginET.setError(null);
