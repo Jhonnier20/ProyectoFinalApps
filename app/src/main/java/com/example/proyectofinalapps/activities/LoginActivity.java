@@ -123,13 +123,13 @@ public class LoginActivity extends AppCompatActivity {
                                             Intent intent = new Intent(this, HomeGymActivity.class);
                                             intent.putExtra("rol", "Staff");
                                             startActivity(intent);
-                                            //finish();
+                                            finish();
                                         }
                                         if(user.getRol().equals("Staff")){
                                             Intent intent = new Intent(this, HomeStaffActivity.class);
                                             intent.putExtra("rol", "Staff");
                                             startActivity(intent);
-                                            //finish();
+                                            finish();
                                         }
                                     }
                             );

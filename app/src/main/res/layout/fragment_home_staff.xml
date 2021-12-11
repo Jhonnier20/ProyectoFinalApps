@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/edittext_back"
         android:ems="10"
@@ -52,24 +52,24 @@
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Permitir entrada"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/allowEntry"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toStartOf="@+id/allowEntry"
         app:layout_constraintTop_toBottomOf="@+id/allowEntry" />
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Activar Cliente"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -85,7 +85,7 @@
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/campana" />
+        app:srcCompat="@drawable/campanita" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -101,29 +101,34 @@
 
     <Button
         android:id="@+id/allowEntry"
-        android:layout_width="104dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="#00B0D7"
-        android:text="Flecha Izq"
+        android:paddingLeft="70dp"
         android:textAllCaps="false"
         android:textSize="16dp"
+        app:icon="@drawable/flecha_out"
+        app:iconPadding="10dp"
         app:layout_constraintEnd_toStartOf="@+id/activateClientStaffBtn"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchClient" />
 
     <Button
         android:id="@+id/activateClientStaffBtn"
-        android:layout_width="112dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="30dp"
         android:backgroundTint="#00B0D7"
+        android:fontFamily="@font/cairo_regular"
+        android:paddingTop="0dp"
         android:text="+"
         android:textAllCaps="false"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/allowEntry"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/allowEntry"
         app:layout_constraintTop_toTopOf="@+id/allowEntry" />
 

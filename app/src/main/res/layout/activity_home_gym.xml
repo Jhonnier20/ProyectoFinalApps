@@ -6,4 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activities.HomeGymActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigatorStaff"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="@drawable/menu_bottom"
+        app:itemIconSize="20dp"
+        app:itemIconTint="@color/buttons_color"
+        app:itemTextAppearanceActive="@style/activos"
+        app:itemTextAppearanceInactive="@style/desactivos"
+        app:itemTextColor="@color/grei"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/staff_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
