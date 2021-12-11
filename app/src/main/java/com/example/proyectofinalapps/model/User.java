@@ -1,28 +1,20 @@
 package com.example.proyectofinalapps.model;
 
-public class User {
+import androidx.annotation.NonNull;
 
-    private String name;
+import java.io.Serializable;
+
+public class User implements Serializable {
+
     private String id;
-    private String email;
-    private String uid;
+    private String rol;
 
     public User() {
     }
 
-    public User(String name, String id, String email, String uid) {
-        this.name = name;
+    public User(String id, String rol) {
         this.id = id;
-        this.email = email;
-        this.uid = uid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.rol = rol;
     }
 
     public String getId() {
@@ -33,19 +25,11 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getRol() {
+        return rol;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }

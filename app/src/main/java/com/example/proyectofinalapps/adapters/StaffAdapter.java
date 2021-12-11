@@ -33,7 +33,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
         User user = users.get(position);
-        holder.getNameuserrow().setText(user.getName());
+        //holder.getNameuserrow().setText(user.getName());
     }
 
     @Override

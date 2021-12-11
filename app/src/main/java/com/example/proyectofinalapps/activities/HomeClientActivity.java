@@ -9,12 +9,14 @@ import android.os.Bundle;
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.fragments.ConfigFragment;
 import com.example.proyectofinalapps.fragments.ProfileClientFragment;
+import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityHomeClientBinding;
 import com.example.proyectofinalapps.fragments.HomeClientFragment;
 import com.example.proyectofinalapps.model.Client;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 public class HomeClientActivity extends AppCompatActivity {
@@ -51,8 +53,12 @@ public class HomeClientActivity extends AppCompatActivity {
         homeClientFragment = HomeClientFragment.newInstance();
         configFragment = ConfigFragment.newInstance();
         profileClientFragment = ProfileClientFragment.newInstance();
-        
-        homeClientFragment.setUser(user);
+
+        FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnCompleteListener(
+                task -> {
+                    homeClientFragment.setPerson(task.getResult().toObject(Person.class));
+                }
+        );
 
         showFragment(homeClientFragment);
 

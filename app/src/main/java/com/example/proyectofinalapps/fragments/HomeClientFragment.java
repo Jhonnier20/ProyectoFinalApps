@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeClientBinding;
 import com.example.proyectofinalapps.model.Client;
+import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
@@ -24,8 +25,7 @@ public class HomeClientFragment extends Fragment {
     private View view;
     private ImageView codQrImg, goToNotificationsActivity;
 
-    private Client client;
-    private User user;
+    private Person person;
 
     public HomeClientFragment() {
         // Required empty public constructor
@@ -58,7 +58,7 @@ public class HomeClientFragment extends Fragment {
         try {
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Gson gson = new Gson();
-            String json = gson.toJson(user);
+            String json = gson.toJson(person);
             Bitmap bitmap = barcodeEncoder.encodeBitmap(json, BarcodeFormat.QR_CODE, 750, 750);
 
             codQrImg.setImageBitmap(bitmap);
@@ -68,20 +68,12 @@ public class HomeClientFragment extends Fragment {
         }
     }
 
-    public Client getClient() {
-        return client;
+    public Person getPerson() {
+        return person;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     private void goToNotificationsActivity(View view){

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
+import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityLoginBinding;
 import com.facebook.AccessToken;
@@ -79,23 +80,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginFacebook(View view) {
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
+        if(rolTmp == null || rolTmp.equals("")) {
+            Toast.makeText(this, "Seleccione un rol existente", Toast.LENGTH_LONG).show();
+        } else {
 
-            @Override
-            public void onCancel() {
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    handleFacebookAccessToken(loginResult.getAccessToken());
+                }
 
-            }
+                @Override
+                public void onCancel() {
 
-            @Override
-            public void onError(@NonNull FacebookException e) {
+                }
 
-            }
-        });
+                @Override
+                public void onError(@NonNull FacebookException e) {
+
+                }
+            });
+        }
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -103,10 +109,8 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signInWithCredential(credential)
         .addOnCompleteListener(
                 task -> {
-                    if(rolTmp == null || rolTmp.equals("")) {
-                        Toast.makeText(this, "Seleccione un rol existente", Toast.LENGTH_LONG).show();
-                    }
-                    else if(rolTmp.equals("Client")) {
+
+                    if(rolTmp.equals("Client")) {
                         addClientFirebase();
                         Intent intentClient = new Intent(this, HomeClientActivity.class);
                         startActivity(intentClient);
@@ -125,22 +129,32 @@ public class LoginActivity extends AppCompatActivity {
 
     private void addStaffFirebase() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        User user = new User();
-        user.setUid(firebaseUser.getUid());
-        user.setName(firebaseUser.getDisplayName());
-        user.setEmail(firebaseUser.getEmail());
+        User user = new User(firebaseUser.getUid(), "Staff");
+        saveUser(user);
+        Person person = new Person();
+        person.setId(firebaseUser.getUid());
+        person.setFullName(firebaseUser.getDisplayName());
+        person.setEmail(firebaseUser.getEmail());
+        person.setRol(user.getRol());
+        person.setActive(false);
 
-        FirebaseFirestore.getInstance().collection("Staff").document(user.getUid()).set(user);
+        FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
+        FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person);
     }
 
     private void addClientFirebase() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        User user = new User();
-        user.setUid(firebaseUser.getUid());
-        user.setName(firebaseUser.getDisplayName());
-        user.setEmail(firebaseUser.getEmail());
+        User user = new User(firebaseUser.getUid(), "Client");
+        saveUser(user);
+        Person person = new Person();
+        person.setId(firebaseUser.getUid());
+        person.setFullName(firebaseUser.getDisplayName());
+        person.setEmail(firebaseUser.getEmail());
+        person.setRol(user.getRol());
+        person.setActive(false);
 
-        FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user);
+        FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
+        FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person);
     }
 
     private void isClient(View view){
@@ -163,9 +177,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = emailLoginET.getText().toString();
         String pass = passwordLoginET.getText().toString();
 
-        if(email.isEmpty() || pass.isEmpty() ){
-            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
-        }else{
+        if(validateEmail() && validatePassword()) {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(
                     email,
                     pass
@@ -218,14 +230,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void validate(View view) {
-        boolean result[] = {validateEmail(), validatePassword()};
-        if (result[0] && result[1]) {
-            //loginUser();
+        if(rolTmp != null && !rolTmp.equals("")) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -244,23 +251,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validatePassword() {
         String password = passwordLoginET.getText().toString();
-        String regEx = "^(?:(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*)[^\\s]{8,}$";
 
         if(password.isEmpty()) {
             passwordLoginET.setError("Por favor ingrese una contraseña");
             return false;
-        } else {
-            CharSequence inputStr = password;
-
-            Pattern pattern = Pattern.compile(regEx,Pattern.UNICODE_CASE);
-            Matcher matcher = pattern.matcher(inputStr);
-
-            if(matcher.matches()) {
-                return true;
-            } else {
-                return false;
-            }
         }
+        return true;
 
     }
 

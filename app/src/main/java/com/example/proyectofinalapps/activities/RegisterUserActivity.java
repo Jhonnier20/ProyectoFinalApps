@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
+
+import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityRegisterUserBinding;
 import com.example.proyectofinalapps.model.Client;
@@ -55,55 +57,51 @@ public class RegisterUserActivity extends AppCompatActivity {
         String id = idRegisterET.getText().toString();
         String email = mailRegisterET.getText().toString();
         String pass1 = passwordRegisterET.getText().toString();
-        String pass2 = password2RegisterET.getText().toString();
 
-        if(name.isEmpty() || id.isEmpty() || email.isEmpty() || pass1.isEmpty() || pass2.isEmpty()){
-            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
-        }else{
-            if(pass1.equals(pass2)){
-                //1. registro en db de auth
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                        email,
-                        pass1
-                ).addOnSuccessListener(
-                        task -> {
-                            //2. registar al user en la base de datos
-                            FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = fbUser.getUid();
+        if(validateEmail() && validateOtherData() == 0) {
+            //1. registro en db de auth
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(
+                    email,
+                    pass1
+            ).addOnSuccessListener(
+                    task -> {
+                        //2. registar al user en la base de datos
+                        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+                        String uid = fbUser.getUid();
 
-                            User user = new User(name, id, email, uid);
+                        User user = new User(fbUser.getUid(), rol);
+                        Person person = new Person(fbUser.getUid(), name, email, id, rol, false);
 
-                            if(rol.equals("Client")) {
+                        FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user).addOnSuccessListener(
+                                firetask -> {
 
-                                FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user).addOnSuccessListener(
-                                        firetask->{
-                                            Intent intent = new Intent(this, HomeClientActivity.class);
-                                            intent.putExtra("rol", "Client");
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                );
+                                    if(user.getRol().equals("Client")) {
+                                        FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person).addOnSuccessListener(
+                                                task2 -> {
+                                                    Intent intent = new Intent(this, HomeClientActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                        );
 
-                            } else if(rol.equals("Staff")) {
+                                    } else if(user.getRol().equals("Staff")) {
+                                        FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person).addOnSuccessListener(
+                                                task3 -> {
+                                                    Intent intent = new Intent(this, HomeStaffActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                        );
+                                    }
+                                }
+                        );
 
-                                FirebaseFirestore.getInstance().collection("Staff").document(user.getUid()).set(user).addOnSuccessListener(
-                                        firetask->{
-                                            Intent intent = new Intent(this, HomeStaffActivity.class);
-                                            intent.putExtra("rol", "Staff");
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                );
-                            }
-                        }
-                ).addOnFailureListener(
-                        error->{
-                            Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                );
-            }else{
-                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
-            }
+                    }
+            ).addOnFailureListener(
+                    error->{
+                        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+            );
         }
     }
 
@@ -121,31 +119,6 @@ public class RegisterUserActivity extends AppCompatActivity {
 
 
 
-
-
-
-    private void validate(View view) {
-        boolean result[] = {validateEmail(), validatePassword()};
-        if (result[0] && result[1] && validateOtherData() == 0) {
-            //next screen
-            if(rol.equals("Client")) {
-                Intent intent = new Intent(this, HomeClientActivity.class);
-                Client client = new Client(
-                        UUID.randomUUID().toString(),
-                        nameRegisterET.getText().toString(),
-                        Integer.parseInt(idRegisterET.getText().toString()),
-                        mailRegisterET.getText().toString(),
-                        passwordRegisterET.getText().toString(),
-                        false
-                );
-                intent.putExtra("client", client);
-                startActivity(intent);
-            } else if(rol.equals("Staff")) {
-                Intent intent1 = new Intent(this, HomeStaffActivity.class);
-                startActivity(intent1);
-            }
-        }
-    }
 
     private boolean validateEmail() {
         String email = binding.mailRegisterET.getText().toString();
@@ -197,9 +170,10 @@ public class RegisterUserActivity extends AppCompatActivity {
                 password2RegisterET.setError("No coínciden las contraseñas");
                 complete++;
             }
+        } else {
+            password2RegisterET.setError("Ingrese una contraseña");
+            complete++;
         }
-
-        Log.e(">>>>>>>",""+rol);
 
         return complete;
     }
