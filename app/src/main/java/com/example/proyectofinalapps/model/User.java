@@ -32,4 +32,5 @@ public class User implements Serializable {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
 }

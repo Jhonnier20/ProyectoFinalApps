@@ -42,11 +42,9 @@ public class RegisterUserActivity extends AppCompatActivity {
         mailRegisterET = binding.mailRegisterET;
         passwordRegisterET = binding.passwordRegisterET;
         password2RegisterET = binding.password2RegisterET;
-
         goToRegisterTV = binding.goToRegisterTV;
         registerBtn = binding.registerBtn;
 
-        rol = getIntent().getExtras().getString("rol");
 
         goToRegisterTV.setOnClickListener(this::changeToLogin);
         registerBtn.setOnClickListener(this::registerUser);
@@ -75,7 +73,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user).addOnSuccessListener(
                                 firetask -> {
 
-                                    if(user.getRol().equals("Client")) {
+                                    if (user.getRol().equals("Client")) {
                                         FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person).addOnSuccessListener(
                                                 task2 -> {
                                                     Intent intent = new Intent(this, HomeClientActivity.class);
@@ -84,7 +82,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                                                 }
                                         );
 
-                                    } else if(user.getRol().equals("Staff")) {
+                                    } else if (user.getRol().equals("Staff")) {
                                         FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person).addOnSuccessListener(
                                                 task3 -> {
                                                     Intent intent = new Intent(this, HomeStaffActivity.class);
@@ -98,7 +96,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
                     }
             ).addOnFailureListener(
-                    error->{
+                    error -> {
                         Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
             );
@@ -115,9 +113,6 @@ public class RegisterUserActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
-
 
 
     private boolean validateEmail() {
