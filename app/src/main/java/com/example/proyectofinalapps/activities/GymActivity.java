@@ -11,7 +11,6 @@ import com.example.proyectofinalapps.databinding.ActivityGymBinding;
 
 public class GymActivity extends AppCompatActivity {
 
-    private Button registerMyGymBtn;
     private Button registerStaffBtn;
     private Button loginBtnGym;
 
@@ -23,12 +22,10 @@ public class GymActivity extends AppCompatActivity {
         binding = ActivityGymBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        registerMyGymBtn = binding.registerMyGymBtn;
         registerStaffBtn = binding.registerStaffBtn;
         loginBtnGym = binding.loginBtnGym;
 
-        registerMyGymBtn.setOnClickListener(this::registerGym);
-        registerStaffBtn.setOnClickListener(this::registerStaff);
+        registerStaffBtn.setOnClickListener(this::register);
         loginBtnGym.setOnClickListener(this::login);
     }
 
@@ -38,15 +35,10 @@ public class GymActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void registerStaff(View view) {
+    private void register(View view) {
         Intent intent = new Intent(this, RegisterUserActivity.class);
         intent.putExtra("rol", "Staff");
         startActivity(intent);
     }
 
-    private void registerGym(View view) {
-        Intent intent = new Intent(this, RegisterGymActivity.class);
-        intent.putExtra("rol", "Gym");
-        startActivity(intent);
-    }
 }

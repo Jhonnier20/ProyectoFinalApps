@@ -44,9 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView forgotPassTV;
     private Button loginBtn, goToLoginTV;
     private LoginButton loginFaceBtn;
-    private RadioButton isClient, isGym;
     private String rol;
-    private String rolTmp;
 
     private CallbackManager callbackManager;
 
@@ -64,20 +62,95 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = binding.loginBtn;
         loginFaceBtn = binding.loginFaceBtn;
         goToLoginTV = binding.goToLoginTV;
-        isClient = binding.isClient;
-        isGym = binding.isGym;
 
         callbackManager = CallbackManager.Factory.create();
 
         loginFaceBtn.setOnClickListener(this::loginFacebook);
-
         loginBtn.setOnClickListener(this::loginUser);
         goToLoginTV.setOnClickListener(this::changeToRegister);
 
-        isClient.setOnClickListener(this::isClient);
-        isGym.setOnClickListener(this::isGym);
     }
 
+    //cambiar al registro
+    private void changeToRegister(View view) {
+        Intent intent = new Intent(this, RegisterUserActivity.class);
+        if(rol.equals("Client")) {
+            intent.putExtra("rol", "Client");
+        } else if(rol.equals("Staff")) {
+            intent.putExtra("rol", "Staff");
+        }
+        startActivity(intent);
+        finish();
+    }
+
+    //login
+    private void loginUser(View view) {
+        String email = emailLoginET.getText().toString();
+        String pass = passwordLoginET.getText().toString();
+
+        if(email.isEmpty() || pass.isEmpty() ){
+            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
+        }else{
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(
+                    email,
+                    pass
+            ).addOnSuccessListener(
+                    task-> {
+                        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+
+                        //login de cliente
+                        if(rol.equals("Client")) {
+                            FirebaseFirestore.getInstance().collection("Clientes").document(fbuser.getUid()).get().addOnSuccessListener(
+                                    document -> {
+                                        User user = document.toObject(User.class);
+                                        saveUser(user);
+                                        Log.e(">>>", ">>>>>"+ user.getRol());
+
+                                        Intent intent = new Intent(this, HomeClientActivity.class);
+                                        intent.putExtra("rol", "Client");
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                            );
+                        }else{
+                            FirebaseFirestore.getInstance().collection("Staff").document(fbuser.getUid()).get().addOnSuccessListener(
+                                    document -> {
+                                        User user = document.toObject(User.class);
+                                        saveUser(user);
+                                        Log.e(">>>", ">>>>>"+ user.getRol());
+
+                                        if(user.getRol().equals("Admin")){
+                                            Intent intent = new Intent(this, HomeGymActivity.class);
+                                            intent.putExtra("rol", "Staff");
+                                            startActivity(intent);
+                                            //finish();
+                                        }
+                                        if(user.getRol().equals("Staff")){
+                                            Intent intent = new Intent(this, HomeStaffActivity.class);
+                                            intent.putExtra("rol", "Staff");
+                                            startActivity(intent);
+                                            //finish();
+                                        }
+                                    }
+                            );
+                        }
+                    }
+            ).addOnFailureListener(
+                    error->{
+                        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+            );
+        }
+    }
+
+    //usuario guardado
+    private void saveUser(User user) {
+        String json = new Gson().toJson(user);
+        getSharedPreferences("data", MODE_PRIVATE).edit().putString("user", json).apply();
+    }
+
+
+    //login con facebook
     private void loginFacebook(View view) {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -87,14 +160,10 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancel() {
-
-            }
+            public void onCancel() {}
 
             @Override
-            public void onError(@NonNull FacebookException e) {
-
-            }
+            public void onError(@NonNull FacebookException e) {}
         });
     }
 
@@ -103,17 +172,16 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signInWithCredential(credential)
         .addOnCompleteListener(
                 task -> {
-                    if(rolTmp == null || rolTmp.equals("")) {
-                        Toast.makeText(this, "Seleccione un rol existente", Toast.LENGTH_LONG).show();
-                    }
-                    else if(rolTmp.equals("Client")) {
+                    if(rol.equals("Client")) {
                         addClientFirebase();
                         Intent intentClient = new Intent(this, HomeClientActivity.class);
                         startActivity(intentClient);
-                    } else if(rolTmp.equals("Gym")) {
+                        finish();
+                    } else if(rol.equals("Staff")) {
                         addStaffFirebase();
                         Intent intentStaff = new Intent(this, HomeStaffActivity.class);
                         startActivity(intentStaff);
+                        finish();
                     }
                 }
         ).addOnFailureListener(
@@ -143,78 +211,10 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user);
     }
 
-    private void isClient(View view){
-        boolean checked = isClient.isChecked();
-        if(checked){
-            rolTmp = "Client";
-            isGym.setChecked(false);
-        }
-    }
-
-    private void isGym(View view){
-        boolean checked = isGym.isChecked();
-        if(checked){
-            rolTmp = "Gym";
-            isClient.setChecked(false);
-        }
-    }
-
-    private void loginUser(View view) {
-        String email = emailLoginET.getText().toString();
-        String pass = passwordLoginET.getText().toString();
-
-        if(email.isEmpty() || pass.isEmpty() ){
-            Toast.makeText(this, "Rellene todos los espacios", Toast.LENGTH_LONG).show();
-        }else{
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(
-                    email,
-                    pass
-            ).addOnSuccessListener(
-                    task->{
-                        FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
-
-                        FirebaseFirestore.getInstance().collection("Clientes").document(fbuser.getUid()).get().addOnSuccessListener(
-                                document->{
-                                    User user = document.toObject(User.class);
-                                    saveUser(user);
-                                    if(rolTmp.equals("Client")) {
-                                        Intent intent = new Intent(this, HomeClientActivity.class);
-                                        intent.putExtra("rol", "Client");
-                                        startActivity(intent);
-                                        finish();
-                                    } else if(rolTmp.equals("Gym")) {
-                                        Intent intent = new Intent(this, HomeStaffActivity.class);
-                                        intent.putExtra("rol", "Staff");
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                }
-                        );
-                    }
-            ).addOnFailureListener(
-                    error->{
-                        Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-            );
-        }
-    }
 
 
-    private void saveUser(User user) {
-        String json = new Gson().toJson(user);
-        getSharedPreferences("data", MODE_PRIVATE).edit().putString("user", json).apply();
-    }
 
-    private void changeToRegister(View view) {
-        Intent intent = new Intent(this, RegisterUserActivity.class);
-        if(rol.equals("Client")) {
-            intent.putExtra("rol", "Client");
-        } else if(rol.equals("Staff")) {
-            intent.putExtra("rol", "Staff");
-        }
-        startActivity(intent);
-        finish();
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -261,7 +261,9 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         }
-
     }
+
+
+
 
 }

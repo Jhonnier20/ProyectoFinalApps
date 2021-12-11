@@ -40,11 +40,9 @@ public class RegisterUserActivity extends AppCompatActivity {
         mailRegisterET = binding.mailRegisterET;
         passwordRegisterET = binding.passwordRegisterET;
         password2RegisterET = binding.password2RegisterET;
-
         goToRegisterTV = binding.goToRegisterTV;
         registerBtn = binding.registerBtn;
 
-        rol = getIntent().getExtras().getString("rol");
 
         goToRegisterTV.setOnClickListener(this::changeToLogin);
         registerBtn.setOnClickListener(this::registerUser);
@@ -71,9 +69,9 @@ public class RegisterUserActivity extends AppCompatActivity {
                             FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = fbUser.getUid();
 
-                            User user = new User(name, id, email, uid);
-
                             if(rol.equals("Client")) {
+
+                                User user = new User(name, id, email, uid, "Cliente");
 
                                 FirebaseFirestore.getInstance().collection("Clientes").document(user.getUid()).set(user).addOnSuccessListener(
                                         firetask->{
@@ -85,6 +83,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                                 );
 
                             } else if(rol.equals("Staff")) {
+
+                                User user = new User(name, id, email, uid, "Staff");
 
                                 FirebaseFirestore.getInstance().collection("Staff").document(user.getUid()).set(user).addOnSuccessListener(
                                         firetask->{
@@ -117,8 +117,6 @@ public class RegisterUserActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
 
 
 
