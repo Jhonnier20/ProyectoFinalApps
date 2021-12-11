@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.adapters.StaffAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 import com.example.proyectofinalapps.model.Person;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeStaffFragment extends Fragment implements ActivateClient_AllowEntry.OnActivedClient {
 
@@ -47,6 +51,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                              Bundle savedInstanceState) {
         binding = FragmentHomeStaffBinding.inflate(inflater, container, false);
         view = binding.getRoot();
+
         clientRecylcler = binding.clientRecylcler;
         manager = new LinearLayoutManager(getActivity());
         clientRecylcler.setLayoutManager(manager);
@@ -59,6 +64,8 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         activateClientStaffBtn.setOnClickListener(this::activateClient);
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
+
+        chargeClients();
         return view;
     }
 
@@ -89,6 +96,19 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         this.onReadQRListener = onReadQRListener;
     }
 
+    private void chargeClients() {
+        FirebaseFirestore.getInstance().collection("Clientes").get().addOnSuccessListener(
+                task -> {
+                    for(DocumentSnapshot doc: task.getDocuments()) {
+                        Person person = doc.toObject(Person.class);
+                        if(person.getIsActive().equals("Y")) {
+                            adapter.addClient(person);
+                        }
+                    }
+                }
+        );
+    }
+
     @Override
     public void onActivedClient(Person client) {
         adapter.addClient(client);
@@ -105,4 +125,6 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     public void setAdapter(StaffAdapter adapter) {
         this.adapter = adapter;
     }
+
+
 }

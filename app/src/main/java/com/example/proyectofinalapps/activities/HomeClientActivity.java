@@ -64,6 +64,7 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
         FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnSuccessListener(
                 task -> {
                     client = task.toObject(Person.class);
+                    Log.e(">>>", "cliente: " + client.getId() + " " + client.getIsActive());
                     if(client.getIsActive().equals("Y")) {
                         showFragment(homeRegisteredUserFragment);
                     } else if(client.getIsActive().equals("N")) {

@@ -44,5 +44,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
 
     public void addClient(Person client) {
         clients.add(client);
+        notifyItemInserted(clients.size()-1);
     }
+
 }

@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                             Intent intentS = new Intent(this, HomeStaffActivity.class);
                             startActivity(intentS);
 
-                        } else if(user.getRol().equals("admin")) {
+                        } else if(user.getRol().equals("Admin")) {
                             Intent intentA = new Intent(this, HomeGymActivity.class);
                             startActivity(intentA);
 
