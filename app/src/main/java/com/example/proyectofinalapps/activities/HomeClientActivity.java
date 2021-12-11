@@ -13,7 +13,6 @@ import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityHomeClientBinding;
 import com.example.proyectofinalapps.fragments.HomeClientFragment;
-import com.example.proyectofinalapps.model.Client;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;

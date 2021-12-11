@@ -2,7 +2,6 @@ package com.example.proyectofinalapps.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +12,7 @@ import androidx.core.util.PatternsCompat;
 import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityRegisterUserBinding;
-import com.example.proyectofinalapps.model.Client;
-import java.util.UUID;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.firebase.auth.FirebaseAuth;

@@ -11,9 +11,7 @@ import android.widget.ImageView;
 
 import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeClientBinding;
-import com.example.proyectofinalapps.model.Client;
 import com.example.proyectofinalapps.model.Person;
-import com.example.proyectofinalapps.model.User;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
