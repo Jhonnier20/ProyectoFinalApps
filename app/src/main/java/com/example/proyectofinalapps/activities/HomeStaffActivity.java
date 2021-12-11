@@ -31,7 +31,6 @@ import com.journeyapps.barcodescanner.ScanOptions;
 public class HomeStaffActivity extends AppCompatActivity {
 
     private ActivityHomeStaffBinding binding;
-
     private BottomNavigationView navigatorStaff;
 
     private HomeStaffFragment homeStaffFragment;
@@ -51,7 +50,6 @@ public class HomeStaffActivity extends AppCompatActivity {
         showFragment(homeStaffFragment);
 
         navigatorStaff.setOnItemSelectedListener(menuItem->{
-
             if(menuItem.getItemId() == R.id.clientsStaffMenu){
                 showFragment(homeStaffFragment);
             }else if(menuItem.getItemId() == R.id.configStaffMenu){

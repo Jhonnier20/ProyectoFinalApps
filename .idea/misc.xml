@@ -35,12 +35,48 @@
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps2/app/src/main/res/drawable/backgroundlogin.xml" value="0.37135416666666665" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps2/app/src/main/res/font/cairo.xml" value="0.3854166666666667" />
         <entry key="..\:/jhonn/Documents/Proyectos/ProyectoFinalApps2/app/src/main/res/layout/activity_client.xml" value="0.35520833333333335" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_client.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_home_client.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.28080949687199175" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home_client.xml" value="0.1" />
+=======
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/drawable/backgroundlogin.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/drawable/buttonbackmain.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/drawable/edittext_back.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/drawable/main_app_back.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/drawable/menu_bottom.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/layout/activity_activate_client_allow_entry.xml" value="0.17889492753623187" />
+        <entry key="app/src/main/res/layout/activity_client.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_client_notifications.xml" value="0.17889492753623187" />
+        <entry key="app/src/main/res/layout/activity_client_qrcode.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_customer_details.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_gym.xml" value="0.42376432247885576" />
+        <entry key="app/src/main/res/layout/activity_home_client.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_home_gym.xml" value="0.15172101449275363" />
+        <entry key="app/src/main/res/layout/activity_home_staff.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_notifications.xml" value="0.2078804347826087" />
+        <entry key="app/src/main/res/layout/activity_register_gym.xml" value="0.1393110435663627" />
+        <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/clientrow.xml" value="0.17391304347826086" />
+        <entry key="app/src/main/res/layout/fragment_config.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_config_gym.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_home_client.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_home_registered_user.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/fragment_home_staff.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_profile_client.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/nav_item_color_state.xml" value="0.21875" />
+        <entry key="app/src/main/res/menu/menuclient.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/staff_menu.xml" value="0.2864583333333333" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3026041666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3026041666666667" />
+>>>>>>> master
       </map>
     </option>
   </component>

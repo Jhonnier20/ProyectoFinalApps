@@ -39,7 +39,7 @@
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/campana" />
+        app:srcCompat="@drawable/campanita" />
 
     <TextView
         android:id="@+id/welcomeTitle"

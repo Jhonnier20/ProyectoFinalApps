@@ -62,7 +62,6 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
                 task -> {
                     Person p = task.toObject(Person.class);
                     homeClientFragment.setPerson(p);
-                    Log.e(">>>", p.getId());
                     showFragment(homeClientFragment);
                 }
         );
@@ -77,13 +76,13 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
                         showFragment(homeClientFragment);
 
                         //Si esta registrado que muestre este otro fragmento
-                    }else{
+                    }else if(menuItem.getItemId() == R.id.profileClientMenu){
                         showFragment(profileClientFragment);
                     }
                     return true;
                 }
         );
-
+        
     }
 
     private User loadUser() {
