@@ -25,6 +25,10 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminView> {
         notifyItemInserted(instructors.size()-1);
     }
 
+    public void rebaseAdapter () {
+        instructors.clear();
+    }
+
     @NonNull
     @Override
     public AdminView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,6 +43,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminView> {
         Person instructor = instructors.get(position);
         skeleton.setInstructor(instructor);
         skeleton.getInstructorName().setText(instructor.getFullName());
+        skeleton.setInstructor(instructor);
     }
 
     @Override

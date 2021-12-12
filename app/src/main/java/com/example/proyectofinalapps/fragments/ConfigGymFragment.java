@@ -63,9 +63,10 @@ public class ConfigGymFragment extends Fragment {
         signOff = binding.signOff;
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore.getInstance().collection("Clientes").document(firebaseUser.getUid()).get().addOnSuccessListener(
+        FirebaseFirestore.getInstance().collection("Staff").document(firebaseUser.getUid()).get().addOnSuccessListener(
                 v-> {
                    person = v.toObject(Person.class);
+                   clientName6.setText(person.getFullName());
                 }
         );
 

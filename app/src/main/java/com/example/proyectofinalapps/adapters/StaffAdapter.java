@@ -29,7 +29,6 @@ import java.util.ArrayList;
 public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
 
     private ArrayList<Person> clients;
-    HomeStaffActivity homeStaff;
 
     public StaffAdapter() {
         clients = new ArrayList<>();

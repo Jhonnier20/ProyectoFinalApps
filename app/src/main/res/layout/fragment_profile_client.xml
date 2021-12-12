@@ -132,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="35dp"
         android:fontFamily="@font/cairo_bold"
         android:text="Customer details"
         android:textColor="#FFFFFF"
@@ -143,13 +143,13 @@
 
     <ImageView
         android:id="@+id/imageClient2"
-        android:layout_width="134dp"
-        android:layout_height="124dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView23"
-        tools:src="@drawable/persona" />
+        app:srcCompat="@drawable/personota" />
 
     <TextView
         android:id="@+id/textView23"
@@ -166,7 +166,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
-        android:layout_width="363dp"
+        android:layout_width="0dp"
         android:layout_height="75dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"

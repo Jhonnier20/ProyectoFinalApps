@@ -121,7 +121,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     }
 
     private void chargeClients() {
-        adapter.removeAllClientFromArray();
+        adapter.rebaseAdapter();
         FirebaseFirestore.getInstance().collection("Clientes").get().addOnCompleteListener(
                 task -> {
                     for(DocumentSnapshot doc: task.getResult()) {

@@ -83,6 +83,5 @@ public class ConfAdminFragment extends Fragment {
                     dialog.dismiss();
                 });
         builder.show();
-        //FirebaseAuth.getInstance().signOut();
     }
 }

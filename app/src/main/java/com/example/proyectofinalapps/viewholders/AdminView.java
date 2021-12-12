@@ -1,43 +1,57 @@
 package com.example.proyectofinalapps.viewholders;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.model.Person;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminView extends RecyclerView.ViewHolder {
 
     private Person instructor;
 
-    private ImageView imageInstructor;
     private TextView instructorName;
     private Button deleteInstructor;
+    protected FirebaseUser firebaseUser;
 
     public AdminView(@NonNull View itemView) {
         super(itemView);
 
-        imageInstructor = itemView.findViewById(R.id.imageInstructor);
         instructorName = itemView.findViewById(R.id.instructorName);
         deleteInstructor = itemView.findViewById(R.id.deleteInstructor);
 
         deleteInstructor.setOnClickListener(this::deleteInstructor);
+
     }
 
     public void deleteInstructor(View view){
-        //TODO con firebase
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                .setTitle("Eliminar instructor")
+                .setMessage("¿Esta seguro que desea eliminar a "+ instructor.getFullName()+"?")
+                .setNegativeButton("NO", (dialog, id) -> {
+                    dialog.dismiss();
+                })
+                .setPositiveButton("SI", (dialog, id) -> {
+                    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore.getInstance().collection("Staff").document(instructor.getId()).delete();
+                    dialog.dismiss();
+                });
+        builder.show();
     }
 
     public interface OnDeleteInstructor{
         void onDelete(Person instructor);
     }
 
-    public ImageView getImageInstructor() {
-        return imageInstructor;
-    }
 
     public TextView getInstructorName() {
         return instructorName;

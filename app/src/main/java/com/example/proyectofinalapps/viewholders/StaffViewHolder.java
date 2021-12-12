@@ -12,7 +12,6 @@ import com.example.proyectofinalapps.model.User;
 public class StaffViewHolder extends RecyclerView.ViewHolder {
 
     private TextView nameuserrow;
-
     private User user;
 
     public StaffViewHolder(@NonNull View itemView) {
