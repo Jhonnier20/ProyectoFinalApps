@@ -48,6 +48,7 @@ public class HomeAdminFragment extends Fragment {
         addInstructor.setOnClickListener(this::addInstructor);
         manager = new LinearLayoutManager(this.getContext());
         instructorList.setLayoutManager(manager);
+        adapter = new AdminAdapter();
         instructorList.setAdapter(adapter);
         instructorList.setHasFixedSize(true);
 

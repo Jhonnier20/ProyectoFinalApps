@@ -19,7 +19,6 @@ public class StaffViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         nameuserrow = itemView.findViewById(R.id.nameuserrow);
-
     }
 
     public TextView getNameuserrow() {

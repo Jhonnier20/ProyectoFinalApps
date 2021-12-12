@@ -39,9 +39,6 @@ public class customerDetails extends AppCompatActivity {
 
     private void allowEntry(View view){
         Intent intent = new Intent(this, ActivateClient_AllowEntry.class);
-        //TODO
-        //No se como pasarle el titulo  a ActivateClient_AllowEntry
-        //Me parece que es con put extra pero no recuerdo como ponerselo a un string allá
         intent.putExtra("title", "PERMITIR");
         startActivity(intent);
     }
