@@ -1,10 +1,13 @@
 package com.example.proyectofinalapps.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
+import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfAdminBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -23,6 +27,8 @@ public class ConfAdminFragment extends Fragment {
     private Button privacyPolicyAdmin, logOutAdmin;
     private PrivacyPolicyActivity privacyPolicyActivity;
     private View view;
+
+    private Context context;
 
     public ConfAdminFragment() {
         // Required empty public constructor
@@ -52,6 +58,8 @@ public class ConfAdminFragment extends Fragment {
         privacyPolicyAdmin.setOnClickListener(this::goToPrivacyPolicy);
         logOutAdmin.setOnClickListener(this::logOut);
 
+        context = getActivity();
+
         return view;
     }
 
@@ -69,6 +77,10 @@ public class ConfAdminFragment extends Fragment {
                 })
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
+                    context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
+                    Intent intent = new Intent(context, SplashActivity.class);
+                    context.startActivity(intent);
+                    dialog.dismiss();
                 });
         builder.show();
         //FirebaseAuth.getInstance().signOut();

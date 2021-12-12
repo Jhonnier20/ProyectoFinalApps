@@ -66,9 +66,19 @@ public class ProfileClientFragment extends Fragment {
         membershipClient2.setText(subscription.getMembership());
         if(subscription.isActive()) {
             activeTV.setText("Subscripcion activa");
+            dateClient2.setText(subscription.getDateStart() + "-" +subscription.getDateEnd());
         } else {
             activeTV.setText("Subscripcion inactiva");
+            dateClient2.setText("--/--/--");
         }
+
+        //Display Client info
+        clientName2.setText(person.getFullName());
+        emailClient2.setText(person.getEmail());
+        ageClient2.setText(person.getRol());
+        gymClient2.setText("My Gym");
+        accountStatusClient2.setText(subscription.getState());
+        membershipClient2.setText("Mensual");
 
         return view;
     }

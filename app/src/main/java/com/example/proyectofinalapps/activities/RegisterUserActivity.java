@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 public class RegisterUserActivity extends AppCompatActivity {
 
@@ -68,7 +69,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                         Log.e(">>>", "Datos correctos");
                         //2. registar al user en la base de datos
                         FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-                        String uid = fbUser.getUid();
+                        //String uid = fbUser.getUid();
 
                         User user = new User(fbUser.getUid(), rol);
                         Person person = new Person(fbUser.getUid(), name, email, id, rol, "N");
@@ -89,6 +90,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                                                 task2 -> {
                                                     FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).collection("Subscription")
                                                             .document(subscription.getId()).set(subscription);
+
+                                                    saveUser(user);
                                                     Intent intent = new Intent(this, HomeClientActivity.class);
                                                     startActivity(intent);
                                                     finish();
@@ -98,6 +101,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                                     } else if (user.getRol().equals("Staff")) {
                                         FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person).addOnSuccessListener(
                                                 task3 -> {
+                                                    saveUser(user);
                                                     Intent intent = new Intent(this, HomeStaffActivity.class);
                                                     startActivity(intent);
                                                     finish();
@@ -127,6 +131,11 @@ public class RegisterUserActivity extends AppCompatActivity {
         finish();
     }
 
+    //usuario guardado
+    private void saveUser(User user) {
+        String json = new Gson().toJson(user);
+        getSharedPreferences("data", MODE_PRIVATE).edit().putString("user", json).apply();
+    }
 
     private boolean validateEmail() {
         String email = binding.mailRegisterET.getText().toString();

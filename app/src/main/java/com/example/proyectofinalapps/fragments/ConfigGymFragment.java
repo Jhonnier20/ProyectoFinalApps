@@ -1,5 +1,6 @@
 package com.example.proyectofinalapps.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
@@ -12,21 +13,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
+import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigGymBinding;
+import com.example.proyectofinalapps.model.Person;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ConfigGymFragment extends Fragment {
 
     private FragmentConfigGymBinding binding;
     private ImageView gymImage;
     private TextView gymName, gymInstructor;
+    private TextView clientName6;
     private Button privacyPolicy, deleteProfile, editProfile, signOff;
     private View view;
 
     protected FirebaseUser firebaseUser;
+    private Person person;
 
     private PrivacyPolicyActivity privacyPolicyActivity;
+
+    private Context context;
 
     public ConfigGymFragment() {
         // Required empty public constructor
@@ -47,6 +55,7 @@ public class ConfigGymFragment extends Fragment {
 
         gymImage = binding.gymImage;
         gymName = binding.gymName;
+        clientName6 = binding.clientName6;
         gymInstructor = binding.gymInstructor;
         privacyPolicy = binding.privacyPolicy;
         deleteProfile = binding.deleteProfile;
@@ -54,7 +63,17 @@ public class ConfigGymFragment extends Fragment {
         signOff = binding.signOff;
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Log.e("user", firebaseUser.getEmail());
+        FirebaseFirestore.getInstance().collection("Clientes").document(firebaseUser.getUid()).get().addOnSuccessListener(
+                v-> {
+                   person = v.toObject(Person.class);
+                }
+        );
+
+        if (person != null){
+            clientName6.setText(person.getFullName());
+        }
+
+        context = getActivity();
 
         privacyPolicy.setOnClickListener(this::goToPrivacyPolicy);
         deleteProfile.setOnClickListener(this::deleteProfile);
@@ -86,6 +105,10 @@ public class ConfigGymFragment extends Fragment {
                 })
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
+                    context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
+                    Intent intent = new Intent(context, SplashActivity.class);
+                    context.startActivity(intent);
+                    dialog.dismiss();
                 });
         builder.show();
     }

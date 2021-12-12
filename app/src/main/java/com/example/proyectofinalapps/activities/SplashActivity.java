@@ -27,6 +27,7 @@ public class SplashActivity extends AppCompatActivity {
     private void login() {
         FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
         if(auth == null) {
+            getSharedPreferences("data", MODE_PRIVATE).edit().clear().apply();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
