@@ -64,14 +64,41 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         clientRecylcler.setHasFixedSize(true);
         activateClientStaffBtn = binding.activateClientStaffBtn;
         allowEntry = binding.allowEntry;
+        buscarBtn  = binding.buscarBtn;
         notifications = binding.notifications;
         searchClient = binding.searchClient;
         activateClientStaffBtn.setOnClickListener(this::activateClient);
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
+        buscarBtn.setOnClickListener(this::searchClient);
 
         chargeClients();
         return view;
+    }
+
+    private void searchClient(View view) {
+
+        String toSearch = searchClient.getText().toString();
+
+        if (toSearch.isEmpty()){
+            chargeClients();
+        }
+        else{
+            FirebaseFirestore.getInstance().collection("Clientes").whereEqualTo("fullName", toSearch).get().addOnCompleteListener(
+                    task -> {
+                        Log.e("size after:  ",adapter.getItemCount()+"");
+                        adapter.removeAllClientFromArray();
+                        Log.e("size before:  ",adapter.getItemCount()+"");
+                        for(DocumentSnapshot doc: task.getResult()) {
+                            Person person = doc.toObject(Person.class);
+                            if(person.getIsActive().equals("Y")) {
+                                adapter.addClient(person);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+            );
+        }
     }
 
     private void activateClient(View view) {
@@ -96,7 +123,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     }
 
     private void chargeClients() {
-        adapter.rebaseAdapter();
+        adapter.removeAllClientFromArray();
         FirebaseFirestore.getInstance().collection("Clientes").get().addOnCompleteListener(
                 task -> {
                     for(DocumentSnapshot doc: task.getResult()) {

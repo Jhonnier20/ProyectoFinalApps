@@ -35,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
                     task -> {
                         Log.e(">>>", auth.getUid());
                         user = task.getResult().toObject(User.class);
+                        Log.e("<><<><>", user.getRol());
                         saveUser(user);
                         if(user.getRol().equals("Client")) {
                             Intent intentC = new Intent(this, HomeClientActivity.class);
