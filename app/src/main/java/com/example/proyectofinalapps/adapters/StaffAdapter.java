@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.activities.HomeStaffActivity;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
+import com.example.proyectofinalapps.activities.SplashActivity;
+import com.example.proyectofinalapps.activities.customerDetails;
 import com.example.proyectofinalapps.fragments.HomeStaffFragment;
 import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
@@ -56,8 +58,8 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(this, PrivacyPolicyActivity.class);
-                //this.startActivity(intent);
+                Intent intent = new Intent(view.getContext(), customerDetails.class);
+                view.getContext().startActivity(intent);
             }
         });
 
