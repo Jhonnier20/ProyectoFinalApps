@@ -22,6 +22,16 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         clients = new ArrayList<>();
     }
 
+    public void addClient(Person client) {
+        clients.add(client);
+        notifyItemInserted(clients.size()-1);
+    }
+
+    public void rebaseAdapter () {
+        clients.clear();
+
+    }
+
     @NonNull
     @Override
     public StaffViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,9 +52,5 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         return clients.size();
     }
 
-    public void addClient(Person client) {
-        clients.add(client);
-        notifyItemInserted(clients.size()-1);
-    }
 
 }
