@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.fragments.ConfigFragment;
 import com.example.proyectofinalapps.fragments.FragmentHomeRegisteredUser;

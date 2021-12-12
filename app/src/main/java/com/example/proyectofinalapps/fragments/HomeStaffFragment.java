@@ -34,9 +34,12 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     private OnReadQRListener onReadQRListener;
     private ImageView notifications;
 
+    private ActivateClient_AllowEntry activateClient_allowEntry;
+
     public HomeStaffFragment() {
         // Required empty public constructor
         adapter = new StaffAdapter();
+        activateClient_allowEntry = new ActivateClient_AllowEntry();
     }
 
     public static HomeStaffFragment newInstance() {
@@ -51,6 +54,8 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                              Bundle savedInstanceState) {
         binding = FragmentHomeStaffBinding.inflate(inflater, container, false);
         view = binding.getRoot();
+
+        activateClient_allowEntry.setListener(this);
 
         clientRecylcler = binding.clientRecylcler;
         manager = new LinearLayoutManager(getActivity());

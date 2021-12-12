@@ -32,6 +32,10 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
 
     private OnActivedClient listener;
 
+    public ActivateClient_AllowEntry() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
