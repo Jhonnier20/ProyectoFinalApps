@@ -18,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ProfileClientFragment extends Fragment {
 
     private TextView clientName2, emailClient2, gymClient2, accountStatusClient2,
-            membershipClient2, dateClient2, activeTV;
+            membershipClient2, dateClient2, but;
     private View view;
 
     private FragmentProfileClientBinding binding;
@@ -51,7 +51,7 @@ public class ProfileClientFragment extends Fragment {
         accountStatusClient2 = binding.accountStatusClient2;
         membershipClient2 = binding.membershipClient2;
         dateClient2 = binding.dateClient2;
-        activeTV = binding.activeTV;
+        but = binding.but;
 
         FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).collection("Subscription").document(subscription.getId()).addSnapshotListener(
                 (value, error) -> {
@@ -62,10 +62,10 @@ public class ProfileClientFragment extends Fragment {
         accountStatusClient2.setText(subscription.getState());
         membershipClient2.setText(subscription.getMembership());
         if(subscription.isActive()) {
-            activeTV.setText("Subscripcion activa");
+            but.setText("Subscripcion activa");
             dateClient2.setText(subscription.getDateStart() + "-" +subscription.getDateEnd());
         } else {
-            activeTV.setText("Subscripcion inactiva");
+            but.setText("Subscripcion inactiva");
             dateClient2.setText("--/--/--");
         }
 
