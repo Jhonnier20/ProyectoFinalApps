@@ -26,7 +26,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
 
     private FragmentHomeStaffBinding binding;
     private EditText searchClient;
-    private Button activateClientStaffBtn, allowEntry;
+    private Button activateClientStaffBtn, allowEntry, buscarBtn;
     private RecyclerView clientRecylcler;
     private View view;
     private StaffAdapter adapter;

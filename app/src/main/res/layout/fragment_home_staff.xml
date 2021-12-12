@@ -149,4 +149,22 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <Button
+        android:id="@+id/buscarBtn"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:background="#00FFFFFF"
+        android:paddingStart="10dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="20dp"
+        app:icon="@drawable/lupa"
+        app:iconPadding="0dp"
+        app:iconSize="20dp"
+        app:iconTint="@color/buttons_color"
+        app:layout_constraintBottom_toBottomOf="@+id/searchClient"
+        app:layout_constraintEnd_toEndOf="@+id/searchClient"
+        app:layout_constraintTop_toTopOf="@+id/searchClient" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
