@@ -96,12 +96,14 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     }
 
     private void chargeClients() {
-        FirebaseFirestore.getInstance().collection("Clientes").get().addOnSuccessListener(
+        adapter.rebaseAdapter();
+        FirebaseFirestore.getInstance().collection("Clientes").get().addOnCompleteListener(
                 task -> {
-                    for(DocumentSnapshot doc: task.getDocuments()) {
+                    for(DocumentSnapshot doc: task.getResult()) {
                         Person person = doc.toObject(Person.class);
                         if(person.getIsActive().equals("Y")) {
                             adapter.addClient(person);
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 }
