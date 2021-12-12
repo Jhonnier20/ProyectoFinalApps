@@ -2,6 +2,8 @@ package com.example.proyectofinalapps.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigBinding;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ConfigFragment extends Fragment {
 
@@ -51,11 +54,11 @@ public class ConfigFragment extends Fragment {
     }
 
     private void editProfile(View view){
-
+        //TODO
     }
 
     private void deleteProfile(View view){
-
+//TODO
     }
 
     private void goToPrivacyPolicy(View view){
@@ -65,6 +68,15 @@ public class ConfigFragment extends Fragment {
     }
 
     private void logout(View view){
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Esta seguro que desea cerrar sesión?")
+                .setNegativeButton("NO", (dialog, id) -> {
+                    dialog.dismiss();
+                })
+                .setPositiveButton("SI", (dialog, id) -> {
+                    FirebaseAuth.getInstance().signOut();
+                });
+        builder.show();
     }
 }

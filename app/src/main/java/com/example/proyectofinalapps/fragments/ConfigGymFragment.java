@@ -2,18 +2,19 @@ package com.example.proyectofinalapps.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
-import com.example.proyectofinalapps.activities.LoginActivity;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigGymBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ConfigGymFragment extends Fragment {
 
@@ -22,6 +23,8 @@ public class ConfigGymFragment extends Fragment {
     private TextView gymName, gymInstructor;
     private Button privacyPolicy, deleteProfile, editProfile, signOff;
     private View view;
+
+    protected FirebaseUser firebaseUser;
 
     private PrivacyPolicyActivity privacyPolicyActivity;
 
@@ -50,6 +53,9 @@ public class ConfigGymFragment extends Fragment {
         editProfile = binding.editProfile;
         signOff = binding.signOff;
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.e("user", firebaseUser.getEmail());
+
         privacyPolicy.setOnClickListener(this::goToPrivacyPolicy);
         deleteProfile.setOnClickListener(this::deleteProfile);
         editProfile.setOnClickListener(this::editProfile);
@@ -64,14 +70,23 @@ public class ConfigGymFragment extends Fragment {
     }
 
     protected void deleteProfile(View view){
-        //TODO
+        Log.e("user", firebaseUser.getEmail());
     }
 
     protected void editProfile(View view){
-        //TODO
+        Log.e("user", firebaseUser.getEmail());
     }
 
     protected void signOff(View view){
-        //TODO
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Cerrar sesión")
+                .setMessage("¿Esta seguro que desea cerrar sesión?")
+                .setNegativeButton("NO", (dialog, id) -> {
+                    dialog.dismiss();
+                })
+                .setPositiveButton("SI", (dialog, id) -> {
+                    FirebaseAuth.getInstance().signOut();
+                });
+        builder.show();
     }
 }
