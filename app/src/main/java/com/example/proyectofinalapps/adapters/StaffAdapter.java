@@ -1,6 +1,7 @@
 package com.example.proyectofinalapps.adapters;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,11 @@ import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.activities.customerDetails;
 import com.example.proyectofinalapps.fragments.HomeStaffFragment;
 import com.example.proyectofinalapps.model.Person;
+import com.example.proyectofinalapps.model.Subscription;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.viewholders.StaffViewHolder;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -57,17 +61,26 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), customerDetails.class);
-                intent.putExtra("clientName",client.getFullName());
-                intent.putExtra("emailName",client.getEmail());
-                intent.putExtra("ageClient","");
-                intent.putExtra("gymClient","My Gym");
-                //TODO intent.putExtra("accountStatusClient",client.getIsActive());
-                intent.putExtra("membershipClient","Mensual");
-                intent.putExtra("status",client.getIsActive());
-                //TODO intent.putExtra("dateClient",client.get);
 
-                view.getContext().startActivity(intent);
+                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
+                        task -> {
+                            for (DocumentSnapshot doc: task.getDocuments()) {
+                                Subscription sub = doc.toObject(Subscription.class);
+
+                                Intent intent = new Intent(view.getContext(), customerDetails.class);
+                                intent.putExtra("clientName",client.getFullName());
+                                intent.putExtra("emailName",client.getEmail());
+                                intent.putExtra("ageClient","");
+                                intent.putExtra("gymClient","My Gym");
+                                intent.putExtra("accountStatusClient", sub.getState());
+                                intent.putExtra("membershipClient","Mensual");
+                                intent.putExtra("status",client.getIsActive());
+                                intent.putExtra("dateClient", sub.getDateEnd());
+
+                                view.getContext().startActivity(intent);
+                            }
+                        }
+                );
             }
         });
 

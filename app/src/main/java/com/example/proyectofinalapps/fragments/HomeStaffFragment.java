@@ -86,9 +86,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         else{
             FirebaseFirestore.getInstance().collection("Clientes").whereEqualTo("fullName", toSearch).get().addOnCompleteListener(
                     task -> {
-                        Log.e("size after:  ",adapter.getItemCount()+"");
                         adapter.removeAllClientFromArray();
-                        Log.e("size before:  ",adapter.getItemCount()+"");
                         for(DocumentSnapshot doc: task.getResult()) {
                             Person person = doc.toObject(Person.class);
                             if(person.getIsActive().equals("Y")) {
