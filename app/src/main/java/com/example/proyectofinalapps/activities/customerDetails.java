@@ -12,8 +12,8 @@ import com.example.proyectofinalapps.databinding.ActivityCustomerDetailsBinding;
 
 public class customerDetails extends AppCompatActivity {
 
-    private TextView clientName, emailClient, gymClient, accountStatusClient, membershipClient, dateClient;
-    private Button allowEntryC, but;
+    private TextView clientName, emailClient, gymClient, accountStatusClient, membershipClient, dateClient, but;
+    private Button allowEntryC;
     private ImageButton closeDetails;
 
     private ActivityCustomerDetailsBinding binding;
@@ -31,6 +31,7 @@ public class customerDetails extends AppCompatActivity {
         membershipClient = binding.membershipClient;
         dateClient = binding.dateClient;
         but = binding.but;
+
         closeDetails = binding.closeDetails;
         allowEntryC = binding.allowEntryC;
 

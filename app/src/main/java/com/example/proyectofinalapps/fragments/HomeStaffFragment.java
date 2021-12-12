@@ -68,6 +68,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         buscarBtn  = binding.buscarBtn;
         notifications = binding.notifications;
         searchClient = binding.searchClient;
+
         activateClientStaffBtn.setOnClickListener(this::activateClient);
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);

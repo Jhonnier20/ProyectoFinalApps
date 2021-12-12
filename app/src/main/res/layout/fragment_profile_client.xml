@@ -193,7 +193,7 @@
             app:srcCompat="@drawable/chulo" />
 
         <TextView
-            android:id="@+id/activeTV"
+            android:id="@+id/but"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
