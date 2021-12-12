@@ -20,8 +20,9 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/adminNavigator"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:background="@drawable/menu_bottom"
+        app:itemIconSize="20dp"
         app:itemIconTint="@color/el_blue"
         app:itemTextAppearanceActive="@style/activos"
         app:itemTextAppearanceInactive="@style/desactivos"

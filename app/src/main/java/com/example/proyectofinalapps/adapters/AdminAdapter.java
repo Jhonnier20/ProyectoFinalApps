@@ -25,8 +25,11 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminView> {
         notifyItemInserted(instructors.size()-1);
     }
 
-    public void rebaseAdapter () {
-        instructors.clear();
+    public void removeAllInstructorFromArray () {
+        for (int i=instructors.size()-1;i>=0;i--) {
+            instructors.remove(i);
+            notifyItemRemoved(i);
+        }
     }
 
     @NonNull

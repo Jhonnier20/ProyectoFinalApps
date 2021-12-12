@@ -52,15 +52,13 @@ public class HomeAdminFragment extends Fragment {
         instructorList.setAdapter(adapter);
         instructorList.setHasFixedSize(true);
 
-
         chargeInstructors();
-        adapter.notifyDataSetChanged();
 
         return view;
     }
 
     private void chargeInstructors() {
-        adapter.rebaseAdapter();
+        adapter.removeAllInstructorFromArray();
         FirebaseFirestore.getInstance().collection("Staff").get().addOnCompleteListener(
                 task -> {
                     for(DocumentSnapshot doc: task.getResult()) {

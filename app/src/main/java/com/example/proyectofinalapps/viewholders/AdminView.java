@@ -48,11 +48,6 @@ public class AdminView extends RecyclerView.ViewHolder {
         builder.show();
     }
 
-    public interface OnDeleteInstructor{
-        void onDelete(Person instructor);
-    }
-
-
     public TextView getInstructorName() {
         return instructorName;
     }

@@ -116,28 +116,32 @@
 
     <TextView
         android:id="@+id/emailClient2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/cairo_regular"
         android:text="andresmarmo@gmail.com"
         android:textColor="#FFFFFF"
         android:textSize="16dp"
         android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageClient2"
         app:layout_constraintTop_toBottomOf="@+id/clientName2" />
 
     <TextView
         android:id="@+id/clientName2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="35dp"
+        android:layout_marginEnd="30dp"
         android:fontFamily="@font/cairo_bold"
         android:text="Customer details"
         android:textColor="#FFFFFF"
         android:textSize="19dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageClient2"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -197,6 +201,7 @@
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView7"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

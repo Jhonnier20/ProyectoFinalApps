@@ -39,9 +39,12 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         notifyItemInserted(clients.size()-1);
     }
 
-    public void rebaseAdapter () {
-        clients.clear();
-    }
+    public void removeAllClientFromArray() {
+        for (int i=clients.size()-1;i>=0;i--) {
+            clients.remove(i);
+            notifyItemRemoved(i);
+        }
+    };
 
     @NonNull
     @Override
@@ -89,13 +92,5 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     public int getItemCount() {
         return clients.size();
     }
-
-    public void removeAllClientFromArray() {
-
-        for (int i=clients.size()-1;i>=0;i--) {
-            clients.remove(i);
-            notifyItemRemoved(i);
-        }
-    };
 
 }

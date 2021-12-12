@@ -10,20 +10,18 @@
         android:id="@+id/backToHome"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="40dp"
         android:backgroundTint="#00B0D7"
         android:text="Volver"
         android:textAllCaps="false"
         android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_Activate_Allow5"
-        app:layout_constraintVertical_bias="0.895" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/QRCodeString"
