@@ -59,6 +59,15 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), customerDetails.class);
+                intent.putExtra("clientName",client.getFullName());
+                intent.putExtra("emailName",client.getEmail());
+                intent.putExtra("ageClient","");
+                intent.putExtra("gymClient","My Gym");
+                //TODO intent.putExtra("accountStatusClient",client.getIsActive());
+                intent.putExtra("membershipClient","Mensual");
+                intent.putExtra("status",client.getIsActive());
+                //TODO intent.putExtra("dateClient",client.get);
+
                 view.getContext().startActivity(intent);
             }
         });
@@ -69,6 +78,4 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     public int getItemCount() {
         return clients.size();
     }
-
-
 }

@@ -17,8 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileClientFragment extends Fragment {
 
-    private ImageView imageClient2;
-    private TextView clientName2, emailClient2, ageClient2, gymClient2, accountStatusClient2,
+    private TextView clientName2, emailClient2, gymClient2, accountStatusClient2,
             membershipClient2, dateClient2, activeTV;
     private View view;
 
@@ -46,10 +45,8 @@ public class ProfileClientFragment extends Fragment {
         binding = FragmentProfileClientBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
-        imageClient2 = binding.imageClient2;
         clientName2 = binding.clientName2;
         emailClient2 = binding.emailClient2;
-        ageClient2 = binding.ageClient2;
         gymClient2 = binding.gymClient2;
         accountStatusClient2 = binding.accountStatusClient2;
         membershipClient2 = binding.membershipClient2;
@@ -75,7 +72,6 @@ public class ProfileClientFragment extends Fragment {
         //Display Client info
         clientName2.setText(person.getFullName());
         emailClient2.setText(person.getEmail());
-        ageClient2.setText(person.getRol());
         gymClient2.setText("My Gym");
         accountStatusClient2.setText(subscription.getState());
         membershipClient2.setText("Mensual");

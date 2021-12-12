@@ -50,10 +50,6 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
 
         title = getIntent().getExtras().getString("title");
 
-        //Esto se hace porque lo unico que cambia en estas dos actividades es el titulo
-        //Entonces solo cambio el titulo y la funcionalidad sigue igual
-        //TODO Falta recibir los extras con el getExtras
-
         if(title.equals("ACTIVAR")){
             title_Activate_Allow.setText("ACTIVAR CLIENTE");
         }else{
