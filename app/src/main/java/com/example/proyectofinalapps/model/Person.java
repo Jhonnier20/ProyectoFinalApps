@@ -14,7 +14,7 @@ public class Person {
 
     public Person(String id, String fullName, String email, String identification, String rol, String isActive) {
         this.id = id;
-        this.fullName = fullName;
+        this.fullName = fullName.toLowerCase();
         this.email = email;
         this.identification = identification;
         this.rol = rol;

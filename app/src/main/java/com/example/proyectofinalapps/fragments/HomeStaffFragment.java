@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
 import com.example.proyectofinalapps.activities.Notifications;
@@ -78,12 +79,11 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
 
     private void searchClient(View view) {
 
-        String toSearch = searchClient.getText().toString();
+        String toSearch = searchClient.getText().toString().toLowerCase();
 
         if (toSearch.isEmpty()){
             chargeClients();
-        }
-        else{
+        }else{
             FirebaseFirestore.getInstance().collection("Clientes").whereEqualTo("fullName", toSearch).get().addOnCompleteListener(
                     task -> {
                         adapter.removeAllClientFromArray();
