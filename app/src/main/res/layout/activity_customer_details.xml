@@ -74,19 +74,6 @@
         app:layout_constraintTop_toBottomOf="@+id/clientName" />
 
     <TextView
-        android:id="@+id/ageClient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="22 años"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toEndOf="@+id/imageClient"
-        app:layout_constraintTop_toBottomOf="@+id/emailClient" />
-
-    <TextView
         android:id="@+id/gymClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="Andres Marmolejo"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
@@ -195,6 +182,6 @@
         android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@drawable/persona" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
