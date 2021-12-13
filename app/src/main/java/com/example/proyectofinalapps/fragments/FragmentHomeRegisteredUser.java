@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
+import com.example.proyectofinalapps.activities.ClientQRCodeActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeRegisteredUserBinding;
+import com.example.proyectofinalapps.model.Person;
 
 public class FragmentHomeRegisteredUser extends Fragment {
 
@@ -19,6 +21,8 @@ public class FragmentHomeRegisteredUser extends Fragment {
     private ImageView QRIcon, cashIcon, goToNotifications;
     private View view;
     private FragmentHomeRegisteredUserBinding binding;
+
+    private Person client;
 
     public FragmentHomeRegisteredUser() {
         // Required empty public constructor
@@ -56,6 +60,9 @@ public class FragmentHomeRegisteredUser extends Fragment {
 
     private void generateQR(View view){
         //TODO
+        Intent intent = new Intent(getActivity(), ClientQRCodeActivity.class);
+        intent.putExtra("client", client);
+        startActivity(intent);
     }
 
     private void requestPayment(View view){
@@ -65,5 +72,13 @@ public class FragmentHomeRegisteredUser extends Fragment {
     private void goToNotifications(View view){
         Intent intent = new Intent(getActivity(), ClientNotificationsActivity.class);
         getActivity().startActivity(intent);
+    }
+
+    public Person getClient() {
+        return client;
+    }
+
+    public void setClient(Person client) {
+        this.client = client;
     }
 }

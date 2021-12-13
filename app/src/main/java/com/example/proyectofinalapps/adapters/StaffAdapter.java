@@ -18,6 +18,8 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
 
     private ArrayList<Person> clients;
 
+    private OnClientInfoListener listener;
+
     public StaffAdapter() {
         clients = new ArrayList<>();
     }
@@ -35,6 +37,16 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
         Person client = clients.get(position);
         holder.getNameuserrow().setText(client.getFullName());
+        holder.getUserImg().setOnClickListener(
+                v -> {
+                    listener.onClientInfo(client);
+                }
+        );
+        holder.getNameuserrow().setOnClickListener(
+                v -> {
+                    listener.onClientInfo(client);
+                }
+        );
     }
 
     @Override
@@ -45,6 +57,24 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     public void addClient(Person client) {
         clients.add(client);
         notifyItemInserted(clients.size()-1);
+    }
+
+    public void deleteClients() {
+        notifyItemRangeRemoved(0, clients.size());
+        clients.clear();
+    }
+
+
+    public OnClientInfoListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnClientInfoListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnClientInfoListener {
+        void onClientInfo(Person client);
     }
 
 }

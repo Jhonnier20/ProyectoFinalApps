@@ -16,23 +16,28 @@ import android.widget.ImageView;
 
 import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
 import com.example.proyectofinalapps.activities.Notifications;
+import com.example.proyectofinalapps.activities.customerDetails;
 import com.example.proyectofinalapps.adapters.StaffAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 import com.example.proyectofinalapps.model.Person;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class HomeStaffFragment extends Fragment implements ActivateClient_AllowEntry.OnActivedClient {
+public class HomeStaffFragment extends Fragment implements ActivateClient_AllowEntry.OnActivedClient, StaffAdapter.OnClientInfoListener {
 
     private FragmentHomeStaffBinding binding;
+
     private EditText searchClient;
     private Button activateClientStaffBtn, allowEntry;
     private RecyclerView clientRecylcler;
+    private ImageView notifications;
+
     private View view;
+
     private StaffAdapter adapter;
     private LinearLayoutManager manager;
+
     private OnReadQRListener onReadQRListener;
-    private ImageView notifications;
 
     private ActivateClient_AllowEntry activateClient_allowEntry;
 
@@ -61,6 +66,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         manager = new LinearLayoutManager(getActivity());
         clientRecylcler.setLayoutManager(manager);
         clientRecylcler.setAdapter(adapter);
+        adapter.setListener(this);
         clientRecylcler.setHasFixedSize(true);
         activateClientStaffBtn = binding.activateClientStaffBtn;
         allowEntry = binding.allowEntry;
@@ -70,6 +76,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
 
+        adapter.deleteClients();
         chargeClients();
         return view;
     }
@@ -111,6 +118,13 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     @Override
     public void onActivedClient(Person client) {
         adapter.addClient(client);
+    }
+
+    @Override
+    public void onClientInfo(Person client) {
+        Intent intent = new Intent(getActivity(), customerDetails.class);
+        intent.putExtra("client", client);
+        startActivity(intent);
     }
 
     public interface OnReadQRListener {

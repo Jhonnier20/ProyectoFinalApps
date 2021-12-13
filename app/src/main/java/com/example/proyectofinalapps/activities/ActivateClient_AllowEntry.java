@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.proyectofinalapps.databinding.ActivityActivateClientAllowEntryBinding;
 import com.example.proyectofinalapps.fragments.ConfigGymFragment;
 import com.example.proyectofinalapps.model.Person;
@@ -21,6 +23,8 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.Date;
+
 public class ActivateClient_AllowEntry extends AppCompatActivity {
 
     private TextView title_Activate_Allow;
@@ -28,7 +32,7 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
     private Button allow, scanQR;
     private ImageButton goToClients;
     private ActivityActivateClientAllowEntryBinding binding;
-    public String title = "ACTIVAR";
+    public String title;
 
     private OnActivedClient listener;
 
@@ -91,14 +95,25 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
                 Log.e(">>>", "Scanned: " + result.getContents());
                 Gson gson = new Gson();
                 Person client = gson.fromJson(result.getContents(), Person.class);
-                client.setIsActive("Y");
-                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).update("isActive", client.getIsActive()).addOnCompleteListener(
-                        task -> {
-                            listener.onActivedClient(client);
-                            finish();
-                            //homeStaffFragment.getAdapter().addClient(client);
-                        }
-                );
+
+                if(title.equals("ACTIVAR")) {
+                    client.setIsActive("Y");
+                    FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).update("isActive", client.getIsActive()).addOnCompleteListener(
+                            task -> {
+                                listener.onActivedClient(client);
+                                finish();
+                                //homeStaffFragment.getAdapter().addClient(client);
+                            }
+                    );
+
+                } else if(title.equals("PERMITIR")) {
+                    FirebaseFirestore.getInstance().collection("Attendance").document(client.getId()).set(client).addOnSuccessListener(
+                            task -> {
+                                FirebaseFirestore.getInstance().collection("Attendance").document(client.getId()).update("dateOfEntry", new Date().getTime());
+                                Toast.makeText(this, "Ingreso permitido - " + new Date().toString(), Toast.LENGTH_LONG).show();
+                            }
+                    );
+                }
 
                 //showFragment(homeStaffFragment);
             }
