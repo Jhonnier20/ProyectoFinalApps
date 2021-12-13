@@ -28,6 +28,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
     private Notification notification;
     protected FirebaseUser firebaseUser;
 
+
     public NotificationsView(@NonNull View itemView, String rol) {
         super(itemView);
 
@@ -51,76 +52,68 @@ public class NotificationsView extends RecyclerView.ViewHolder {
     }
 
     private void see(View view){
-            FirebaseFirestore.getInstance().collection("Payments").addSnapshotListener(
-                    (value, error) -> {
-                        for (DocumentChange dc: value.getDocumentChanges()){
-                            switch (dc.getType()){
-                                case ADDED:
-                                    //esta persona acabo de pagar
-                                    Notification client = dc.getDocument().toObject(Notification.class);
+        FirebaseFirestore.getInstance().collection("Payments").document(notification.getId()).get().addOnSuccessListener(
+                task -> {
+                    Notification client = task.toObject(Notification.class);
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
-                                            .setTitle(client.getName()+" acaba de solicitar el pago")
-                                            .setMessage("¿Confirmar el pago?")
-                                            .setNegativeButton("NO", (dialog, id) -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
+                            .setTitle(client.getName()+" acaba de solicitar el pago")
+                            .setMessage("¿Confirmar el pago?")
+                            .setNegativeButton("NO", (dialog, id) -> {
 
-                                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).get().addOnSuccessListener(
-                                                        answer -> {
-                                                           Notification not = answer.toObject(Notification.class);
-                                                           not.setDescription("Denegada");
+                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).get().addOnSuccessListener(
+                                        answer -> {
+                                            Notification not = answer.toObject(Notification.class);
+                                            not.setDescription("Denegada");
 
-                                                           FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
+                                            FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
+                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                        }
+                                );
+
+                                dialog.dismiss();
+                            })
+                            .setPositiveButton("SI", (dialog, id) -> {
+
+                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).get().addOnSuccessListener(
+                                        answer -> {
+                                            Notification not = answer.toObject(Notification.class);
+                                            not.setDescription("Aceptada");
+
+                                            FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
+                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                            Toast.makeText(view.getContext(),"Solicitud denegada con éxito", Toast.LENGTH_LONG).show();
+                                        }
+                                );
+
+                                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
+                                        sussSub -> {
+                                            for(DocumentSnapshot doc: sussSub.getDocuments()) {
+                                                Subscription sub = doc.toObject(Subscription.class);
+
+                                                sub.setActive(true);
+                                                sub.setDateStart(new Date().getTime());
+                                                long dateend = new Date().getTime() + 2147483647;
+                                                dateend += 432000000;
+                                                sub.setDateEnd(dateend);
+                                                sub.setMembership("Gold");
+                                                sub.setState("Pago");
+
+                                                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").document(sub.getId()).set(sub).addOnSuccessListener(
+                                                        suss -> {
                                                             FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                                            Toast.makeText(view.getContext(),"Solicitud aceptada con éxito", Toast.LENGTH_LONG).show();
                                                         }
                                                 );
+                                            }
+                                        }
+                                );
 
-                                                dialog.dismiss();
-                                            })
-                                            .setPositiveButton("SI", (dialog, id) -> {
-
-                                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).get().addOnSuccessListener(
-                                                        answer -> {
-                                                            Notification not = answer.toObject(Notification.class);
-                                                            not.setDescription("Aceptada");
-
-                                                            FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
-                                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
-                                                            Toast.makeText(view.getContext(),"Solicitud denegada con éxito", Toast.LENGTH_LONG).show();
-                                                        }
-                                                );
-
-                                                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
-                                                        sussSub -> {
-                                                            for(DocumentSnapshot doc: sussSub.getDocuments()) {
-                                                                Subscription sub = doc.toObject(Subscription.class);
-
-                                                                sub.setActive(true);
-                                                                sub.setDateStart(new Date().getTime());
-                                                                long dateend = new Date().getTime() + 2147483647;
-                                                                dateend += 432000000;
-                                                                sub.setDateEnd(dateend);
-                                                                sub.setMembership("Gold");
-                                                                sub.setState("Pago");
-
-                                                                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").document(sub.getId()).set(sub).addOnSuccessListener(
-                                                                        suss -> {
-                                                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
-                                                                            Toast.makeText(view.getContext(),"Solicitud aceptada con éxito", Toast.LENGTH_LONG).show();
-                                                                        }
-                                                                );
-                                                            }
-                                                        }
-                                                );
-
-                                                dialog.dismiss();
-                                            });
-                                    builder.show();
-
-                                    break;
-                            }
-                        }
-                    }
-            );
+                                dialog.dismiss();
+                            });
+                    builder.show();
+                }
+        );
     }
 
     public TextView getNotificationName() {
