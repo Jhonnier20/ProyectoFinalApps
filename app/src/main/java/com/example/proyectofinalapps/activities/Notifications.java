@@ -28,6 +28,7 @@ public class Notifications extends AppCompatActivity {
     private ImageButton closeNotifications;
     private LinearLayoutManager manager;
     private NotificationsAdapter adapter;
+    private String rol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,10 @@ public class Notifications extends AppCompatActivity {
         deleteNotifications = binding.deleteNotifications;
         closeNotifications = binding.closeNotifications;
 
+        rol = getIntent().getExtras().getString("rol");
         manager = new LinearLayoutManager(this);
         notifications.setLayoutManager(manager);
-        adapter = new NotificationsAdapter(getIntent().getExtras().getString("rol"));
+        adapter = new NotificationsAdapter(rol);
         notifications.setAdapter(adapter);
         notifications.setHasFixedSize(true);
 
@@ -54,16 +56,35 @@ public class Notifications extends AppCompatActivity {
     private void chargeNotifications() {
         FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
         adapter.deteleNotifications();
-        FirebaseFirestore.getInstance().collection("Payments").get().addOnCompleteListener(
-                task -> {
-                    for(DocumentSnapshot doc: task.getResult()) {
-                        Notification notification = doc.toObject(Notification.class);
-                        adapter.addNotification(notification);
-                        adapter.notifyDataSetChanged();
-                        amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
+
+        if(rol.equals("Staff")){
+
+            FirebaseFirestore.getInstance().collection("Payments").get().addOnCompleteListener(
+                    task -> {
+                        for(DocumentSnapshot doc: task.getResult()) {
+                            Notification notification = doc.toObject(Notification.class);
+                            adapter.addNotification(notification);
+                            adapter.notifyDataSetChanged();
+                            amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
+                        }
                     }
-                }
-        );
+            );
+
+        }else if(rol.equals("Client")){
+
+            FirebaseFirestore.getInstance().collection("PaymentsAnswered").get().addOnCompleteListener(
+                    task -> {
+                        for(DocumentSnapshot doc: task.getResult()) {
+                            Notification notification = doc.toObject(Notification.class);
+                            adapter.addNotification(notification);
+                            adapter.notifyDataSetChanged();
+                            amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
+                        }
+                    }
+            );
+
+        }
+
     }
 
     private void deleteAll(View view){
