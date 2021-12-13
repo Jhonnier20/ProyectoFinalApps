@@ -1,5 +1,6 @@
 package com.example.proyectofinalapps.viewholders;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,11 +33,15 @@ public class NotificationsView extends RecyclerView.ViewHolder {
         see = itemView.findViewById(R.id.see);
 
         if(rol.equals("Cliente")){
-            notificationName.setVisibility(View.GONE);
-            see.setVisibility(View.GONE);
+            notificationName.setVisibility(View.INVISIBLE);
+            see.setVisibility(View.INVISIBLE);
+            Log.e("ºººººººº","Entro al if");
+        }else{
+            notificationName.setVisibility(View.VISIBLE);
+            see.setVisibility(View.VISIBLE);
+            Log.e("ºººººººº","Entro al else");
+            see.setOnClickListener(this::see);
         }
-
-        see.setOnClickListener(this::see);
     }
 
     private void see(View view){
