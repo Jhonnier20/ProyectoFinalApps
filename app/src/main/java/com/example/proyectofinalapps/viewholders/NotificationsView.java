@@ -57,12 +57,13 @@ public class NotificationsView extends RecyclerView.ViewHolder {
                                             .setNegativeButton("NO", (dialog, id) -> {
                                                 FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
 
-                                                //send user to PaymentsAnswered collection
-                                                FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(client);
-
                                                 dialog.dismiss();
                                             })
                                             .setPositiveButton("SI", (dialog, id) -> {
+
+                                                //send user to PaymentsAnswered collection
+                                                FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(client);
+
 
                                                 FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
                                                         sussSub -> {
