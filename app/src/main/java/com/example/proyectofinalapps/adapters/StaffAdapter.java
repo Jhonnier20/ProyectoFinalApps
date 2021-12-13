@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
 
@@ -77,7 +78,9 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
                                 intent.putExtra("accountStatusClient", sub.getState());
                                 intent.putExtra("membershipClient","Mensual");
                                 intent.putExtra("status",client.getIsActive());
-                                intent.putExtra("dateClient", sub.getDateEnd());
+                                Date tmp = new Date(sub.getDateEnd());
+                                String deit = "" + tmp.getDay() + "/" + tmp.getMonth() + "/" + tmp.getYear();
+                                intent.putExtra("dateClient", deit);
 
                                 view.getContext().startActivity(intent);
                             }

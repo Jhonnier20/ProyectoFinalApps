@@ -38,6 +38,8 @@ public class customerDetails extends AppCompatActivity {
         clientName.setText(getIntent().getExtras().getString("clientName"));
         emailClient.setText(getIntent().getExtras().getString("emailName"));
         gymClient.setText(getIntent().getExtras().getString("gymClient"));
+        accountStatusClient.setText(getIntent().getExtras().getString("accountStatusClient"));
+        dateClient.setText("Válida hasta: " + getIntent().getExtras().getString("dateClient"));
         String tmp = getIntent().getExtras().getString("status");
 
         if(tmp.equalsIgnoreCase("Y")){
