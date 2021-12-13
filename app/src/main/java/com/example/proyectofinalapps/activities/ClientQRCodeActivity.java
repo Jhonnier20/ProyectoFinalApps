@@ -44,7 +44,7 @@ public class ClientQRCodeActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("Attendance").document(client.getId()).addSnapshotListener(
                 (value, error) -> {
-                    Toast.makeText(this, "Ingreso exitoso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Código QR generado exitósamente", Toast.LENGTH_SHORT).show();
                 }
         );
         updateQR();

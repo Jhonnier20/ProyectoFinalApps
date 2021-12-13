@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectofinalapps.activities.Notifications;
+import com.example.proyectofinalapps.activities.SolicitudDePagoClient;
 import com.example.proyectofinalapps.databinding.FragmentHomeRegisteredUserBinding;
 import com.example.proyectofinalapps.model.Notification;
 import com.example.proyectofinalapps.model.Person;
@@ -25,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.proyectofinalapps.activities.ClientQRCodeActivity;
+import com.google.gson.Gson;
 
 
 public class FragmentHomeRegisteredUser extends Fragment {
@@ -34,8 +36,10 @@ public class FragmentHomeRegisteredUser extends Fragment {
     private ImageView QRIcon, cashIcon, goToNotifications;
     private View view;
     private FragmentHomeRegisteredUserBinding binding;
+    private Subscription subscription;
 
     private Person client;
+    protected FirebaseUser firebaseUser;
 
     public FragmentHomeRegisteredUser() {
         // Required empty public constructor
@@ -68,9 +72,24 @@ public class FragmentHomeRegisteredUser extends Fragment {
         requestPayment.setOnClickListener(this::requestPayment);
         goToNotifications.setOnClickListener(this::goToNotifications);
 
-        chargeData();
+
+        chargeItems();
 
         return view;
+    }
+
+    private void chargeItems() {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore.getInstance().collection("Clientes").document(firebaseUser.getUid()).collection("Subscription").get().addOnSuccessListener(
+                task -> {
+                    for(DocumentSnapshot doc: task.getDocuments()) {
+                        subscription = doc.toObject(Subscription.class);
+                        break;
+                    }
+                    membership.setText(subscription.getMembership());
+                    cutoffDate.setText(""+subscription.getState());
+                }
+        );
     }
 
     private void generateQR(View view){
@@ -88,43 +107,17 @@ public class FragmentHomeRegisteredUser extends Fragment {
 
                         if (sub.isActive() == true){
                             Log.e(">>>odioesto",""+sub.isActive());
+                            Toast.makeText(view.getContext(),"Ya tienes una subscripcion activa", Toast.LENGTH_LONG).show();
 
                         } else {
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                                    .setTitle("Realizar pago")
-                                    .setMessage("¿Esta seguro que desea realizar el pago?")
-                                    .setNegativeButton("NO", (dialog, id) -> {
-                                        dialog.dismiss();
-                                    })
-                                    .setPositiveButton("SI", (dialog, id) -> {
-                                        successPayment();
-                                        dialog.dismiss();
-                                    });
-                            builder.show();
+                            Intent intent = new Intent(getActivity(), SolicitudDePagoClient.class);
+                            getActivity().startActivity(intent);
                         }
                     }
                 }
         );
     }
 
-    private void successPayment () {
-        FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
-
-        FirebaseFirestore.getInstance().collection("Clientes").document(auth.getUid()).get().addOnSuccessListener(
-                per -> {
-                    Person myperson = per.toObject(Person.class);
-                    Notification noti = new Notification(myperson.getFullName(), "pendiente", myperson.getId());
-
-                    //send user to Payments collection
-                    FirebaseFirestore.getInstance().collection("Payments").document(myperson.getId()).set(noti).addOnSuccessListener(
-                            added -> {
-                                Toast.makeText(getActivity(), "Esperando confirmación de staff", Toast.LENGTH_LONG);
-                            }
-                    );
-                }
-        );
-    }
 
     private void goToNotifications(View view){
         Intent intent = new Intent(getActivity(), Notifications.class);
@@ -140,12 +133,4 @@ public class FragmentHomeRegisteredUser extends Fragment {
         this.client = client;
     }
 
-    private void chargeData() {
-        //String[] fullName = client.getFullName().toUpperCase(Locale.ROOT).split(" ");
-
-        //welcomeTitle.setText("BIENVENIDO " + fullName[0] + "!");
-        membership.setText(" - ");
-        cutoffDate.setText(" - ");
-
-    }
 }
