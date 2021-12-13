@@ -19,6 +19,8 @@ import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigBinding;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ConfigFragment extends Fragment {
 
@@ -60,8 +62,22 @@ public class ConfigFragment extends Fragment {
 
 
     private void deleteProfile(View view){
-        //TODO
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Eliminar mi cuenta")
+                .setMessage("¿Esta seguro que deseas eliminar tu cuenta?")
+                .setNegativeButton("NO", (dialog, id) -> {
+                    dialog.dismiss();
+                })
+                .setPositiveButton("SI", (dialog, id) -> {
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore.getInstance().collection("Clientes").document(firebaseUser.getUid()).delete();
+                    context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                    dialog.dismiss();
+                    getActivity().finish();
+                });
+        builder.show();
     }
 
     private void goToPrivacyPolicy(View view){

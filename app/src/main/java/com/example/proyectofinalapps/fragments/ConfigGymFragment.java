@@ -90,6 +90,22 @@ public class ConfigGymFragment extends Fragment {
     }
 
     protected void deleteProfile(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Eliminar mi cuenta")
+                .setMessage("¿Esta seguro que deseas eliminar tu cuenta?")
+                .setNegativeButton("NO", (dialog, id) -> {
+                    dialog.dismiss();
+                })
+                .setPositiveButton("SI", (dialog, id) -> {
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore.getInstance().collection("Staff").document(firebaseUser.getUid()).delete();
+                    context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                    dialog.dismiss();
+                    getActivity().finish();
+                });
+        builder.show();
 
     }
 
