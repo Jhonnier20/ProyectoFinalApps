@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
+import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeRegisteredUserBinding;
+import com.example.proyectofinalapps.model.Notification;
 import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.Subscription;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,7 +77,6 @@ public class FragmentHomeRegisteredUser extends Fragment {
     }
 
     private void generateQR(View view){
-        //TODO
         Intent intent = new Intent(getActivity(), ClientQRCodeActivity.class);
         intent.putExtra("client", client);
         startActivity(intent);
@@ -129,7 +130,8 @@ public class FragmentHomeRegisteredUser extends Fragment {
     }
 
     private void goToNotifications(View view){
-        Intent intent = new Intent(getActivity(), ClientNotificationsActivity.class);
+        Intent intent = new Intent(getActivity(), Notifications.class);
+        intent.putExtra("rol","Client");
         getActivity().startActivity(intent);
     }
 

@@ -86,6 +86,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
         buscarBtn.setOnClickListener(this::searchClient);
+
         searchClient.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -151,6 +152,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
 
     private void goToNotifications(View view){
         Intent intent = new Intent(getActivity(), Notifications.class);
+        intent.putExtra("rol","Staff");
         getActivity().startActivity(intent);
     }
 
