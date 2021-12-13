@@ -3,16 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="90dp"
     android:background="#632222"
     android:backgroundTint="@color/grei">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="#434343"
+        android:backgroundTint="#5A5A5A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
         android:id="@+id/see"
-        android:layout_width="wrap_content"
-        android:layout_height="51dp"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:backgroundTint="@color/buttons_color"
+        android:paddingLeft="13dp"
         android:text="Ver"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,12 +36,13 @@
         style="@style/ForgotPassMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/cairo_regular"
         android:text="nombre"
         android:textColor="@color/secondary_1"
         android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,10 +50,9 @@
         android:id="@+id/notificationDescription"
         style="@style/ForgotPassMin"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/cairo_regular"
         android:text="Ha solicitado un pago"
         android:textColor="@color/secondary_1"

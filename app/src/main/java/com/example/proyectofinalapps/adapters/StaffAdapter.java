@@ -107,7 +107,6 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         }
     }
 
-
     public OnClientInfoListener getListener() {
         return listener;
     }

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
+import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.databinding.FragmentHomeClientBinding;
 import com.example.proyectofinalapps.model.Person;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,12 +50,10 @@ public class HomeClientFragment extends Fragment {
         view = binding.getRoot();
 
         codQrImg = binding.codQrImg;
-        goToNotificationsActivity = binding.goToNotificationsActivity;
         welcomeTv = binding.welcomeTv;
 
         generateQR();
 
-        goToNotificationsActivity.setOnClickListener(this::goToNotificationsActivity);
 
         FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).addSnapshotListener(
                 (task, error) -> {
@@ -92,11 +90,6 @@ public class HomeClientFragment extends Fragment {
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    private void goToNotificationsActivity(View view){
-        Intent intent = new Intent(getActivity(), ClientNotificationsActivity.class);
-        getActivity().startActivity(intent);
     }
 
 

@@ -13,6 +13,8 @@ import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.model.Notification;
 import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.Subscription;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +25,8 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
     private TextView notificationName, notificationDescription;
     private Button see;
-    private Person notification;
+    private Notification notification;
+    protected FirebaseUser firebaseUser;
 
     public NotificationsView(@NonNull View itemView, String rol) {
         super(itemView);
@@ -33,18 +36,18 @@ public class NotificationsView extends RecyclerView.ViewHolder {
         see = itemView.findViewById(R.id.see);
 
         if(rol.equals("Client")){
-            notificationName.setVisibility(View.INVISIBLE);
-            notificationDescription.setText("Solicitud realizada");
+            notificationName.setText("Respuesta de solicitud");
+            see.setText("X");
             see.setOnClickListener(this::see2);
         }else{
-            notificationName.setVisibility(View.VISIBLE);
             see.setVisibility(View.VISIBLE);
             see.setOnClickListener(this::see);
         }
     }
 
     private void see2(View view){
-        //FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).delete();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(firebaseUser.getUid()).delete();
     }
 
     private void see(View view){
@@ -54,21 +57,36 @@ public class NotificationsView extends RecyclerView.ViewHolder {
                             switch (dc.getType()){
                                 case ADDED:
                                     //esta persona acabo de pagar
-                                    Person client = dc.getDocument().toObject(Person.class);
+                                    Notification client = dc.getDocument().toObject(Notification.class);
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
-                                            .setTitle(client.getFullName()+" acaba de realizar pago")
+                                            .setTitle(client.getName()+" acaba de solicitar el pago")
                                             .setMessage("¿Confirmar el pago?")
                                             .setNegativeButton("NO", (dialog, id) -> {
-                                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+
+                                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).get().addOnSuccessListener(
+                                                        answer -> {
+                                                           Notification not = answer.toObject(Notification.class);
+                                                           not.setDescription("Denegada");
+
+                                                           FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
+                                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                                        }
+                                                );
 
                                                 dialog.dismiss();
                                             })
                                             .setPositiveButton("SI", (dialog, id) -> {
 
-                                                //send user to PaymentsAnswered collection
-                                                FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(client);
+                                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).get().addOnSuccessListener(
+                                                        answer -> {
+                                                            Notification not = answer.toObject(Notification.class);
+                                                            not.setDescription("Aceptada");
 
+                                                            FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
+                                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                                        }
+                                                );
 
                                                 FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
                                                         sussSub -> {
@@ -85,7 +103,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
                                                                 FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").document(sub.getId()).set(sub).addOnSuccessListener(
                                                                         suss -> {
-                                                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                                                            //FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
                                                                             Toast.makeText(view.getContext(),"Solicitud aceptada con éxito", Toast.LENGTH_LONG).show();
                                                                         }
                                                                 );
@@ -112,7 +130,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
         return notificationDescription;
     }
 
-    public Person getNotification() {
+    public Notification getNotification() {
         return notification;
     }
 
@@ -120,7 +138,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
         return see;
     }
 
-    public void setNotification(Person notification) {
+    public void setNotification(Notification notification) {
         this.notification = notification;
     }
 }

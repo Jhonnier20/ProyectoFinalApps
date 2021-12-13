@@ -24,7 +24,6 @@ public class Notifications extends AppCompatActivity {
 
     private RecyclerView notifications;
     private TextView amountNotifications;
-    private Button deleteNotifications;
     private ImageButton closeNotifications;
     private LinearLayoutManager manager;
     private NotificationsAdapter adapter;
@@ -37,7 +36,6 @@ public class Notifications extends AppCompatActivity {
         setContentView(binding.getRoot());
         notifications = binding.notifications;
         amountNotifications = binding.amountNotifications;
-        deleteNotifications = binding.deleteNotifications;
         closeNotifications = binding.closeNotifications;
 
         rol = getIntent().getExtras().getString("rol");
@@ -47,35 +45,32 @@ public class Notifications extends AppCompatActivity {
         notifications.setAdapter(adapter);
         notifications.setHasFixedSize(true);
 
-        deleteNotifications.setOnClickListener(this::deleteAll);
         closeNotifications.setOnClickListener(this::close);
 
         chargeNotifications();
     }
 
     private void chargeNotifications() {
-        FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
         adapter.deteleNotifications();
 
-        if(rol.equals("Staff")){
-
-            FirebaseFirestore.getInstance().collection("Payments").get().addOnCompleteListener(
+        if(rol.equals("Client")){
+            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(firebaseUser.getUid()).get().addOnSuccessListener(
                     task -> {
-                        for(DocumentSnapshot doc: task.getResult()) {
-                            Person notification = doc.toObject(Person.class);
+                        Notification notification = task.toObject(Notification.class);
+                        if(notification != null){
                             adapter.addNotification(notification);
                             adapter.notifyDataSetChanged();
-                            amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
+                            amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+" notificaciones");
                         }
                     }
             );
 
-        }else if(rol.equals("Client")){
-
-            FirebaseFirestore.getInstance().collection("PaymentsAnswered").get().addOnCompleteListener(
+        }else if(rol.equals("Staff")){
+            FirebaseFirestore.getInstance().collection("Payments").get().addOnCompleteListener(
                     task -> {
                         for(DocumentSnapshot doc: task.getResult()) {
-                            Person notification = doc.toObject(Person.class);
+                            Notification notification = doc.toObject(Notification.class);
                             adapter.addNotification(notification);
                             adapter.notifyDataSetChanged();
                             amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
@@ -84,12 +79,8 @@ public class Notifications extends AppCompatActivity {
             );
 
         }
-
     }
 
-    private void deleteAll(View view){
-        //TODO
-    }
 
     private void close(View view){
         finish();
