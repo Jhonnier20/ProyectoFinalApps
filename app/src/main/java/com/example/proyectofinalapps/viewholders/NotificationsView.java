@@ -85,6 +85,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
                                                             FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
                                                             FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                                            Toast.makeText(view.getContext(),"Solicitud denegada con éxito", Toast.LENGTH_LONG).show();
                                                         }
                                                 );
 
@@ -103,7 +104,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
                                                                 FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").document(sub.getId()).set(sub).addOnSuccessListener(
                                                                         suss -> {
-                                                                            //FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                                                            FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
                                                                             Toast.makeText(view.getContext(),"Solicitud aceptada con éxito", Toast.LENGTH_LONG).show();
                                                                         }
                                                                 );

@@ -15,6 +15,8 @@ import com.example.proyectofinalapps.model.Subscription;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
+
 public class ProfileClientFragment extends Fragment {
 
     private TextView clientName2, emailClient2, gymClient2, accountStatusClient2,
@@ -63,6 +65,8 @@ public class ProfileClientFragment extends Fragment {
         membershipClient2.setText(subscription.getMembership());
         if(subscription.isActive()) {
             but.setText("Subscripcion activa");
+            Date dateStart = new Date(subscription.getDateStart());
+            Date dateEnd = new Date(subscription.getDateEnd());
             dateClient2.setText(subscription.getDateStart() + "-" +subscription.getDateEnd());
         } else {
             but.setText("Subscripcion inactiva");
