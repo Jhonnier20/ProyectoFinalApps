@@ -48,6 +48,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
         Person client = clients.get(position);
+        holder.setClient(client);
         holder.getNameuserrow().setText(client.getFullName());
 
         holder.getUserImg().setOnClickListener(
@@ -61,31 +62,31 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
                 }
         );
 
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-
-                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
-                        task -> {
-                            for (DocumentSnapshot doc: task.getDocuments()) {
-                                Subscription sub = doc.toObject(Subscription.class);
-
-                                Intent intent = new Intent(view.getContext(), customerDetails.class);
-                                intent.putExtra("clientName",client.getFullName());
-                                intent.putExtra("emailName",client.getEmail());
-                                intent.putExtra("ageClient","");
-                                intent.putExtra("gymClient","My Gym");
-                                intent.putExtra("accountStatusClient", sub.getState());
-                                intent.putExtra("membershipClient","Mensual");
-                                intent.putExtra("status",client.getIsActive());
-                                intent.putExtra("dateClient", sub.getDateEnd());
-
-                                view.getContext().startActivity(intent);
-                            }
-                        }
-                );
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//
+//                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
+//                        task -> {
+//                            for (DocumentSnapshot doc: task.getDocuments()) {
+//                                Subscription sub = doc.toObject(Subscription.class);
+//
+//                                Intent intent = new Intent(view.getContext(), customerDetails.class);
+//                                intent.putExtra("clientName",client.getFullName());
+//                                intent.putExtra("emailName",client.getEmail());
+//                                intent.putExtra("ageClient","");
+//                                intent.putExtra("gymClient","My Gym");
+//                                intent.putExtra("accountStatusClient", sub.getState());
+//                                intent.putExtra("membershipClient","Mensual");
+//                                intent.putExtra("status",client.getIsActive());
+//                                intent.putExtra("dateClient", sub.getDateEnd());
+//
+//                                view.getContext().startActivity(intent);
+//                            }
+//                        }
+//                );
+//            }
+//        });
 
     }
 

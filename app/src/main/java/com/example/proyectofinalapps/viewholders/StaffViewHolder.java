@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.User;
 
 public class StaffViewHolder extends RecyclerView.ViewHolder {
@@ -16,7 +17,7 @@ public class StaffViewHolder extends RecyclerView.ViewHolder {
     private TextView nameuserrow;
     private ImageView userImg;
 
-    private User user;
+    private Person client;
 
     public StaffViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -41,11 +42,11 @@ public class StaffViewHolder extends RecyclerView.ViewHolder {
         this.userImg = userImg;
     }
 
-    public User getUser() {
-        return user;
+    public Person getClient() {
+        return client;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setClient(Person client) {
+        this.client = client;
     }
 }

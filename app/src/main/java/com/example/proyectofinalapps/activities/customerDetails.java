@@ -49,16 +49,16 @@ public class customerDetails extends AppCompatActivity {
         closeDetails = binding.closeDetails;
         allowEntryC = binding.allowEntryC;
 
-        clientName.setText(getIntent().getExtras().getString("clientName"));
-        emailClient.setText(getIntent().getExtras().getString("emailName"));
-        gymClient.setText(getIntent().getExtras().getString("gymClient"));
-        String tmp = getIntent().getExtras().getString("status");
+//        clientName.setText(getIntent().getExtras().getString("clientName"));
+//        emailClient.setText(getIntent().getExtras().getString("emailName"));
+//        gymClient.setText(getIntent().getExtras().getString("gymClient"));
+//        String tmp = getIntent().getExtras().getString("status");
 
-        if(tmp.equalsIgnoreCase("Y")){
-            but.setText("Subscripción Activa");
-        }else{
-            but.setText("Subscripción Inactiva");
-        }
+//        if(tmp.equalsIgnoreCase("Y")){
+//            but.setText("Subscripción Activa");
+//        }else{
+//            but.setText("Subscripción Inactiva");
+//        }
 
         allowEntryC.setOnClickListener(this::allowEntry);
 

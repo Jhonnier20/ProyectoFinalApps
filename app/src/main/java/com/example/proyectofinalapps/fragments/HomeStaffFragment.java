@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +81,27 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
         buscarBtn.setOnClickListener(this::searchClient);
+        searchClient.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        if(editable.toString().equals("")) {
+                            adapter.deleteClients();
+                            chargeClients();
+                        }
+                    }
+                }
+        );
 
         adapter.deleteClients();
         chargeClients();
@@ -94,7 +117,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         }else{
             FirebaseFirestore.getInstance().collection("Clientes").whereEqualTo("fullName", toSearch).get().addOnCompleteListener(
                     task -> {
-                        adapter.removeAllClientFromArray();
+                        adapter.deleteClients();
                         for(DocumentSnapshot doc: task.getResult()) {
                             Person person = doc.toObject(Person.class);
                             if(person.getIsActive().equals("Y")) {
@@ -129,7 +152,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     }
 
     private void chargeClients() {
-        adapter.removeAllClientFromArray();
+        adapter.deleteClients();
         FirebaseFirestore.getInstance().collection("Clientes").get().addOnCompleteListener(
                 task -> {
                     for(DocumentSnapshot doc: task.getResult()) {

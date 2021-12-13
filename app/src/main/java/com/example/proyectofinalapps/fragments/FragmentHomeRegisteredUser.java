@@ -14,6 +14,8 @@ import com.example.proyectofinalapps.activities.ClientQRCodeActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeRegisteredUserBinding;
 import com.example.proyectofinalapps.model.Person;
 
+import java.util.Locale;
+
 public class FragmentHomeRegisteredUser extends Fragment {
 
     private TextView welcomeTitle,actions,membership,cutoffDate;
@@ -55,6 +57,8 @@ public class FragmentHomeRegisteredUser extends Fragment {
         requestPayment.setOnClickListener(this::requestPayment);
         goToNotifications.setOnClickListener(this::goToNotifications);
 
+        chargeData();
+
         return view;
     }
 
@@ -80,5 +84,14 @@ public class FragmentHomeRegisteredUser extends Fragment {
 
     public void setClient(Person client) {
         this.client = client;
+    }
+
+    private void chargeData() {
+        String[] fullName = client.getFullName().toUpperCase(Locale.ROOT).split(" ");
+
+        welcomeTitle.setText("BIENVENIDO " + fullName[0] + "!");
+        membership.setText(" - ");
+        cutoffDate.setText(" - ");
+
     }
 }
