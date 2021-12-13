@@ -54,9 +54,9 @@ public class Notifications extends AppCompatActivity {
     private void chargeNotifications() {
         FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
         adapter.deteleNotifications();
-        FirebaseFirestore.getInstance().collection("Clientes").document(auth.getUid()).collection("Subscription").get().addOnSuccessListener(
+        FirebaseFirestore.getInstance().collection("Payments").get().addOnCompleteListener(
                 task -> {
-                    for(DocumentSnapshot doc: task.getDocuments()) {
+                    for(DocumentSnapshot doc: task.getResult()) {
                         Notification notification = doc.toObject(Notification.class);
                         adapter.addNotification(notification);
                         adapter.notifyDataSetChanged();
