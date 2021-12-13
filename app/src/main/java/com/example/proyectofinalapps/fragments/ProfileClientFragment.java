@@ -67,7 +67,7 @@ public class ProfileClientFragment extends Fragment {
             but.setText("Subscripcion activa");
             Date dateStart = new Date(subscription.getDateStart());
             Date dateEnd = new Date(subscription.getDateEnd());
-            dateClient2.setText(subscription.getDateStart() + "-" +subscription.getDateEnd());
+            dateClient2.setText(dateStart +"\n"+ " - "+"\n" + dateEnd);
         } else {
             but.setText("Subscripcion inactiva");
             dateClient2.setText("--/--/--");
