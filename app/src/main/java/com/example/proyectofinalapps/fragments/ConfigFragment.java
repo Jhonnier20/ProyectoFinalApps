@@ -24,7 +24,7 @@ public class ConfigFragment extends Fragment {
 
     private FragmentConfigBinding binding;
     private View view;
-    private Button logoutBtn, editThisProfile, deleteThisProfile, goToPrivacyPolicy;
+    private Button logoutBtn, deleteThisProfile, goToPrivacyPolicy;
 
     private Context context;
 
@@ -46,11 +46,9 @@ public class ConfigFragment extends Fragment {
         view = binding.getRoot();
 
         logoutBtn = binding.logout;
-        editThisProfile = binding.editThisProfile;
         deleteThisProfile = binding.deleteThisProfile;
         goToPrivacyPolicy = binding.goToPrivacyPolicy;
 
-        editThisProfile.setOnClickListener(this::editProfile);
         deleteThisProfile.setOnClickListener(this::deleteProfile);
         goToPrivacyPolicy.setOnClickListener(this::goToPrivacyPolicy);
         logoutBtn.setOnClickListener(this::logout);
@@ -60,12 +58,10 @@ public class ConfigFragment extends Fragment {
         return view;
     }
 
-    private void editProfile(View view){
-        //TODO
-    }
 
     private void deleteProfile(View view){
-//TODO
+        //TODO
+
     }
 
     private void goToPrivacyPolicy(View view){
