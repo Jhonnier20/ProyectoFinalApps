@@ -86,6 +86,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
         buscarBtn.setOnClickListener(this::searchClient);
+
         searchClient.addTextChangedListener(
                 new TextWatcher() {
                     @Override

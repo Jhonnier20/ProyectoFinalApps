@@ -11,6 +11,12 @@ import android.widget.TextView;
 
 import com.example.proyectofinalapps.adapters.NotificationsAdapter;
 import com.example.proyectofinalapps.databinding.ActivityNotificationsBinding;
+import com.example.proyectofinalapps.model.Notification;
+import com.example.proyectofinalapps.model.Person;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Notifications extends AppCompatActivity {
 
@@ -41,6 +47,22 @@ public class Notifications extends AppCompatActivity {
 
         deleteNotifications.setOnClickListener(this::deleteAll);
         closeNotifications.setOnClickListener(this::close);
+
+        chargeNotifications();
+    }
+
+    private void chargeNotifications() {
+        FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
+        adapter.deteleNotifications();
+        FirebaseFirestore.getInstance().collection("Clientes").document(auth.getUid()).collection("Subscription").get().addOnSuccessListener(
+                task -> {
+                    for(DocumentSnapshot doc: task.getDocuments()) {
+                        Notification notification = doc.toObject(Notification.class);
+                        adapter.addNotification(notification);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+        );
     }
 
     private void deleteAll(View view){
