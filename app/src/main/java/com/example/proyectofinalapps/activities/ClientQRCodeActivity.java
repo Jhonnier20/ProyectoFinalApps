@@ -24,7 +24,6 @@ import java.util.Date;
 public class ClientQRCodeActivity extends AppCompatActivity {
 
     private ImageView QRCodeImg;
-    private TextView QRCodeString;
     private Button backToHome;
     private ActivityClientQrcodeBinding binding;
 
@@ -39,7 +38,6 @@ public class ClientQRCodeActivity extends AppCompatActivity {
         client = (Person) getIntent().getExtras().get("client");
 
         QRCodeImg = binding.QRCodeImg;
-        QRCodeString = binding.QRCodeString;
         backToHome = binding.backToHome;
 
         backToHome.setOnClickListener(this::backToHome);

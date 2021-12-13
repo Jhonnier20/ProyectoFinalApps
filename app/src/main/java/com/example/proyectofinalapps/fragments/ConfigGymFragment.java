@@ -28,7 +28,7 @@ public class ConfigGymFragment extends Fragment {
     private ImageView gymImage;
     private TextView gymName, gymInstructor;
     private TextView clientName6;
-    private Button privacyPolicy, deleteProfile, editProfile, signOff;
+    private Button privacyPolicy, deleteProfile, signOff;
     private View view;
 
     protected FirebaseUser firebaseUser;
@@ -61,7 +61,6 @@ public class ConfigGymFragment extends Fragment {
         gymInstructor = binding.gymInstructor;
         privacyPolicy = binding.privacyPolicy;
         deleteProfile = binding.deleteProfile;
-        editProfile = binding.editProfile;
         signOff = binding.signOff;
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -80,7 +79,6 @@ public class ConfigGymFragment extends Fragment {
 
         privacyPolicy.setOnClickListener(this::goToPrivacyPolicy);
         deleteProfile.setOnClickListener(this::deleteProfile);
-        editProfile.setOnClickListener(this::editProfile);
         signOff.setOnClickListener(this::signOff);
 
         return view;
@@ -92,11 +90,23 @@ public class ConfigGymFragment extends Fragment {
     }
 
     protected void deleteProfile(View view){
-        Log.e("user", firebaseUser.getEmail());
-    }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("Eliminar mi cuenta")
+                .setMessage("¿Esta seguro que deseas eliminar tu cuenta?")
+                .setNegativeButton("NO", (dialog, id) -> {
+                    dialog.dismiss();
+                })
+                .setPositiveButton("SI", (dialog, id) -> {
+                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseFirestore.getInstance().collection("Staff").document(firebaseUser.getUid()).delete();
+                    context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                    dialog.dismiss();
+                    getActivity().finish();
+                });
+        builder.show();
 
-    protected void editProfile(View view){
-        Log.e("user", firebaseUser.getEmail());
     }
 
     protected void signOff(View view){

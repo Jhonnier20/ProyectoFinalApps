@@ -86,6 +86,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
         buscarBtn.setOnClickListener(this::searchClient);
+
         searchClient.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -107,8 +108,6 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                     }
                 }
         );
-
-        watchClientPayment();
 
         adapter.deleteClients();
         chargeClients();
@@ -151,6 +150,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
 
     private void goToNotifications(View view){
         Intent intent = new Intent(getActivity(), Notifications.class);
+        intent.putExtra("rol","Staff");
         getActivity().startActivity(intent);
     }
 
@@ -168,60 +168,6 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                             adapter.addClient(person);
                             adapter.notifyDataSetChanged();
                         }
-                    }
-                }
-        );
-    }
-
-    private void watchClientPayment() {
-        FirebaseFirestore.getInstance().collection("Payments").addSnapshotListener(
-                (value, error) -> {
-
-                    for (DocumentChange dc: value.getDocumentChanges()){
-                     switch (dc.getType()){
-                         case ADDED:
-                             //esta persona acabo de pagar
-                             Person client = dc.getDocument().toObject(Person.class);
-
-                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                                     .setTitle(client.getFullName()+" acaba de realizar pago")
-                                     .setMessage("¿Confirma el pago?")
-                                     .setNegativeButton("NO", (dialog, id) -> {
-                                         FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
-                                         dialog.dismiss();
-                                     })
-                                     .setPositiveButton("SI", (dialog, id) -> {
-
-                                         FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
-                                                 sussSub -> {
-                                                     for(DocumentSnapshot doc: sussSub.getDocuments()) {
-                                                         Subscription sub = doc.toObject(Subscription.class);
-
-                                                         sub.setActive(true);
-                                                         sub.setDateStart(new Date().getTime());
-                                                         long dateend = new Date().getTime() + 2147483647;
-                                                         dateend += 432000000;
-                                                         sub.setDateEnd(dateend);
-                                                         sub.setMembership("Gold");
-                                                         sub.setState("Pago");
-
-                                                         FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").document(sub.getId()).set(sub).addOnSuccessListener(
-                                                                 suss -> {
-                                                                     FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
-                                                                     Toast.makeText(getActivity(),"Persona activada", Toast.LENGTH_LONG).show();
-                                                                 }
-                                                         );
-                                                     }
-                                                 }
-                                         );
-
-                                         dialog.dismiss();
-                                     });
-                             builder.show();
-
-                             Toast.makeText(getContext(), "Alguien agrego algo", Toast.LENGTH_LONG).show();
-                             break;
-                     }
                     }
                 }
         );

@@ -44,7 +44,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminView> {
     @Override
     public void onBindViewHolder(@NonNull AdminView skeleton, int position) {
         Person instructor = instructors.get(position);
-        skeleton.setInstructor(instructor);
         skeleton.getInstructorName().setText(instructor.getFullName());
         skeleton.setInstructor(instructor);
     }

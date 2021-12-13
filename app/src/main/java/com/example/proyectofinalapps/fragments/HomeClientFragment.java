@@ -60,9 +60,11 @@ public class HomeClientFragment extends Fragment {
         FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).addSnapshotListener(
                 (task, error) -> {
                     Person p = task.toObject(Person.class);
-                    if(p.getIsActive().equals("Y")) {
-                        listener.onIsActiveClient();
-                        //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+                    if (p!=null){
+                        if(p.getIsActive().equals("Y")) {
+                            listener.onIsActiveClient();
+                            //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+                        }
                     }
                 }
         );

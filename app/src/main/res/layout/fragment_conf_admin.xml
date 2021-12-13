@@ -109,20 +109,6 @@
             app:layout_constraintTop_toBottomOf="@+id/gymNameAdmin" />
 
         <TextView
-            android:id="@+id/activeInstructors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/cairo_regular"
-            android:text="Instructores activos: 4"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            android:textStyle="normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/totalInstructors" />
-
-        <TextView
             android:id="@+id/totalClients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -134,7 +120,7 @@
             android:textSize="16dp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activeInstructors" />
+            app:layout_constraintTop_toBottomOf="@+id/totalInstructors" />
 
         <TextView
             android:id="@+id/activeClients"

@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
+import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeRegisteredUserBinding;
+import com.example.proyectofinalapps.model.Notification;
 import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.model.Subscription;
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,7 +77,6 @@ public class FragmentHomeRegisteredUser extends Fragment {
     }
 
     private void generateQR(View view){
-        //TODO
         Intent intent = new Intent(getActivity(), ClientQRCodeActivity.class);
         intent.putExtra("client", client);
         startActivity(intent);
@@ -119,8 +120,7 @@ public class FragmentHomeRegisteredUser extends Fragment {
                                     }
                             );
 
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getActivity(), "Ya tienes una subscripción activa", Toast.LENGTH_LONG);
                         }
                     }
@@ -129,7 +129,8 @@ public class FragmentHomeRegisteredUser extends Fragment {
     }
 
     private void goToNotifications(View view){
-        Intent intent = new Intent(getActivity(), ClientNotificationsActivity.class);
+        Intent intent = new Intent(getActivity(), Notifications.class);
+        intent.putExtra("rol","Client");
         getActivity().startActivity(intent);
     }
 
@@ -142,9 +143,9 @@ public class FragmentHomeRegisteredUser extends Fragment {
     }
 
     private void chargeData() {
-        String[] fullName = client.getFullName().toUpperCase(Locale.ROOT).split(" ");
+        //String[] fullName = client.getFullName().toUpperCase(Locale.ROOT).split(" ");
 
-        welcomeTitle.setText("BIENVENIDO " + fullName[0] + "!");
+        //welcomeTitle.setText("BIENVENIDO " + fullName[0] + "!");
         membership.setText(" - ");
         cutoffDate.setText(" - ");
 
