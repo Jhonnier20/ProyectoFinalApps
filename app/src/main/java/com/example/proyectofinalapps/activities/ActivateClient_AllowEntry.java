@@ -66,10 +66,12 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
     }
 
     protected void allowEntry(View view){
-        //TODO Aceptar entrada
-        //Supongo que se modificará algo en la base de datos
-        //Y despues termina esta actividad
-        finish();
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
+        integrator.setPrompt("LECTOR -QR");
+        integrator.setCameraId(0);
+        integrator.setBeepEnabled(true);
+        integrator.initiateScan();
     }
 
     protected void scanQR(View view){
