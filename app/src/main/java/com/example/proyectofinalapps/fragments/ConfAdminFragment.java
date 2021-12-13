@@ -19,17 +19,25 @@ import com.example.proyectofinalapps.activities.MainActivity;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
 import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfAdminBinding;
+import com.example.proyectofinalapps.model.Person;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ConfAdminFragment extends Fragment {
 
     private FragmentConfAdminBinding binding;
-    private TextView gymNameAdmin, totalInstructors, activeInstructors, totalClients,activeClients;
+    private TextView gymNameAdmin, totalInstructors, totalClients, activeClients;
     private Button privacyPolicyAdmin, logOutAdmin;
     private PrivacyPolicyActivity privacyPolicyActivity;
     private View view;
 
     private Context context;
+
+    //counters
+    private int counterInstructors;
+    private int counterClients;
+    private int counterActiveClients;
 
     public ConfAdminFragment() {
         // Required empty public constructor
@@ -48,9 +56,12 @@ public class ConfAdminFragment extends Fragment {
         binding = FragmentConfAdminBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
+        counterInstructors = 0;
+        counterClients = 0;
+        counterActiveClients = 0;
+
         gymNameAdmin = binding.gymNameAdmin;
         totalInstructors = binding.totalInstructors;
-        activeInstructors  = binding.activeInstructors;
         totalClients = binding.totalClients;
         activeClients = binding.activeClients;
         privacyPolicyAdmin = binding.privacyPolicyAdmin;
@@ -61,7 +72,40 @@ public class ConfAdminFragment extends Fragment {
 
         context = getActivity();
 
+        setGymData();
+
         return view;
+    }
+
+    private void setGymData() {
+        FirebaseFirestore.getInstance().collection("Staff").addSnapshotListener(
+                (value, error)-> {
+                    for (DocumentChange dc: value.getDocumentChanges()){
+                        Person person = dc.getDocument().toObject(Person.class);
+
+                        if (!person.getRol().equals("Admin")){
+                            counterInstructors++;
+                        }
+                    }
+                    totalInstructors.setText("Total instructores: "+counterInstructors);
+                }
+        );
+
+        FirebaseFirestore.getInstance().collection("Clientes").addSnapshotListener(
+                (value, error)-> {
+                    for (DocumentChange dc:value.getDocumentChanges()){
+                        Person person = dc.getDocument().toObject(Person.class);
+                        counterClients++;
+                        if (person.getIsActive().equals("Y")){
+                            counterActiveClients++;
+                        }
+                    }
+                    totalClients.setText("Total clientes: "+counterClients);
+                    activeClients.setText("Clientes activos "+counterActiveClients);
+                }
+        );
+
+
     }
 
     protected void goToPrivacyPolicy(View view){
