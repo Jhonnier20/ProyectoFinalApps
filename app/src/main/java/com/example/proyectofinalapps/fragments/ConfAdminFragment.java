@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ConfAdminFragment extends Fragment {
 
     private FragmentConfAdminBinding binding;
-    private TextView gymNameAdmin, totalInstructors, activeInstructors, totalClients,activeClients;
+    private TextView gymNameAdmin, totalInstructors, totalClients,activeClients;
     private Button privacyPolicyAdmin, logOutAdmin;
     private PrivacyPolicyActivity privacyPolicyActivity;
     private View view;
@@ -50,7 +50,6 @@ public class ConfAdminFragment extends Fragment {
 
         gymNameAdmin = binding.gymNameAdmin;
         totalInstructors = binding.totalInstructors;
-        activeInstructors  = binding.activeInstructors;
         totalClients = binding.totalClients;
         activeClients = binding.activeClients;
         privacyPolicyAdmin = binding.privacyPolicyAdmin;
