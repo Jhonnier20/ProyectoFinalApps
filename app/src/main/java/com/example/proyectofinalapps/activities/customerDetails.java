@@ -87,7 +87,7 @@ public class customerDetails extends AppCompatActivity {
                         but.setText("Subscripción activa");
                         Date dateStart = new Date(subscription.getDateStart());
                         Date dateEnd = new Date(subscription.getDateEnd());
-                        dateClient.setText(dateStart + " - " + dateEnd);
+                        dateClient.setText(dateStart +"\n"+ " - "+"\n" + dateEnd);
                     }else{
                         //La subscripcion esta inactiva
                         but.setText("Subscripción inactiva");
