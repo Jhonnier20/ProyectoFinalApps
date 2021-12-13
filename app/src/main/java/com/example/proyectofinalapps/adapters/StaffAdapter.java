@@ -101,8 +101,10 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     }
 
     public void deleteClients() {
-        notifyItemRangeRemoved(0, clients.size());
-        clients.clear();
+        for(int i = 0; i < clients.size(); i++) {
+            clients.remove(i);
+            notifyItemRemoved(i);
+        }
     }
 
 

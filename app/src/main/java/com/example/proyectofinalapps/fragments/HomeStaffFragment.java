@@ -109,8 +109,9 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                 }
         );
 
-        adapter.deleteClients();
-        chargeClients();
+        if(adapter.getItemCount() == 0) {
+            chargeClients();
+        }
         return view;
     }
 
@@ -164,11 +165,12 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                 task -> {
                     for(DocumentSnapshot doc: task.getResult()) {
                         Person person = doc.toObject(Person.class);
+                        Log.e(">>>", person.getFullName());
                         if(person.getIsActive().equals("Y")) {
                             adapter.addClient(person);
-                            adapter.notifyDataSetChanged();
                         }
                     }
+                    Log.e(">>>", "Finish");
                 }
         );
     }

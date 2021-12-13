@@ -47,7 +47,7 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
 
         //Load User from SP
         user = loadUser();
-        if(user == null || FirebaseAuth.getInstance().getCurrentUser() == null){
+        if(user == null || FirebaseAuth.getInstance().getCurrentUser() == null || !FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

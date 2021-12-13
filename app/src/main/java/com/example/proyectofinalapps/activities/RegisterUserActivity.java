@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
@@ -15,10 +18,21 @@ import com.example.proyectofinalapps.model.Subscription;
 import com.example.proyectofinalapps.model.User;
 import com.example.proyectofinalapps.databinding.ActivityRegisterUserBinding;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,6 +43,9 @@ public class RegisterUserActivity extends AppCompatActivity {
     private ActivityRegisterUserBinding binding;
     private EditText nameRegisterET, idRegisterET, mailRegisterET, passwordRegisterET, password2RegisterET;
     private Button registerBtn, goToRegisterTV;
+
+    private LoginButton registerFacebookBtn;
+    private CallbackManager callbackManager;
 
     private String rol;
 
@@ -47,10 +64,130 @@ public class RegisterUserActivity extends AppCompatActivity {
         password2RegisterET = binding.password2RegisterET;
         goToRegisterTV = binding.goToRegisterTV;
         registerBtn = binding.registerBtn;
+        registerFacebookBtn = binding.registerFacebookBtn;
 
-
+        registerFacebookBtn.setOnClickListener(this::loginFacebook);
         goToRegisterTV.setOnClickListener(this::changeToLogin);
         registerBtn.setOnClickListener(this::registerUser);
+    }
+
+    //login con facebook
+    private void loginFacebook(View view) {
+        if(rol == null || rol.equals("")) {
+            Toast.makeText(this, "Seleccione un rol existente", Toast.LENGTH_LONG).show();
+        } else {
+
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile"));
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    handleFacebookAccessToken(loginResult.getAccessToken());
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(@NonNull FacebookException e) {
+
+                }
+            });
+        }
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener(
+                        task -> {
+
+                            if(rol.equals("Client")) {
+                                addClientFirebase();
+
+                            } else if(rol.equals("Staff")) {
+                                addStaffFirebase();
+                            }
+                        }
+                ).addOnFailureListener(
+                error -> {
+                    Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+        );
+    }
+
+    private void addStaffFirebase() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        User user = new User(firebaseUser.getUid(), "Staff");
+        saveUser(user);
+        Person person = new Person();
+        person.setId(firebaseUser.getUid());
+        person.setFullName(firebaseUser.getDisplayName());
+        person.setEmail(firebaseUser.getEmail());
+        person.setRol(user.getRol());
+        person.setIsActive("N");
+
+        validateExistUser(person, user);
+    }
+
+    private void addClientFirebase() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        User user = new User(firebaseUser.getUid(), "Client");
+        saveUser(user);
+        Person person = new Person();
+        person.setId(firebaseUser.getUid());
+        person.setFullName(firebaseUser.getDisplayName());
+        person.setEmail(firebaseUser.getEmail());
+        person.setRol(user.getRol());
+        person.setIsActive("N");
+
+        validateExistUser(person, user);
+
+    }
+
+    private void validateExistUser(Person person, User user) {
+        switch (user.getRol()) {
+            case "Client":
+                FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnSuccessListener(
+                        e -> {
+                            FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
+                            FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person);
+                            Subscription subscription = new Subscription(
+                                    UUID.randomUUID().toString(),
+                                    false,
+                                    0,
+                                    0,
+                                    "Sin pago",
+                                    "Ninguna"
+                            );
+                            FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).collection("Subscription")
+                                    .document(subscription.getId()).set(subscription);
+                            Intent intentClient = new Intent(this, HomeClientActivity.class);
+                            startActivity(intentClient);
+                            finish();
+                        }
+                );
+
+                break;
+
+            case "Staff":
+                FirebaseFirestore.getInstance().collection("Staff").document(user.getId()).get().addOnSuccessListener(
+                        e -> {
+                            FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
+                            FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person);
+                            Intent intentStaff = new Intent(this, HomeStaffActivity.class);
+                            startActivity(intentStaff);
+                            finish();
+                        }
+                );
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void registerUser(View view) {
@@ -92,8 +229,11 @@ public class RegisterUserActivity extends AppCompatActivity {
                                                             .document(subscription.getId()).set(subscription);
 
                                                     saveUser(user);
-                                                    Intent intent = new Intent(this, HomeClientActivity.class);
+                                                    Intent intent = new Intent(this, LoginActivity.class);
+                                                    intent.putExtra("rol", user.getRol());
                                                     startActivity(intent);
+                                                    sendVerificationEmail();
+                                                    finish();
                                                 }
                                         );
 
@@ -101,8 +241,11 @@ public class RegisterUserActivity extends AppCompatActivity {
                                         FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person).addOnSuccessListener(
                                                 task3 -> {
                                                     saveUser(user);
-                                                    Intent intent = new Intent(this, HomeStaffActivity.class);
+                                                    Intent intent = new Intent(this, LoginActivity.class);
+                                                    intent.putExtra("rol", user.getRol());
                                                     startActivity(intent);
+                                                    sendVerificationEmail();
+                                                    finish();
                                                 }
                                         );
                                     }
@@ -116,6 +259,18 @@ public class RegisterUserActivity extends AppCompatActivity {
                     }
             );
         }
+    }
+
+    private void sendVerificationEmail() {
+        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnSuccessListener(
+                task -> {
+                    Toast.makeText(this, "Verifique su email antes de iniciar sesion", Toast.LENGTH_LONG).show();
+                }
+        ).addOnFailureListener(
+                error -> {
+                    Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+        );
     }
 
     private void changeToLogin(View view) {

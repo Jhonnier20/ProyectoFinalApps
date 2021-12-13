@@ -2,6 +2,7 @@ package com.example.proyectofinalapps.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 import com.example.proyectofinalapps.databinding.ActivityLoginBinding;
@@ -64,7 +66,36 @@ public class LoginActivity extends AppCompatActivity {
         loginFaceBtn.setOnClickListener(this::loginFacebook);
         loginBtn.setOnClickListener(this::loginUser);
         goToLoginTV.setOnClickListener(this::changeToRegister);
+        forgotPassTV.setOnClickListener(this::forgotPass);
 
+    }
+
+    private void forgotPass(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("Olvidaste tu contraseña")
+                .setMessage("Ingresa tu email para cambiar la contraseña");
+        EditText emailForgot = new EditText(this);
+        emailForgot.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        builder.setView(emailForgot);
+        builder.setPositiveButton("Enviar", (dialog, id) -> {
+            String sendEmail = emailForgot.getText().toString().trim();
+            if(sendEmail.equals("") || sendEmail == null) {
+                Toast.makeText(this, "Ingresa tu email", Toast.LENGTH_LONG).show();
+            } else {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(sendEmail).addOnSuccessListener(
+                        task -> {
+                            Toast.makeText(this, "El cambio de contraseña se ha enviado a " + sendEmail, Toast.LENGTH_LONG).show();
+                        }
+                ).addOnFailureListener(
+                        error -> {
+                            Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                );
+            }
+        }).setNegativeButton("Cancelar", (dialog, id) -> {
+            dialog.dismiss();
+        });
+        builder.show();
     }
 
     //cambiar al registro
@@ -91,42 +122,49 @@ public class LoginActivity extends AppCompatActivity {
             ).addOnSuccessListener(
                     task-> {
                         FirebaseUser fbuser = FirebaseAuth.getInstance().getCurrentUser();
+                        FirebaseFirestore.getInstance().collection("Users").document(fbuser.getUid()).get().addOnSuccessListener(
+                                taskUser -> {
+                                    User u = taskUser.toObject(User.class);
 
-                        //login de cliente
-                        if(rol.equals("Client")) {
-                            FirebaseFirestore.getInstance().collection("Clientes").document(fbuser.getUid()).get().addOnSuccessListener(
-                                    document -> {
-                                        User user = document.toObject(User.class);
-                                        saveUser(user);
-                                        Log.e(">>>", ">>>>>"+ user.getRol());
+                                    //login de cliente
+                                    if (u.getRol().equals("Client")) {
+                                        FirebaseFirestore.getInstance().collection("Clientes").document(fbuser.getUid()).get().addOnSuccessListener(
+                                                document -> {
+                                                    User user = document.toObject(User.class);
+                                                    saveUser(user);
+                                                    Log.e(">>>", ">>>>>" + user.getRol());
 
-                                        Intent intent = new Intent(this, HomeClientActivity.class);
-                                        intent.putExtra("rol", "Client");
-                                        startActivity(intent);
-                                        finish();
+                                                    Intent intent = new Intent(this, HomeClientActivity.class);
+                                                    intent.putExtra("rol", "Client");
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                        );
+                                    } else {
+                                        FirebaseFirestore.getInstance().collection("Staff").document(fbuser.getUid()).get().addOnSuccessListener(
+                                                document -> {
+                                                    User user = document.toObject(User.class);
+                                                    saveUser(user);
+                                                    Log.e(">>>", user.getRol());
+
+                                                    if (user.getRol().equals("Admin")) {
+                                                        Intent intent = new Intent(this, HomeAdminActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                    if (user.getRol().equals("Staff")) {
+                                                        Intent intent = new Intent(this, HomeStaffActivity.class);
+                                                        intent.putExtra("rol", "Staff");
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                        );
                                     }
-                            );
-                        }else{
-                            FirebaseFirestore.getInstance().collection("Staff").document(fbuser.getUid()).get().addOnSuccessListener(
-                                    document -> {
-                                        User user = document.toObject(User.class);
-                                        saveUser(user);
-                                        Log.e(">>>", user.getRol());
 
-                                        if(user.getRol().equals("Admin")){
-                                            Intent intent = new Intent(this, HomeAdminActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                        if(user.getRol().equals("Staff")){
-                                            Intent intent = new Intent(this, HomeStaffActivity.class);
-                                            intent.putExtra("rol", "Staff");
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                    }
-                            );
-                        }
+                                }
+                        );
+
                     }
             ).addOnFailureListener(
                     error->{
