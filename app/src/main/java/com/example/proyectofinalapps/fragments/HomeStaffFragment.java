@@ -102,7 +102,6 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                     @Override
                     public void afterTextChanged(Editable editable) {
                         if(editable.toString().equals("")) {
-                            adapter.deleteClients();
                             chargeClients();
                         }
                     }
@@ -117,21 +116,20 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
 
     private void searchClient(View view) {
 
-        String toSearch = searchClient.getText().toString().toLowerCase();
-
-        if (toSearch.isEmpty()){
-            chargeClients();
-        }else{
+        String toSearch = searchClient.getText().toString().trim();
+        if(!toSearch.isEmpty() && !toSearch.equals("")){
+            adapter.deleteClients();
             FirebaseFirestore.getInstance().collection("Clientes").whereEqualTo("fullName", toSearch).get().addOnCompleteListener(
                     task -> {
-                        adapter.deleteClients();
                         for(DocumentSnapshot doc: task.getResult()) {
                             Person person = doc.toObject(Person.class);
                             if(person.getIsActive().equals("Y")) {
+                                Log.e(">>>", person.getFullName());
                                 adapter.addClient(person);
-                                adapter.notifyDataSetChanged();
+                                //adapter.notifyDataSetChanged();
                             }
                         }
+                        Log.e(">>>", "Finish");
                     }
             );
         }
@@ -165,12 +163,10 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                 task -> {
                     for(DocumentSnapshot doc: task.getResult()) {
                         Person person = doc.toObject(Person.class);
-                        Log.e(">>>", person.getFullName());
                         if(person.getIsActive().equals("Y")) {
                             adapter.addClient(person);
                         }
                     }
-                    Log.e(">>>", "Finish");
                 }
         );
     }
