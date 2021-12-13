@@ -106,6 +106,10 @@ public class ConfigFragment extends Fragment {
                                         }
                                 );
                             }
+                    ).addOnFailureListener(
+                            fail->{
+                                Toast.makeText(getActivity(), fail.getMessage(), Toast.LENGTH_LONG).show();
+                            }
                     );
 
                 });
