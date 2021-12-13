@@ -59,9 +59,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsView
     }
 
     public void deteleNotifications() {
-        for (int i=notifications.size()-1;i>=0;i--) {
-            notifications.remove(i);
-            notifyItemRemoved(i);
-        }
+        notifyItemRangeRemoved(0, notifications.size());
+        notifications.clear();
     }
 }
