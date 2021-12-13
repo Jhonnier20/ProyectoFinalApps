@@ -31,12 +31,14 @@ public class NotificationsView extends RecyclerView.ViewHolder {
         notificationDescription = itemView.findViewById(R.id.notificationDescription);
         see = itemView.findViewById(R.id.see);
 
-        if(rol.equals("Cliente")){
-            notificationName.setVisibility(View.GONE);
-            see.setVisibility(View.GONE);
+        if(rol.equals("Client")){
+            notificationName.setVisibility(View.INVISIBLE);
+            see.setVisibility(View.INVISIBLE);
+        }else{
+            notificationName.setVisibility(View.VISIBLE);
+            see.setVisibility(View.VISIBLE);
+            see.setOnClickListener(this::see);
         }
-
-        see.setOnClickListener(this::see);
     }
 
     private void see(View view){
@@ -53,7 +55,11 @@ public class NotificationsView extends RecyclerView.ViewHolder {
                                             .setTitle(client.getFullName()+" acaba de realizar pago")
                                             .setMessage("¿Confirmar el pago?")
                                             .setNegativeButton("NO", (dialog, id) -> {
-                                                //FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+                                                FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
+
+                                                //send user to PaymentsAnswered collection
+                                                FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(client);
+
                                                 dialog.dismiss();
                                             })
                                             .setPositiveButton("SI", (dialog, id) -> {

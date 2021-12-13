@@ -120,8 +120,7 @@ public class FragmentHomeRegisteredUser extends Fragment {
                                     }
                             );
 
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getActivity(), "Ya tienes una subscripción activa", Toast.LENGTH_LONG);
                         }
                     }
