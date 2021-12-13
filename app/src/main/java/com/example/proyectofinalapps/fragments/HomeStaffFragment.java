@@ -151,6 +151,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
 
     private void goToNotifications(View view){
         Intent intent = new Intent(getActivity(), Notifications.class);
+        intent.putExtra("rol","Staff");
         getActivity().startActivity(intent);
     }
 
