@@ -27,9 +27,8 @@ import java.util.Date;
 
 public class ActivateClient_AllowEntry extends AppCompatActivity {
 
-    private TextView title_Activate_Allow;
-    private EditText code;
-    private Button allow, scanQR;
+    private TextView title_Activate_Allow, changingText;
+    private Button scanQR;
     private ImageButton goToClients;
     private ActivityActivateClientAllowEntryBinding binding;
     public String title;
@@ -47,25 +46,22 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         title_Activate_Allow = binding.titleActivateAllow;
-        code = binding.code;
-        allow = binding.allow;
         scanQR = binding.scanQR;
         goToClients = binding.goToClients;
+        changingText = binding.changingText;
 
         title = getIntent().getExtras().getString("title");
 
-        //Esto se hace porque lo unico que cambia en estas dos actividades es el titulo
-        //Entonces solo cambio el titulo y la funcionalidad sigue igual
-        //TODO Falta recibir los extras con el getExtras
-
         if(title.equals("ACTIVAR")){
             title_Activate_Allow.setText("ACTIVAR CLIENTE");
+            changingText.setText("Escanea el código QR para activar el cliente");
+            scanQR.setOnClickListener(this::scanQR);
         }else{
             title_Activate_Allow.setText("PERMITIR ENTRADA");
+            changingText.setText("Escanea el código QR para permitirle la entrada al cliente");
+            scanQR.setOnClickListener(this::allowEntry);
         }
 
-        allow.setOnClickListener(this::allowEntry);
-        scanQR.setOnClickListener(this::scanQR);
         goToClients.setOnClickListener(this::goToClients);
     }
 

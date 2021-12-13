@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_app_back">
 
+    <TextView
+        android:id="@+id/actions4"
+        style="@style/ForgotPassMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/cairo_regular"
+        android:text="Estos son los clientes activos:"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
     <EditText
         android:id="@+id/searchClient"
         style="@style/EditTextMain"
@@ -17,7 +30,7 @@
         android:background="@drawable/edittext_back"
         android:ems="10"
         android:fontFamily="@font/cairo_regular"
-        android:hint="Buscar por nombre o cédula"
+        android:hint="Buscar por nombre "
         android:inputType="textPersonName"
         android:textSize="16dp"
         app:errorEnabled="true"
@@ -137,16 +150,33 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/actions4">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/buscarBtn"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:background="#00FFFFFF"
+        android:paddingStart="10dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="20dp"
+        app:icon="@drawable/lupa"
+        app:iconPadding="0dp"
+        app:iconSize="20dp"
+        app:iconTint="@color/buttons_color"
+        app:layout_constraintBottom_toBottomOf="@+id/searchClient"
+        app:layout_constraintEnd_toEndOf="@+id/searchClient"
+        app:layout_constraintTop_toTopOf="@+id/searchClient" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

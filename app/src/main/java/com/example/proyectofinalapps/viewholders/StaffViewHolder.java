@@ -23,7 +23,6 @@ public class StaffViewHolder extends RecyclerView.ViewHolder {
 
         nameuserrow = itemView.findViewById(R.id.nameuserrow);
         userImg = itemView.findViewById(R.id.userImg);
-
     }
 
     public TextView getNameuserrow() {

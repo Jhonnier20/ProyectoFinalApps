@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
 import com.example.proyectofinalapps.activities.Notifications;
@@ -28,7 +29,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     private FragmentHomeStaffBinding binding;
 
     private EditText searchClient;
-    private Button activateClientStaffBtn, allowEntry;
+    private Button activateClientStaffBtn, allowEntry, buscarBtn;
     private RecyclerView clientRecylcler;
     private ImageView notifications;
 
@@ -70,15 +71,40 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         clientRecylcler.setHasFixedSize(true);
         activateClientStaffBtn = binding.activateClientStaffBtn;
         allowEntry = binding.allowEntry;
+        buscarBtn  = binding.buscarBtn;
         notifications = binding.notifications;
         searchClient = binding.searchClient;
+
         activateClientStaffBtn.setOnClickListener(this::activateClient);
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
+        buscarBtn.setOnClickListener(this::searchClient);
 
         adapter.deleteClients();
         chargeClients();
         return view;
+    }
+
+    private void searchClient(View view) {
+
+        String toSearch = searchClient.getText().toString().toLowerCase();
+
+        if (toSearch.isEmpty()){
+            chargeClients();
+        }else{
+            FirebaseFirestore.getInstance().collection("Clientes").whereEqualTo("fullName", toSearch).get().addOnCompleteListener(
+                    task -> {
+                        adapter.removeAllClientFromArray();
+                        for(DocumentSnapshot doc: task.getResult()) {
+                            Person person = doc.toObject(Person.class);
+                            if(person.getIsActive().equals("Y")) {
+                                adapter.addClient(person);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+            );
+        }
     }
 
     private void activateClient(View view) {
@@ -103,12 +129,14 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     }
 
     private void chargeClients() {
-        FirebaseFirestore.getInstance().collection("Clientes").get().addOnSuccessListener(
+        adapter.removeAllClientFromArray();
+        FirebaseFirestore.getInstance().collection("Clientes").get().addOnCompleteListener(
                 task -> {
-                    for(DocumentSnapshot doc: task.getDocuments()) {
+                    for(DocumentSnapshot doc: task.getResult()) {
                         Person person = doc.toObject(Person.class);
                         if(person.getIsActive().equals("Y")) {
                             adapter.addClient(person);
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 }

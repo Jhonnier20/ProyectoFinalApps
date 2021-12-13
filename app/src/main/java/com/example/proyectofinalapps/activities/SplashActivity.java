@@ -27,6 +27,7 @@ public class SplashActivity extends AppCompatActivity {
     private void login() {
         FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
         if(auth == null) {
+            getSharedPreferences("data", MODE_PRIVATE).edit().clear().apply();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else {
@@ -34,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
                     task -> {
                         Log.e(">>>", auth.getUid());
                         user = task.getResult().toObject(User.class);
+                        Log.e("<><<><>", user.getRol());
                         saveUser(user);
                         if(user.getRol().equals("Client")) {
                             Intent intentC = new Intent(this, HomeClientActivity.class);

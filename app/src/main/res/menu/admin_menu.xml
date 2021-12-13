@@ -5,7 +5,7 @@
     <item
         android:id="@+id/clientsAdmin"
         android:icon="@drawable/datas"
-        android:title="Clientes" />
+        android:title="Instructores" />
     <item
         android:id="@+id/confgAdmin"
         android:icon="@drawable/config"

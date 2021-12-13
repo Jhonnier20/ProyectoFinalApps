@@ -1,5 +1,6 @@
 package com.example.proyectofinalapps.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.activities.MainActivity;
 import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
+import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigBinding;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +25,8 @@ public class ConfigFragment extends Fragment {
     private FragmentConfigBinding binding;
     private View view;
     private Button logoutBtn, editThisProfile, deleteThisProfile, goToPrivacyPolicy;
+
+    private Context context;
 
     public ConfigFragment() {
         // Required empty public constructor
@@ -51,6 +55,8 @@ public class ConfigFragment extends Fragment {
         goToPrivacyPolicy.setOnClickListener(this::goToPrivacyPolicy);
         logoutBtn.setOnClickListener(this::logout);
 
+        context = getActivity();
+
         return view;
     }
 
@@ -77,8 +83,10 @@ public class ConfigFragment extends Fragment {
                 })
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
+                    context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                    dialog.dismiss();
                     getActivity().finish();
                 });
         builder.show();

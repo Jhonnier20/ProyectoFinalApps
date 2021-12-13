@@ -2,22 +2,30 @@ package com.example.proyectofinalapps.fragments;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Trace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.adapters.AdminAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeAdminBinding;
+import com.example.proyectofinalapps.model.Person;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeAdminFragment extends Fragment {
 
     private RecyclerView instructorList;
-    private Button addInstructor;
     private FragmentHomeAdminBinding binding;
     private View view;
+
+    private LinearLayoutManager manager;
+    private AdminAdapter adapter;
 
     public HomeAdminFragment() {
         // Required empty public constructor
@@ -37,14 +45,31 @@ public class HomeAdminFragment extends Fragment {
         view = binding.getRoot();
 
         instructorList = binding.instructorList;
-        addInstructor = binding.addInstructor;
 
-        addInstructor.setOnClickListener(this::addInstructor);
+        manager = new LinearLayoutManager(this.getContext());
+        instructorList.setLayoutManager(manager);
+        adapter = new AdminAdapter();
+        instructorList.setAdapter(adapter);
+        instructorList.setHasFixedSize(true);
+
+        chargeInstructors();
 
         return view;
     }
 
-    protected void addInstructor(View view){
-        //TODO
+    private void chargeInstructors() {
+        adapter.removeAllInstructorFromArray();
+        FirebaseFirestore.getInstance().collection("Staff").get().addOnCompleteListener(
+                task -> {
+                    for(DocumentSnapshot doc: task.getResult()) {
+                        Person person = doc.toObject(Person.class);
+                        if(person.getRol().equals("Staff")){
+                            adapter.addInstructor(person);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+        );
     }
+
 }

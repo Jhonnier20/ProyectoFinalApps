@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +21,9 @@ import java.util.Date;
 
 public class customerDetails extends AppCompatActivity {
 
-    private ImageView imageClient;
-    private TextView clientName, emailClient, ageClient, gymClient, accountStatusClient, membershipClient, dateClient;
-    private Button allowEntryC, but;
+    private TextView clientName, emailClient, gymClient, accountStatusClient, membershipClient, dateClient, but;
+    private Button allowEntryC;
+    private ImageButton closeDetails;
 
     private ActivityCustomerDetailsBinding binding;
 
@@ -37,16 +38,27 @@ public class customerDetails extends AppCompatActivity {
 
         client = (Person) getIntent().getExtras().get("client");
 
-        imageClient = binding.imageClient;
         clientName = binding.clientName;
         emailClient = binding.emailClient;
-        ageClient = binding.ageClient;
         gymClient = binding.gymClient;
         accountStatusClient = binding.accountStatusClient;
         membershipClient = binding.membershipClient;
         dateClient = binding.dateClient;
         but = binding.but;
+
+        closeDetails = binding.closeDetails;
         allowEntryC = binding.allowEntryC;
+
+        clientName.setText(getIntent().getExtras().getString("clientName"));
+        emailClient.setText(getIntent().getExtras().getString("emailName"));
+        gymClient.setText(getIntent().getExtras().getString("gymClient"));
+        String tmp = getIntent().getExtras().getString("status");
+
+        if(tmp.equalsIgnoreCase("Y")){
+            but.setText("Subscripción Activa");
+        }else{
+            but.setText("Subscripción Inactiva");
+        }
 
         allowEntryC.setOnClickListener(this::allowEntry);
 
@@ -88,13 +100,12 @@ public class customerDetails extends AppCompatActivity {
                     Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
         );
+
+        closeDetails.setOnClickListener(this::close);
     }
 
     private void allowEntry(View view){
         Intent intent = new Intent(this, ActivateClient_AllowEntry.class);
-        //TODO
-        //No se como pasarle el titulo  a ActivateClient_AllowEntry
-        //Me parece que es con put extra pero no recuerdo como ponerselo a un string allá
         intent.putExtra("title", "PERMITIR");
         startActivity(intent);
     }
@@ -105,5 +116,9 @@ public class customerDetails extends AppCompatActivity {
 
     public void setClient(Person client) {
         this.client = client;
+    }
+
+    private void close(View view){
+        finish();
     }
 }

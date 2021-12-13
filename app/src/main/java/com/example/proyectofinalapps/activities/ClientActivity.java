@@ -33,11 +33,13 @@ public class ClientActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra("rol", "Client");
         startActivity(intent);
+        finish();
     }
 
     private void registerClient(View view) {
         Intent intent = new Intent(this, RegisterUserActivity.class);
         intent.putExtra("rol", "Client");
         startActivity(intent);
+        finish();
     }
 }
