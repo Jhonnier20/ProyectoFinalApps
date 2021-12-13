@@ -69,7 +69,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
-        android:layout_width="0dp"
+        android:layout_width="348dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
@@ -128,15 +128,29 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="16dp"
             android:fontFamily="@font/cairo_regular"
             android:text="Clientes activos: 20"
             android:textColor="#FFFFFF"
             android:textSize="16dp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/totalClients" />
+
+        <TextView
+            android:id="@+id/clientsInGym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/cairo_regular"
+            android:text="Clientes en el gym: 20"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activeClients" />
 
         <TextView
             android:id="@+id/textView24"

@@ -24,10 +24,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
+
 public class ConfAdminFragment extends Fragment {
 
     private FragmentConfAdminBinding binding;
-    private TextView gymNameAdmin, totalInstructors, totalClients, activeClients;
+    private TextView gymNameAdmin, totalInstructors, totalClients, activeClients, clientsInGym;
     private Button privacyPolicyAdmin, logOutAdmin;
     private PrivacyPolicyActivity privacyPolicyActivity;
     private View view;
@@ -38,6 +40,7 @@ public class ConfAdminFragment extends Fragment {
     private int counterInstructors;
     private int counterClients;
     private int counterActiveClients;
+    private int counterClientsInGym;
 
     public ConfAdminFragment() {
         // Required empty public constructor
@@ -59,6 +62,7 @@ public class ConfAdminFragment extends Fragment {
         counterInstructors = 0;
         counterClients = 0;
         counterActiveClients = 0;
+        counterClientsInGym = 0;
 
         gymNameAdmin = binding.gymNameAdmin;
         totalInstructors = binding.totalInstructors;
@@ -66,6 +70,7 @@ public class ConfAdminFragment extends Fragment {
         activeClients = binding.activeClients;
         privacyPolicyAdmin = binding.privacyPolicyAdmin;
         logOutAdmin = binding.logOutAdmin;
+        clientsInGym = binding.clientsInGym;
 
         privacyPolicyAdmin.setOnClickListener(this::goToPrivacyPolicy);
         logOutAdmin.setOnClickListener(this::logOut);
@@ -102,6 +107,19 @@ public class ConfAdminFragment extends Fragment {
                     }
                     totalClients.setText("Total clientes: "+counterClients);
                     activeClients.setText("Clientes activos "+counterActiveClients);
+                }
+        );
+
+        FirebaseFirestore.getInstance().collection("Attendance").addSnapshotListener(
+                (value, error) -> {
+                    for(DocumentChange dc: value.getDocumentChanges()) {
+                        long date = (long) dc.getDocument().get("dateOfEntry");
+                        long newDate = date + 86400000;
+                        if (date <= new Date().getTime() && newDate >= new Date().getTime()) {
+                            counterClientsInGym++;
+                        }
+                    }
+                    clientsInGym.setText("Clientes en el gym: " + counterClientsInGym);
                 }
         );
 
