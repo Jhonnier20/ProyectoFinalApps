@@ -23,7 +23,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
     private TextView notificationName, notificationDescription;
     private Button see;
-    private Notification notification;
+    private Person notification;
 
     public NotificationsView(@NonNull View itemView, String rol) {
         super(itemView);
@@ -35,6 +35,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
         if(rol.equals("Client")){
             notificationName.setVisibility(View.INVISIBLE);
             see.setVisibility(View.INVISIBLE);
+            notificationDescription.setText("Solicitud realizada");
         }else{
             notificationName.setVisibility(View.VISIBLE);
             see.setVisibility(View.VISIBLE);
@@ -107,10 +108,15 @@ public class NotificationsView extends RecyclerView.ViewHolder {
         return notificationDescription;
     }
 
+    public Person getNotification() {
+        return notification;
+    }
+
     public Button getSee() {
         return see;
     }
 
-    public void setNotification(Notification notification) {
+    public void setNotification(Person notification) {
+        this.notification = notification;
     }
 }

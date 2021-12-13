@@ -62,7 +62,7 @@ public class Notifications extends AppCompatActivity {
             FirebaseFirestore.getInstance().collection("Payments").get().addOnCompleteListener(
                     task -> {
                         for(DocumentSnapshot doc: task.getResult()) {
-                            Notification notification = doc.toObject(Notification.class);
+                            Person notification = doc.toObject(Person.class);
                             adapter.addNotification(notification);
                             adapter.notifyDataSetChanged();
                             amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
@@ -75,7 +75,7 @@ public class Notifications extends AppCompatActivity {
             FirebaseFirestore.getInstance().collection("PaymentsAnswered").get().addOnCompleteListener(
                     task -> {
                         for(DocumentSnapshot doc: task.getResult()) {
-                            Notification notification = doc.toObject(Notification.class);
+                            Person notification = doc.toObject(Person.class);
                             adapter.addNotification(notification);
                             adapter.notifyDataSetChanged();
                             amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");

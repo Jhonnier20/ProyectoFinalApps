@@ -1,5 +1,6 @@
 package com.example.proyectofinalapps.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,13 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.model.Notification;
+import com.example.proyectofinalapps.model.Person;
 import com.example.proyectofinalapps.viewholders.NotificationsView;
 
 import java.util.ArrayList;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsView> {
 
-    private ArrayList<Notification> notifications;
+    //private ArrayList<Notification> notifications;
+    private ArrayList<Person> notifications;
     public String rol;
 
     public NotificationsAdapter(String rol){
@@ -21,7 +24,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsView
         this.rol = rol;
     }
 
-    public void addNotification(Notification notification){
+    public void addNotification(Person notification){
         notifications.add(notification);
         notifyItemInserted(notifications.size()-1);
     }
@@ -37,10 +40,10 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsView
 
     @Override
     public void onBindViewHolder(@NonNull NotificationsView skeleton, int position) {
-        Notification notification = notifications.get(position);
+        Person notification = notifications.get(position);
         skeleton.setNotification(notification);
-        skeleton.getNotificationName().setText(notification.getName());
-        skeleton.getNotificationDescription().setText(notification.getDescription());
+        //Log.e("000000000000000000000000000",notification.getName() + "  " + notification.getDescription());
+        skeleton.getNotificationName().setText(notification.getFullName());
     }
 
     @Override

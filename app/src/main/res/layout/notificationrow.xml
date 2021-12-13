@@ -42,7 +42,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/cairo_regular"
-        android:text="nombre"
+        android:text="Ha solicitado un pago"
         android:textColor="@color/secondary_1"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
