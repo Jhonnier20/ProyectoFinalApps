@@ -177,14 +177,9 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(rol.equals("Client")) {
                         addClientFirebase();
-                        Intent intentClient = new Intent(this, HomeClientActivity.class);
-                        startActivity(intentClient);
-                        finish();
+
                     } else if(rol.equals("Staff")) {
                         addStaffFirebase();
-                        Intent intentStaff = new Intent(this, HomeStaffActivity.class);
-                        startActivity(intentStaff);
-                        finish();
                     }
                 }
         ).addOnFailureListener(
@@ -226,7 +221,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validateExistUser(Person person, User user) {
         switch (user.getRol()) {
             case "Client":
-                FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnFailureListener(
+                FirebaseFirestore.getInstance().collection("Clientes").document(user.getId()).get().addOnSuccessListener(
                         e -> {
                             FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
                             FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).set(person);
@@ -240,16 +235,22 @@ public class LoginActivity extends AppCompatActivity {
                             );
                             FirebaseFirestore.getInstance().collection("Clientes").document(person.getId()).collection("Subscription")
                                     .document(subscription.getId()).set(subscription);
+                            Intent intentClient = new Intent(this, HomeClientActivity.class);
+                            startActivity(intentClient);
+                            finish();
                         }
                 );
 
                 break;
 
             case "Staff":
-                FirebaseFirestore.getInstance().collection("Staff").document(user.getId()).get().addOnFailureListener(
+                FirebaseFirestore.getInstance().collection("Staff").document(user.getId()).get().addOnSuccessListener(
                         e -> {
                             FirebaseFirestore.getInstance().collection("Users").document(user.getId()).set(user);
                             FirebaseFirestore.getInstance().collection("Staff").document(person.getId()).set(person);
+                            Intent intentStaff = new Intent(this, HomeStaffActivity.class);
+                            startActivity(intentStaff);
+                            finish();
                         }
                 );
         }
