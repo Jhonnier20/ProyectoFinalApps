@@ -46,13 +46,13 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
         navigatorClient = binding.navigatorClient;
 
         //Load User from SP
-        User loadedUser = loadUser();
-        if(loadedUser == null || FirebaseAuth.getInstance().getCurrentUser() == null){
+        user = loadUser();
+        if(user == null || FirebaseAuth.getInstance().getCurrentUser() == null){
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }else{
-            this.user = loadedUser;
+            this.user = user;
         }
 
         homeClientFragment = HomeClientFragment.newInstance();
@@ -66,6 +66,7 @@ public class HomeClientActivity extends AppCompatActivity implements HomeClientF
                     client = task.toObject(Person.class);
                     Log.e(">>>", "cliente: " + client.getId() + " " + client.getIsActive());
                     if(client.getIsActive().equals("Y")) {
+                        homeRegisteredUserFragment.setClient(client);
                         showFragment(homeRegisteredUserFragment);
                     } else if(client.getIsActive().equals("N")) {
                         homeClientFragment.setPerson(client);

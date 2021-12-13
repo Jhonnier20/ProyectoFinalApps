@@ -6,31 +6,67 @@
     android:layout_height="match_parent"
     android:background="@drawable/main_app_back">
 
-    <ImageButton
-        android:id="@+id/closeDetails"
-        android:layout_width="42dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_left" />
-
-    <Button
-        android:id="@+id/but"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="60dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="60dp"
-        android:backgroundTint="#00B0D7"
-        android:text="Subscrición activa"
-        android:textAllCaps="false"
-        android:textSize="16dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/buttonbackmain"
+        android:backgroundTint="@color/grei"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generic111" />
+        app:layout_constraintTop_toBottomOf="@+id/generic111">
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="31dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="70dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/chulo" />
+
+        <TextView
+            android:id="@+id/but"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="Subscripción activa"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/dateClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/cairo_regular"
+        android:text="31/10/21 - 31/12/21"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+    <ImageButton
+        android:id="@+id/closeDetails"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blueflecha" />
 
     <Button
         android:id="@+id/allowEntryC"
@@ -38,8 +74,9 @@
         android:layout_height="60dp"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="40dp"
         android:backgroundTint="#00B0D7"
+        android:fontFamily="@font/cairo_bold"
         android:text="Permitir entrada"
         android:textAllCaps="false"
         android:textSize="16dp"
@@ -52,7 +89,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="409dp"
         android:layout_height="2dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,14 +99,17 @@
 
     <TextView
         android:id="@+id/emailClient"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/cairo_regular"
         android:text="andresmarmo@gmail.com"
+        android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageClient"
         app:layout_constraintTop_toBottomOf="@+id/clientName" />
 
@@ -77,10 +117,11 @@
         android:id="@+id/gymClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/cairo_regular"
         android:text="24/7 ciudad jardin"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="normal"
         app:layout_constraintStart_toEndOf="@+id/generic1"
         app:layout_constraintTop_toTopOf="@+id/generic1" />
@@ -89,10 +130,11 @@
         android:id="@+id/accountStatusClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/cairo_regular"
         android:text="Al día"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="normal"
         app:layout_constraintStart_toEndOf="@+id/generic11"
         app:layout_constraintTop_toTopOf="@+id/generic11" />
@@ -101,37 +143,29 @@
         android:id="@+id/membershipClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/cairo_regular"
         android:text="Gold"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="normal"
         app:layout_constraintStart_toEndOf="@+id/generic111"
         app:layout_constraintTop_toTopOf="@+id/generic111" />
 
     <TextView
-        android:id="@+id/dateClient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="31/10/21 - 31/12/21"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="@+id/but"
-        app:layout_constraintStart_toStartOf="@+id/but"
-        app:layout_constraintTop_toBottomOf="@+id/but" />
-
-    <TextView
         android:id="@+id/clientName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/cairo_bold"
         android:text="Andres Marmolejo"
+        android:textAlignment="viewStart"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="19dp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageClient"
         app:layout_constraintTop_toTopOf="@+id/imageClient" />
 
@@ -139,11 +173,12 @@
         android:id="@+id/generic1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/cairo_bold"
         android:text="Gimnasio: "
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -152,11 +187,12 @@
         android:id="@+id/generic11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/cairo_bold"
         android:text="Estado de cuenta: "
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/generic1" />
@@ -165,23 +201,24 @@
         android:id="@+id/generic111"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/cairo_bold"
         android:text="Membresia"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/generic11" />
 
     <ImageView
         android:id="@+id/imageClient"
-        android:layout_width="134dp"
-        android:layout_height="124dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/persona" />
+        app:srcCompat="@drawable/personota" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

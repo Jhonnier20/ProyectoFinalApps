@@ -25,6 +25,13 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminView> {
         notifyItemInserted(instructors.size()-1);
     }
 
+    public void removeAllInstructorFromArray () {
+        for (int i=instructors.size()-1;i>=0;i--) {
+            instructors.remove(i);
+            notifyItemRemoved(i);
+        }
+    }
+
     @NonNull
     @Override
     public AdminView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,6 +46,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminView> {
         Person instructor = instructors.get(position);
         skeleton.setInstructor(instructor);
         skeleton.getInstructorName().setText(instructor.getFullName());
+        skeleton.setInstructor(instructor);
     }
 
     @Override

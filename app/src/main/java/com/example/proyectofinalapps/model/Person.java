@@ -1,6 +1,8 @@
 package com.example.proyectofinalapps.model;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
 
     private String id;
     private String fullName;
@@ -14,7 +16,7 @@ public class Person {
 
     public Person(String id, String fullName, String email, String identification, String rol, String isActive) {
         this.id = id;
-        this.fullName = fullName;
+        this.fullName = fullName.toLowerCase();
         this.email = email;
         this.identification = identification;
         this.rol = rol;

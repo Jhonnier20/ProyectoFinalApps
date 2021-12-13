@@ -25,23 +25,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
 
     private ArrayList<Person> clients;
-    HomeStaffActivity homeStaff;
+
+    private OnClientInfoListener listener;
 
     public StaffAdapter() {
         clients = new ArrayList<>();
-    }
-
-    public void addClient(Person client) {
-        clients.add(client);
-        notifyItemInserted(clients.size()-1);
-    }
-
-    public void rebaseAdapter () {
-        clients.clear();
     }
 
     @NonNull
@@ -56,34 +49,45 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull StaffViewHolder holder, int position) {
         Person client = clients.get(position);
+        holder.setClient(client);
         holder.getNameuserrow().setText(client.getFullName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
+        holder.getUserImg().setOnClickListener(
+                v -> {
+                    listener.onClientInfo(client);
+                }
+        );
+        holder.getNameuserrow().setOnClickListener(
+                v -> {
+                    listener.onClientInfo(client);
+                }
+        );
 
-                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
-                        task -> {
-                            for (DocumentSnapshot doc: task.getDocuments()) {
-                                Subscription sub = doc.toObject(Subscription.class);
-
-                                Intent intent = new Intent(view.getContext(), customerDetails.class);
-                                intent.putExtra("clientName",client.getFullName());
-                                intent.putExtra("emailName",client.getEmail());
-                                intent.putExtra("ageClient","");
-                                intent.putExtra("gymClient","My Gym");
-                                intent.putExtra("accountStatusClient", sub.getState());
-                                intent.putExtra("membershipClient","Mensual");
-                                intent.putExtra("status",client.getIsActive());
-                                intent.putExtra("dateClient", sub.getDateEnd());
-
-                                view.getContext().startActivity(intent);
-                            }
-                        }
-                );
-            }
-        });
-
+//        holder.itemView.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//
+//                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).collection("Subscription").get().addOnSuccessListener(
+//                        task -> {
+//                            for (DocumentSnapshot doc: task.getDocuments()) {
+//                                Subscription sub = doc.toObject(Subscription.class);
+//
+//                                Intent intent = new Intent(view.getContext(), customerDetails.class);
+//                                intent.putExtra("clientName",client.getFullName());
+//                                intent.putExtra("emailName",client.getEmail());
+//                                intent.putExtra("ageClient","");
+//                                intent.putExtra("gymClient","My Gym");
+//                                intent.putExtra("accountStatusClient", sub.getState());
+//                                intent.putExtra("membershipClient","Mensual");
+//                                intent.putExtra("status",client.getIsActive());
+//                                intent.putExtra("dateClient", sub.getDateEnd());
+//
+//                                view.getContext().startActivity(intent);
+//                            }
+//                        }
+//                );
+//            }
+//        });
     }
 
     @Override
@@ -91,12 +95,27 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         return clients.size();
     }
 
-    public void removeAllClientFromArray() {
+    public void addClient(Person client) {
+        clients.add(client);
+        notifyItemInserted(clients.size()-1);
+    }
 
-        for (int i=clients.size()-1;i>=0;i--) {
-            clients.remove(i);
-            notifyItemRemoved(i);
-        }
-    };
+    public void deleteClients() {
+        notifyItemRangeRemoved(0, clients.size());
+        clients.clear();
+    }
+
+
+    public OnClientInfoListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnClientInfoListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnClientInfoListener {
+        void onClientInfo(Person client);
+    }
 
 }

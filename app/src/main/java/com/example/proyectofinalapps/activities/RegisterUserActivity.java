@@ -76,8 +76,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                         Subscription subscription = new Subscription(
                                 UUID.randomUUID().toString(),
                                 false,
-                                new Date().getTime(),
-                                new Date().getTime(),
+                                0,
+                                0,
                                 "Sin pago",
                                 "Ninguna"
                         );
@@ -94,7 +94,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                                                     saveUser(user);
                                                     Intent intent = new Intent(this, HomeClientActivity.class);
                                                     startActivity(intent);
-                                                    finish();
                                                 }
                                         );
 
@@ -104,7 +103,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                                                     saveUser(user);
                                                     Intent intent = new Intent(this, HomeStaffActivity.class);
                                                     startActivity(intent);
-                                                    finish();
                                                 }
                                         );
                                     }

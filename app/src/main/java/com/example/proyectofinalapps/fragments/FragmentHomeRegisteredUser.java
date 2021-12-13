@@ -22,8 +22,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.example.proyectofinalapps.activities.ClientQRCodeActivity;
 
 import java.util.Date;
+import java.util.Locale;
 
 
 public class FragmentHomeRegisteredUser extends Fragment {
@@ -33,6 +35,8 @@ public class FragmentHomeRegisteredUser extends Fragment {
     private ImageView QRIcon, cashIcon, goToNotifications;
     private View view;
     private FragmentHomeRegisteredUserBinding binding;
+
+    private Person client;
 
     public FragmentHomeRegisteredUser() {
         // Required empty public constructor
@@ -65,11 +69,16 @@ public class FragmentHomeRegisteredUser extends Fragment {
         requestPayment.setOnClickListener(this::requestPayment);
         goToNotifications.setOnClickListener(this::goToNotifications);
 
+        chargeData();
+
         return view;
     }
 
     private void generateQR(View view){
         //TODO
+        Intent intent = new Intent(getActivity(), ClientQRCodeActivity.class);
+        intent.putExtra("client", client);
+        startActivity(intent);
     }
 
     private void requestPayment(View view){
@@ -122,5 +131,22 @@ public class FragmentHomeRegisteredUser extends Fragment {
     private void goToNotifications(View view){
         Intent intent = new Intent(getActivity(), ClientNotificationsActivity.class);
         getActivity().startActivity(intent);
+    }
+
+    public Person getClient() {
+        return client;
+    }
+
+    public void setClient(Person client) {
+        this.client = client;
+    }
+
+    private void chargeData() {
+        String[] fullName = client.getFullName().toUpperCase(Locale.ROOT).split(" ");
+
+        welcomeTitle.setText("BIENVENIDO " + fullName[0] + "!");
+        membership.setText(" - ");
+        cutoffDate.setText(" - ");
+
     }
 }

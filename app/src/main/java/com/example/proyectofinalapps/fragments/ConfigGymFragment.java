@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.proyectofinalapps.activities.MainActivity;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
 import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigGymBinding;
@@ -63,9 +65,10 @@ public class ConfigGymFragment extends Fragment {
         signOff = binding.signOff;
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore.getInstance().collection("Clientes").document(firebaseUser.getUid()).get().addOnSuccessListener(
+        FirebaseFirestore.getInstance().collection("Staff").document(firebaseUser.getUid()).get().addOnSuccessListener(
                 v-> {
                    person = v.toObject(Person.class);
+                   clientName6.setText(person.getFullName());
                 }
         );
 
@@ -105,10 +108,13 @@ public class ConfigGymFragment extends Fragment {
                 })
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
+
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
                     context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
-                    Intent intent = new Intent(context, SplashActivity.class);
                     context.startActivity(intent);
                     dialog.dismiss();
+                    getActivity().finish();
+
                 });
         builder.show();
     }

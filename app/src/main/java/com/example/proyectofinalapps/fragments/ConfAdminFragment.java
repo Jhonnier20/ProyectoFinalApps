@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.activities.MainActivity;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
 import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfAdminBinding;
@@ -78,11 +79,11 @@ public class ConfAdminFragment extends Fragment {
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
                     context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
-                    Intent intent = new Intent(context, SplashActivity.class);
+                    Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
                     dialog.dismiss();
+                    getActivity().finish();
                 });
         builder.show();
-        //FirebaseAuth.getInstance().signOut();
     }
 }

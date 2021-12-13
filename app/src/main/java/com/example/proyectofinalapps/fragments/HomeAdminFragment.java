@@ -14,11 +14,13 @@ import android.widget.Button;
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.adapters.AdminAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeAdminBinding;
+import com.example.proyectofinalapps.model.Person;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeAdminFragment extends Fragment {
 
     private RecyclerView instructorList;
-    private Button addInstructor;
     private FragmentHomeAdminBinding binding;
     private View view;
 
@@ -43,19 +45,31 @@ public class HomeAdminFragment extends Fragment {
         view = binding.getRoot();
 
         instructorList = binding.instructorList;
-        addInstructor = binding.addInstructor;
 
-        addInstructor.setOnClickListener(this::addInstructor);
         manager = new LinearLayoutManager(this.getContext());
         instructorList.setLayoutManager(manager);
         adapter = new AdminAdapter();
         instructorList.setAdapter(adapter);
         instructorList.setHasFixedSize(true);
 
+        chargeInstructors();
+
         return view;
     }
 
-    protected void addInstructor(View view){
-        //TODO
+    private void chargeInstructors() {
+        adapter.removeAllInstructorFromArray();
+        FirebaseFirestore.getInstance().collection("Staff").get().addOnCompleteListener(
+                task -> {
+                    for(DocumentSnapshot doc: task.getResult()) {
+                        Person person = doc.toObject(Person.class);
+                        if(person.getRol().equals("Staff")){
+                            adapter.addInstructor(person);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+        );
     }
+
 }

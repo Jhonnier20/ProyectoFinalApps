@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.proyectofinalapps.databinding.ActivityActivateClientAllowEntryBinding;
 import com.example.proyectofinalapps.fragments.ConfigGymFragment;
 import com.example.proyectofinalapps.model.Person;
@@ -21,14 +23,15 @@ import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.Date;
+
 public class ActivateClient_AllowEntry extends AppCompatActivity {
 
-    private TextView title_Activate_Allow;
-    private EditText code;
-    private Button allow, scanQR;
+    private TextView title_Activate_Allow, changingText;
+    private Button scanQR;
     private ImageButton goToClients;
     private ActivityActivateClientAllowEntryBinding binding;
-    public String title = "ACTIVAR";
+    public String title;
 
     private OnActivedClient listener;
 
@@ -43,21 +46,22 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         title_Activate_Allow = binding.titleActivateAllow;
-        code = binding.code;
-        allow = binding.allow;
         scanQR = binding.scanQR;
         goToClients = binding.goToClients;
+        changingText = binding.changingText;
 
         title = getIntent().getExtras().getString("title");
 
         if(title.equals("ACTIVAR")){
             title_Activate_Allow.setText("ACTIVAR CLIENTE");
+            changingText.setText("Escanea el código QR para activar el cliente");
+            scanQR.setOnClickListener(this::scanQR);
         }else{
             title_Activate_Allow.setText("PERMITIR ENTRADA");
+            changingText.setText("Escanea el código QR para permitirle la entrada al cliente");
+            scanQR.setOnClickListener(this::allowEntry);
         }
 
-        allow.setOnClickListener(this::allowEntry);
-        scanQR.setOnClickListener(this::scanQR);
         goToClients.setOnClickListener(this::goToClients);
     }
 
@@ -87,14 +91,25 @@ public class ActivateClient_AllowEntry extends AppCompatActivity {
                 Log.e(">>>", "Scanned: " + result.getContents());
                 Gson gson = new Gson();
                 Person client = gson.fromJson(result.getContents(), Person.class);
-                client.setIsActive("Y");
-                FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).update("isActive", client.getIsActive()).addOnCompleteListener(
-                        task -> {
-                            listener.onActivedClient(client);
-                            finish();
-                            //homeStaffFragment.getAdapter().addClient(client);
-                        }
-                );
+
+                if(title.equals("ACTIVAR")) {
+                    client.setIsActive("Y");
+                    FirebaseFirestore.getInstance().collection("Clientes").document(client.getId()).update("isActive", client.getIsActive()).addOnCompleteListener(
+                            task -> {
+                                listener.onActivedClient(client);
+                                finish();
+                                //homeStaffFragment.getAdapter().addClient(client);
+                            }
+                    );
+
+                } else if(title.equals("PERMITIR")) {
+                    FirebaseFirestore.getInstance().collection("Attendance").document(client.getId()).set(client).addOnSuccessListener(
+                            task -> {
+                                FirebaseFirestore.getInstance().collection("Attendance").document(client.getId()).update("dateOfEntry", new Date().getTime());
+                                Toast.makeText(this, "Ingreso permitido - " + new Date().toString(), Toast.LENGTH_LONG).show();
+                            }
+                    );
+                }
 
                 //showFragment(homeStaffFragment);
             }

@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.proyectofinalapps.activities.ActivateClient_AllowEntry;
 import com.example.proyectofinalapps.activities.Notifications;
+import com.example.proyectofinalapps.activities.customerDetails;
 import com.example.proyectofinalapps.adapters.StaffAdapter;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 import com.example.proyectofinalapps.model.Person;
@@ -26,20 +29,23 @@ import com.example.proyectofinalapps.model.Subscription;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.Date;
 
-public class HomeStaffFragment extends Fragment implements ActivateClient_AllowEntry.OnActivedClient {
+public class HomeStaffFragment extends Fragment implements ActivateClient_AllowEntry.OnActivedClient, StaffAdapter.OnClientInfoListener {
 
     private FragmentHomeStaffBinding binding;
+
     private EditText searchClient;
     private Button activateClientStaffBtn, allowEntry, buscarBtn;
     private RecyclerView clientRecylcler;
+    private ImageView notifications;
+
     private View view;
+
     private StaffAdapter adapter;
     private LinearLayoutManager manager;
+
     private OnReadQRListener onReadQRListener;
-    private ImageView notifications;
 
     private ActivateClient_AllowEntry activateClient_allowEntry;
 
@@ -68,33 +74,57 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         manager = new LinearLayoutManager(getActivity());
         clientRecylcler.setLayoutManager(manager);
         clientRecylcler.setAdapter(adapter);
+        adapter.setListener(this);
         clientRecylcler.setHasFixedSize(true);
         activateClientStaffBtn = binding.activateClientStaffBtn;
         allowEntry = binding.allowEntry;
         buscarBtn  = binding.buscarBtn;
         notifications = binding.notifications;
         searchClient = binding.searchClient;
+
         activateClientStaffBtn.setOnClickListener(this::activateClient);
         allowEntry.setOnClickListener(this::allowEntry);
         notifications.setOnClickListener(this::goToNotifications);
         buscarBtn.setOnClickListener(this::searchClient);
+        searchClient.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        if(editable.toString().equals("")) {
+                            adapter.deleteClients();
+                            chargeClients();
+                        }
+                    }
+                }
+        );
 
         watchClientPayment();
+
+        adapter.deleteClients();
         chargeClients();
         return view;
     }
 
     private void searchClient(View view) {
 
-        String toSearch = searchClient.getText().toString();
+        String toSearch = searchClient.getText().toString().toLowerCase();
 
         if (toSearch.isEmpty()){
             chargeClients();
-        }
-        else{
+        }else{
             FirebaseFirestore.getInstance().collection("Clientes").whereEqualTo("fullName", toSearch).get().addOnCompleteListener(
                     task -> {
-                        adapter.removeAllClientFromArray();
+                        adapter.deleteClients();
                         for(DocumentSnapshot doc: task.getResult()) {
                             Person person = doc.toObject(Person.class);
                             if(person.getIsActive().equals("Y")) {
@@ -129,7 +159,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     }
 
     private void chargeClients() {
-        adapter.removeAllClientFromArray();
+        adapter.deleteClients();
         FirebaseFirestore.getInstance().collection("Clientes").get().addOnCompleteListener(
                 task -> {
                     for(DocumentSnapshot doc: task.getResult()) {
@@ -200,6 +230,13 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
     @Override
     public void onActivedClient(Person client) {
         adapter.addClient(client);
+    }
+
+    @Override
+    public void onClientInfo(Person client) {
+        Intent intent = new Intent(getActivity(), customerDetails.class);
+        intent.putExtra("client", client);
+        startActivity(intent);
     }
 
     public interface OnReadQRListener {

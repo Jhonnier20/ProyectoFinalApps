@@ -3,16 +3,16 @@ package com.example.proyectofinalapps.model;
 public class Subscription {
 
     private String id;
-    private boolean isActive;
+    private boolean active;
     private long dateStart, dateEnd;
     private String state, membership;
 
     public Subscription() {
     }
 
-    public Subscription(String id, boolean isActive, long dateStart, long dateEnd, String state, String membership) {
+    public Subscription(String id, boolean active, long dateStart, long dateEnd, String state, String membership) {
         this.id = id;
-        this.isActive = isActive;
+        this.active = active;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.state = state;
@@ -28,11 +28,11 @@ public class Subscription {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
     public long getDateStart() {

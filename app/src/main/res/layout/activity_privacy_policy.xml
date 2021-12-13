@@ -124,11 +124,11 @@
 
     <ImageButton
         android:id="@+id/goToConfig"
-        android:layout_width="42dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_left" />
+        app:srcCompat="@drawable/blueflecha" />
 </androidx.constraintlayout.widget.ConstraintLayout>

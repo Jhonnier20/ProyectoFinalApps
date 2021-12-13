@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.proyectofinalapps.R;
+import com.example.proyectofinalapps.activities.MainActivity;
 import com.example.proyectofinalapps.activities.Notifications;
 import com.example.proyectofinalapps.activities.PrivacyPolicyActivity;
 import com.example.proyectofinalapps.activities.SplashActivity;
@@ -83,9 +84,10 @@ public class ConfigFragment extends Fragment {
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
                     context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
-                    Intent intent = new Intent(context, SplashActivity.class);
+                    Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);
                     dialog.dismiss();
+                    getActivity().finish();
                 });
         builder.show();
     }
