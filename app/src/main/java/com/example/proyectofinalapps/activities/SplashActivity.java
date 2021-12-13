@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.proyectofinalapps.R;
 import com.example.proyectofinalapps.model.User;
@@ -33,21 +34,29 @@ public class SplashActivity extends AppCompatActivity {
         } else {
             FirebaseFirestore.getInstance().collection("Users").document(auth.getUid()).get().addOnCompleteListener(
                     task -> {
-                        Log.e(">>>", auth.getUid());
                         user = task.getResult().toObject(User.class);
-                        Log.e("<><<><>", user.getRol());
-                        saveUser(user);
-                        if(user.getRol().equals("Client")) {
-                            Intent intentC = new Intent(this, HomeClientActivity.class);
-                            startActivity(intentC);
+                        if (user==null){
+                            FirebaseAuth.getInstance().signOut();
+                            getSharedPreferences("data", MODE_PRIVATE).edit().clear().apply();
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else{
+                            Log.e("<><<><>", user.getRol());
+                            saveUser(user);
+                            if(user.getRol().equals("Client")) {
+                                Intent intentC = new Intent(this, HomeClientActivity.class);
+                                startActivity(intentC);
 
-                        } else if(user.getRol().equals("Staff")) {
-                            Intent intentS = new Intent(this, HomeStaffActivity.class);
-                            startActivity(intentS);
+                            } else if(user.getRol().equals("Staff")) {
+                                Intent intentS = new Intent(this, HomeStaffActivity.class);
+                                startActivity(intentS);
 
-                        } else if(user.getRol().equals("Admin")) {
-                            Intent intentA = new Intent(this, HomeAdminActivity.class);
-                            startActivity(intentA);
+                            } else if(user.getRol().equals("Admin")) {
+                                Intent intentA = new Intent(this, HomeAdminActivity.class);
+                                startActivity(intentA);
+                            }
                         }
                     }
             );
