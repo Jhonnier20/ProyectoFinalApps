@@ -34,13 +34,17 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
         if(rol.equals("Client")){
             notificationName.setVisibility(View.INVISIBLE);
-            see.setVisibility(View.INVISIBLE);
             notificationDescription.setText("Solicitud realizada");
+            see.setOnClickListener(this::see2);
         }else{
             notificationName.setVisibility(View.VISIBLE);
             see.setVisibility(View.VISIBLE);
             see.setOnClickListener(this::see);
         }
+    }
+
+    private void see2(View view){
+        //FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).delete();
     }
 
     private void see(View view){
