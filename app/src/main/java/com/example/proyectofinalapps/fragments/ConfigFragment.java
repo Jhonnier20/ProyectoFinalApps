@@ -22,6 +22,7 @@ import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentConfigBinding;
 import com.example.proyectofinalapps.databinding.FragmentHomeStaffBinding;
 import com.example.proyectofinalapps.model.Subscription;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -131,6 +132,7 @@ public class ConfigFragment extends Fragment {
                 })
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
+                    com.facebook.login.LoginManager.getInstance().logOut();
                     context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);

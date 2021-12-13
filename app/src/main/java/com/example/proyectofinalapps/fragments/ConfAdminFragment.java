@@ -122,6 +122,7 @@ public class ConfAdminFragment extends Fragment {
                 })
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
+                    com.facebook.login.LoginManager.getInstance().logOut();
                     context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
                     Intent intent = new Intent(context, MainActivity.class);
                     context.startActivity(intent);

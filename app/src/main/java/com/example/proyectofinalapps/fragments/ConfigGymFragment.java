@@ -118,7 +118,7 @@ public class ConfigGymFragment extends Fragment {
                 })
                 .setPositiveButton("SI", (dialog, id) -> {
                     FirebaseAuth.getInstance().signOut();
-
+                    com.facebook.login.LoginManager.getInstance().logOut();
                     Intent intent = new Intent(getActivity(), MainActivity.class);
                     context.getSharedPreferences("data", context.MODE_PRIVATE).edit().clear().apply();
                     context.startActivity(intent);

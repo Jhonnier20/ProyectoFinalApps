@@ -213,6 +213,7 @@ public class LoginActivity extends AppCompatActivity {
         .addOnCompleteListener(
                 task -> {
 
+                    Toast.makeText(this, "Vamos bien xd", Toast.LENGTH_LONG).show();
                     if(rol.equals("Client")) {
                         addClientFirebase();
 

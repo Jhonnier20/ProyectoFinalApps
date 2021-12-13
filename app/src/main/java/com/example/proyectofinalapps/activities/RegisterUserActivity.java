@@ -66,6 +66,8 @@ public class RegisterUserActivity extends AppCompatActivity {
         registerBtn = binding.registerBtn;
         registerFacebookBtn = binding.registerFacebookBtn;
 
+        callbackManager = CallbackManager.Factory.create();
+
         registerFacebookBtn.setOnClickListener(this::loginFacebook);
         goToRegisterTV.setOnClickListener(this::changeToLogin);
         registerBtn.setOnClickListener(this::registerUser);
