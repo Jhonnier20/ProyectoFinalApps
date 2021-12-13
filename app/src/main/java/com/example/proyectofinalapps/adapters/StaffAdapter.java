@@ -37,6 +37,19 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
         clients = new ArrayList<>();
     }
 
+    public void addClient(Person client) {
+        clients.add(client);
+        notifyItemInserted(clients.size()-1);
+    }
+
+    public void deleteClients() {
+        for (int i=clients.size()-1;i>=0;i--) {
+            clients.remove(i);
+            notifyItemRemoved(i);
+        }
+    }
+
+
     @NonNull
     @Override
     public StaffViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -94,17 +107,6 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffViewHolder> {
     public int getItemCount() {
         return clients.size();
     }
-
-    public void addClient(Person client) {
-        clients.add(client);
-        notifyItemInserted(clients.size()-1);
-    }
-
-    public void deleteClients() {
-        notifyItemRangeRemoved(0, clients.size());
-        clients.clear();
-    }
-
 
     public OnClientInfoListener getListener() {
         return listener;

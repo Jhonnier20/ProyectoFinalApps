@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.proyectofinalapps.activities.ClientNotificationsActivity;
 import com.example.proyectofinalapps.activities.Notifications;
-import com.example.proyectofinalapps.activities.SplashActivity;
 import com.example.proyectofinalapps.databinding.FragmentHomeRegisteredUserBinding;
 import com.example.proyectofinalapps.model.Notification;
 import com.example.proyectofinalapps.model.Person;
@@ -25,9 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.example.proyectofinalapps.activities.ClientQRCodeActivity;
-
-import java.util.Date;
-import java.util.Locale;
 
 
 public class FragmentHomeRegisteredUser extends Fragment {
@@ -83,47 +80,48 @@ public class FragmentHomeRegisteredUser extends Fragment {
     }
 
     private void requestPayment(View view){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                .setTitle("Realizar pago")
-                .setMessage("¿Esta seguro que desea realizar el pago?")
-                .setNegativeButton("NO", (dialog, id) -> {
-                    dialog.dismiss();
-                })
-                .setPositiveButton("SI", (dialog, id) -> {
-                    successPayment();
-                    dialog.dismiss();
-                });
-        builder.show();
-    }
-
-    private void successPayment () {
         FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
-
         FirebaseFirestore.getInstance().collection("Clientes").document(auth.getUid()).collection("Subscription").get().addOnSuccessListener(
                 task -> {
                     for(DocumentSnapshot doc: task.getDocuments()) {
                         Subscription sub = doc.toObject(Subscription.class);
 
-                        if (true){
-
-                            FirebaseFirestore.getInstance().collection("Clientes").document(auth.getUid()).get().addOnSuccessListener(
-                                    per -> {
-                                        Person myperson = per.toObject(Person.class);
-
-                                        //send user to Payments collection
-                                        FirebaseFirestore.getInstance().collection("Payments").document(myperson.getId()).set(myperson).addOnSuccessListener(
-                                                added -> {
-                                                    Toast.makeText(getActivity(), "Esperando confirmación de staff", Toast.LENGTH_LONG);
-                                                }
-                                        );
-                                    }
-                            );
+                        if (sub.isActive() == true){
+                            Log.e(">>>odioesto",""+sub.isActive());
 
                         } else {
-                            Toast.makeText(getActivity(), "Ya tienes una subscripción activa", Toast.LENGTH_LONG);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                                    .setTitle("Realizar pago")
+                                    .setMessage("¿Esta seguro que desea realizar el pago?")
+                                    .setNegativeButton("NO", (dialog, id) -> {
+                                        dialog.dismiss();
+                                    })
+                                    .setPositiveButton("SI", (dialog, id) -> {
+                                        successPayment();
+                                        dialog.dismiss();
+                                    });
+                            builder.show();
                         }
                     }
+                }
+        );
+    }
+
+    private void successPayment () {
+        FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseFirestore.getInstance().collection("Clientes").document(auth.getUid()).get().addOnSuccessListener(
+                per -> {
+                    Person myperson = per.toObject(Person.class);
+                    Notification noti = new Notification(myperson.getFullName(), "pendiente", myperson.getId());
+
+                    //send user to Payments collection
+                    FirebaseFirestore.getInstance().collection("Payments").document(myperson.getId()).set(noti).addOnSuccessListener(
+                            added -> {
+                                Toast.makeText(getActivity(), "Esperando confirmación de staff", Toast.LENGTH_LONG);
+                            }
+                    );
                 }
         );
     }

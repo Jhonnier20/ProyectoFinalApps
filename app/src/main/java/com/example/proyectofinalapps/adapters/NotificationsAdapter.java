@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsView> {
 
     //private ArrayList<Notification> notifications;
-    private ArrayList<Person> notifications;
+    private ArrayList<Notification> notifications;
     public String rol;
 
     public NotificationsAdapter(String rol){
@@ -24,7 +24,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsView
         this.rol = rol;
     }
 
-    public void addNotification(Person notification){
+    public void addNotification(Notification notification){
         notifications.add(notification);
         notifyItemInserted(notifications.size()-1);
     }
@@ -40,10 +40,17 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsView
 
     @Override
     public void onBindViewHolder(@NonNull NotificationsView skeleton, int position) {
-        Person notification = notifications.get(position);
+        Notification notification = notifications.get(position);
         skeleton.setNotification(notification);
         //Log.e("000000000000000000000000000",notification.getName() + "  " + notification.getDescription());
-        skeleton.getNotificationName().setText(notification.getFullName());
+        skeleton.getNotificationName().setText(notification.getName());
+        if(rol.equals("Client")){
+            skeleton.getNotificationDescription().setText("Su solicitud fue: "+notification.getDescription());
+        }else{
+            skeleton.getNotificationDescription().setText("Ha enviado una nueva solicitud");
+        }
+
+
     }
 
     @Override

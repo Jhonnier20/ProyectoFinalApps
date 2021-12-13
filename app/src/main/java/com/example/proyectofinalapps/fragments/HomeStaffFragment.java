@@ -87,6 +87,7 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
         notifications.setOnClickListener(this::goToNotifications);
         buscarBtn.setOnClickListener(this::searchClient);
 
+        adapter.deleteClients();
         searchClient.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -108,8 +109,6 @@ public class HomeStaffFragment extends Fragment implements ActivateClient_AllowE
                     }
                 }
         );
-
-        adapter.deleteClients();
         chargeClients();
         return view;
     }

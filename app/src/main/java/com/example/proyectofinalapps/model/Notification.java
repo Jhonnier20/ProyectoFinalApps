@@ -4,8 +4,15 @@ public class Notification {
 
     private String name;
     private String description;
+    private String id;
 
     public Notification() {
+    }
+
+    public Notification(String name, String description, String id) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
     }
 
     public String getName() {
@@ -22,5 +29,13 @@ public class Notification {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

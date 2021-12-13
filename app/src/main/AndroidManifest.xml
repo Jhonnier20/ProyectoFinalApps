@@ -29,9 +29,6 @@
 
         </activity>
         <activity
-            android:name=".activities.ClientNotificationsActivity"
-            android:exported="true" />
-        <activity
             android:name=".activities.ClientQRCodeActivity"
             android:exported="true" />
         <activity
