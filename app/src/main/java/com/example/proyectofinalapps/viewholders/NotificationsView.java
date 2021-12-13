@@ -28,6 +28,8 @@ public class NotificationsView extends RecyclerView.ViewHolder {
     private Notification notification;
     protected FirebaseUser firebaseUser;
 
+    private OnDeleteNotificationListener listener;
+
 
     public NotificationsView(@NonNull View itemView, String rol) {
         super(itemView);
@@ -49,6 +51,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
     private void see2(View view){
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(firebaseUser.getUid()).delete();
+        listener.onDeleteNotification(notification);
     }
 
     private void see(View view){
@@ -82,7 +85,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
                                             FirebaseFirestore.getInstance().collection("PaymentsAnswered").document(client.getId()).set(not);
                                             FirebaseFirestore.getInstance().collection("Payments").document(client.getId()).delete();
-                                            Toast.makeText(view.getContext(),"Solicitud denegada con éxito", Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(view.getContext(),"Solicitud aceptada con éxito", Toast.LENGTH_LONG).show();
                                         }
                                 );
 
@@ -110,6 +113,7 @@ public class NotificationsView extends RecyclerView.ViewHolder {
                                 );
 
                                 dialog.dismiss();
+                                listener.onDeleteNotification(notification);
                             });
                     builder.show();
                 }
@@ -134,5 +138,18 @@ public class NotificationsView extends RecyclerView.ViewHolder {
 
     public void setNotification(Notification notification) {
         this.notification = notification;
+    }
+
+
+    public OnDeleteNotificationListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnDeleteNotificationListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnDeleteNotificationListener {
+        void onDeleteNotification(Notification n);
     }
 }

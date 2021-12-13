@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Notifications extends AppCompatActivity {
+public class Notifications extends AppCompatActivity implements NotificationsAdapter.OnAmountNotiListener {
 
     private ActivityNotificationsBinding binding;
 
@@ -42,6 +42,7 @@ public class Notifications extends AppCompatActivity {
         manager = new LinearLayoutManager(this);
         notifications.setLayoutManager(manager);
         adapter = new NotificationsAdapter(rol);
+        adapter.setOnAmountNotiListener(this);
         notifications.setAdapter(adapter);
         notifications.setHasFixedSize(true);
 
@@ -73,7 +74,7 @@ public class Notifications extends AppCompatActivity {
                             Notification notification = doc.toObject(Notification.class);
                             adapter.addNotification(notification);
                             adapter.notifyDataSetChanged();
-                            amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
+                            amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+" notificaciones");
                         }
                     }
             );
@@ -84,5 +85,10 @@ public class Notifications extends AppCompatActivity {
 
     private void close(View view){
         finish();
+    }
+
+    @Override
+    public void onAmountNoti() {
+        amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+" notificaciones");
     }
 }

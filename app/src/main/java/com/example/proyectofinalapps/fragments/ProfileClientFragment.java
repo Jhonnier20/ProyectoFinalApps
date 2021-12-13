@@ -15,6 +15,8 @@ import com.example.proyectofinalapps.model.Subscription;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ProfileClientFragment extends Fragment {
@@ -65,9 +67,11 @@ public class ProfileClientFragment extends Fragment {
         membershipClient2.setText(subscription.getMembership());
         if(subscription.isActive()) {
             but.setText("Subscripcion activa");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
             Date dateStart = new Date(subscription.getDateStart());
             Date dateEnd = new Date(subscription.getDateEnd());
-            dateClient2.setText(dateStart +"\n"+ " - "+"\n" + dateEnd);
+            dateClient2.setText(format.format(dateStart)  +"\n"+ " - "+"\n" + format.format(dateEnd));
         } else {
             but.setText("Subscripcion inactiva");
             dateClient2.setText("--/--/--");
