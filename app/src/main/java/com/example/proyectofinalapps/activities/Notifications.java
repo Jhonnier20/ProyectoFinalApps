@@ -60,6 +60,7 @@ public class Notifications extends AppCompatActivity {
                         Notification notification = doc.toObject(Notification.class);
                         adapter.addNotification(notification);
                         adapter.notifyDataSetChanged();
+                        amountNotifications.setText("Actualmente tienes "+adapter.getItemCount()+"notificaciones");
                     }
                 }
         );
