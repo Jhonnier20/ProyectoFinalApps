@@ -143,9 +143,9 @@ public class FragmentHomeRegisteredUser extends Fragment {
     }
 
     private void chargeData() {
-        String[] fullName = client.getFullName().toUpperCase(Locale.ROOT).split(" ");
+        //String[] fullName = client.getFullName().toUpperCase(Locale.ROOT).split(" ");
 
-        welcomeTitle.setText("BIENVENIDO " + fullName[0] + "!");
+        //welcomeTitle.setText("BIENVENIDO " + fullName[0] + "!");
         membership.setText(" - ");
         cutoffDate.setText(" - ");
 
